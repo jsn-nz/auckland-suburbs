@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auckland Suburb Profiles — 2023 Census + NZDep2023</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%232a78d6'/%3E%3Ccircle cx='8' cy='8' r='3.4' fill='%23fcfcfb'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <h1>Auckland suburb profiles</h1>
+    <span class="sub">2023 Census · NZDep2023 · SA2 areas</span>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-view="map" role="tab" aria-selected="true">Map</button>
+    <button class="tab" data-view="table" role="tab" aria-selected="false">Table</button>
+    <button class="tab" data-view="about" role="tab" aria-selected="false">About the data</button>
+  </nav>
+  <div class="topbar-right">
+    <div class="search" id="search">
+      <input id="search-input" type="search" placeholder="Search suburb…" autocomplete="off"
+             aria-label="Search suburb by name">
+      <ul id="search-results" class="search-results" hidden></ul>
+    </div>
+    <button id="theme-toggle" class="icon-btn" title="Toggle light/dark" aria-label="Toggle light or dark theme">◐</button>
+  </div>
+</header>
+
+<main>
+  <!-- ============================== MAP VIEW -->
+  <section id="view-map" class="view active">
+    <div id="map" aria-label="Choropleth map of Auckland SA2 areas"></div>
+
+    <div class="map-controls">
+      <label class="metric-label" for="metric-select">Colour by</label>
+      <select id="metric-select" aria-label="Choropleth metric"></select>
+    </div>
+
+    <div id="legend" class="legend" aria-live="polite"></div>
+    <div id="map-tooltip" class="map-tooltip" hidden></div>
+
+    <aside id="panel" class="panel" hidden aria-label="Suburb detail panel">
+      <div class="panel-grip" aria-hidden="true"></div>
+      <button id="panel-close" class="icon-btn panel-close" aria-label="Close panel">✕</button>
+      <div id="panel-body" class="panel-body"></div>
+    </aside>
+
+    <div id="loading" class="loading">Loading data…</div>
+  </section>
+
+  <!-- ============================== TABLE VIEW -->
+  <section id="view-table" class="view">
+    <div class="table-toolbar">
+      <input id="tbl-filter-name" type="search" placeholder="Filter by suburb name…"
+             aria-label="Filter table by suburb name">
+      <select id="tbl-filter-board" aria-label="Filter by local board"></select>
+      <span class="decile-filter">
+        <label>NZDep decile</label>
+        <select id="tbl-decile-min" aria-label="Minimum NZDep decile"></select>
+        <span>–</span>
+        <select id="tbl-decile-max" aria-label="Maximum NZDep decile"></select>
+      </span>
+      <span id="tbl-count" class="tbl-count"></span>
+      <button id="tbl-export" class="btn">Export CSV</button>
+    </div>
+    <div id="table-scroll" class="table-scroll">
+      <table id="data-table">
+        <thead id="table-head"></thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+    <p class="table-footnote">Ethnicity is multi-response — the ethnic-group columns are shares of
+      people who stated an ethnicity and intentionally sum to more than 100%. “S” = suppressed by
+      Stats NZ. NZDep decile 1 = least deprived, 10 = most deprived.</p>
+  </section>
+
+  <!-- ============================== ABOUT VIEW -->
+  <section id="view-about" class="view">
+    <article id="about-body" class="about"></article>
+  </section>
+</main>
+
+<script src="vendor/maplibre-gl.js"></script>
+<script src="js/palette.js"></script>
+<script src="js/panel.js"></script>
+<script src="js/map.js"></script>
+<script src="js/table.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
