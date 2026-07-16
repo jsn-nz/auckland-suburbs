@@ -253,14 +253,6 @@ const Panel = (() => {
         <span class="year-note">census year for the charts below</span></div>
 
       <section>
-        <h4>Ethnicity — share of people who stated an ethnicity <span class="h4-year">${year}</span></h4>
-        <p class="h4-note">Multi-response: people can identify with several groups, so shares
-          sum to more than 100%. Never normalised.</p>
-        ${barChart(ethRows, { aria: "Ethnicity shares vs Auckland average" })}
-        <div class="chart-key"><span class="key-tick"></span> Auckland average (${year})</div>
-      </section>
-
-      <section>
         <h4>Age distribution <span class="h4-year">${year}</span></h4>
         ${barChart(ageRows, { aria: "Age distribution vs Auckland average" })}
         <div class="chart-key"><span class="key-tick"></span> Auckland average (${year})
@@ -304,6 +296,14 @@ const Panel = (() => {
           ${statCard("Speak te reo Māori", Palette.fmtPct(s.te_reo_pct),
               "Region " + Palette.fmtPct(ctx.region.te_reo_pct))}
         </div>
+      </section>
+
+      <section>
+        <h4>Ethnicity — share of people who stated an ethnicity <span class="h4-year">${year}</span></h4>
+        <p class="h4-note">Multi-response: people can identify with several groups, so shares
+          sum to more than 100%. Never normalised.</p>
+        ${barChart(ethRows, { aria: "Ethnicity shares vs Auckland average" })}
+        <div class="chart-key"><span class="key-tick"></span> Auckland average (${year})</div>
       </section>
 
       <section>

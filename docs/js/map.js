@@ -4,7 +4,7 @@
 "use strict";
 
 const MapView = (() => {
-  let map, geojson, metric = "dep_decile", selectCb;
+  let map, geojson, metric = "pop2023", selectCb;
   let hoveredCode = null;
   const bboxByCode = {};
 

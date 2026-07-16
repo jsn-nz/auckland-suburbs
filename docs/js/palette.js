@@ -35,17 +35,8 @@ const Palette = (() => {
   const fmtDecile = v => v == null ? "No data" : String(v);
 
   // ---------- metrics available on the map (property names match auckland.geojson)
+  // group order = dropdown order: People, Work & income, Ethnicity, Deprivation & housing
   const METRICS = {
-    dep_decile: { label: "NZDep2023 deprivation decile", short: "NZDep decile",
-                  kind: "decile", fmt: fmtDecile, group: "Deprivation & housing",
-                  note: "1 = least deprived · 10 = most deprived (area measure)" },
-    home_own_pct: { label: "Home ownership rate (15+)", short: "Home ownership", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
-    median_rent: { label: "Median weekly rent", short: "Median rent", kind: "seq", fmt: fmtDollar, group: "Deprivation & housing" },
-    crowded_pct: { label: "Crowded households %", short: "Crowded households", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
-    damp_pct: { label: "Damp homes %", short: "Damp homes", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
-    mould_pct: { label: "Homes with mould %", short: "Mould", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
-    separate_house_pct: { label: "Stand-alone houses %", short: "Stand-alone houses", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
-
     pop2023: { label: "Population (2023)", short: "Population", kind: "seq", fmt: fmtInt, group: "People" },
     pop_change_pct: { label: "Population change 2018–2023", short: "Pop. change 2018–23",
                       kind: "div", fmt: fmtPctSigned, group: "People" },
@@ -67,6 +58,16 @@ const Palette = (() => {
     eth_Asian: { label: "Asian (% of stated)", short: "Asian", kind: "seq", fmt: fmtPct, multi: true, group: "Ethnicity" },
     eth_MELAA: { label: "MELAA (% of stated)", short: "MELAA", kind: "seq", fmt: fmtPct, multi: true, group: "Ethnicity" },
     eth_Other: { label: "Other ethnicity (% of stated)", short: "Other ethnicity", kind: "seq", fmt: fmtPct, multi: true, group: "Ethnicity" },
+
+    dep_decile: { label: "NZDep2023 deprivation decile", short: "NZDep decile",
+                  kind: "decile", fmt: fmtDecile, group: "Deprivation & housing",
+                  note: "1 = least deprived · 10 = most deprived (area measure)" },
+    home_own_pct: { label: "Home ownership rate (15+)", short: "Home ownership", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
+    median_rent: { label: "Median weekly rent", short: "Median rent", kind: "seq", fmt: fmtDollar, group: "Deprivation & housing" },
+    crowded_pct: { label: "Crowded households %", short: "Crowded households", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
+    damp_pct: { label: "Damp homes %", short: "Damp homes", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
+    mould_pct: { label: "Homes with mould %", short: "Mould", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
+    separate_house_pct: { label: "Stand-alone houses %", short: "Stand-alone houses", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
   };
 
   // quantile thresholds -> 6 classes, snapped to "nice" values
