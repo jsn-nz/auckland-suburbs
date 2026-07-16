@@ -106,6 +106,25 @@ SOURCES = {
                "&srsName=urn:ogc:def:crs:EPSG::4326",
         "desc": "Statistical Area 2 2023 Clipped (generalised) boundaries (layer 111206)",
     },
+    "mbie_bonds_quarterly.csv": {
+        "url": "https://www.tenancy.govt.nz/assets/Uploads/Tenancy/Rental-bond-data/"
+               "detailed-quarterly-tenancy-2020-to-2026.csv",
+        "desc": "MBIE/Tenancy Services rental bond data, detailed quarterly by SA2 (2019 areas)",
+        "no_key": True,
+    },
+    "schools.csv": {
+        # the published filename is date-stamped; resolve the current one via CKAN
+        "url": "{ckan:directory-of-educational-institutions:Schools Directory}",
+        "desc": "Ministry of Education schools directory (Education Counts, via data.govt.nz)",
+        "no_key": True,
+    },
+    "consents_sa2.zip": {
+        "url": "https://www.stats.govt.nz/assets/Uploads/Building-consents-issued/"
+               "Building-consents-issued-May-2026/Download-data/"
+               "new-dwellings-consented-by-statistical-area-2-may-2026.zip",
+        "desc": "Stats NZ new dwellings consented by SA2, monthly (May 2026 release)",
+        "no_key": True,
+    },
 }
 
 NZDEP_FILE = "NZDep2023_WgtAvSA2.xlsx"
@@ -170,7 +189,18 @@ def download_all(force=False):
                 with urllib.request.urlopen(req, timeout=60) as r:
                     ver = json.load(r)[0]["id"]
                 url = url.replace("{ver:%s}" % doc_id, str(ver))
-            n = fetch(url.format(key=key), dest)
+            if url.startswith("{ckan:"):  # resolve a data.govt.nz resource URL
+                _, pkg, resname = url.strip("{}").split(":")
+                curl_ = ("https://catalogue.data.govt.nz/api/3/action/package_show?id="
+                         + pkg)
+                req = urllib.request.Request(curl_, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req, timeout=60) as r:
+                    pkg_data = json.load(r)["result"]
+                url = next(res["url"] for res in pkg_data["resources"]
+                           if resname in res["name"] and res["format"] == "CSV")
+            if not src.get("no_key"):
+                url = url.format(key=key)
+            n = fetch(url, dest)
         except RuntimeError as e:
             die(str(e))
         except Exception as e:
@@ -396,6 +426,136 @@ def read_nzdep(path):
         out[code] = {"decile": decile, "score": score}
     return out
 
+def read_sa18_map(path):
+    """modal SA2-2018 parent for each SA2-2023 (for joining SA2-2019 datasets)."""
+    from collections import Counter, defaultdict
+    parent = defaultdict(Counter)
+    with open(path) as f:
+        for row in csv.DictReader(f):
+            parent[row["SA22023_code"]][row["SA22018_code"]] += 1
+    return {c: cnt.most_common(1)[0][0] for c, cnt in parent.items()}
+
+
+def read_bonds(path):
+    """MBIE bond data -> {sa2_2019_code: {median, active}} for the latest quarter."""
+    with open(path, encoding="utf-8-sig") as f:
+        rows = list(csv.DictReader(f))
+    need = {"TimeFrame", "Location Id", "Dwelling Type", "Number Of Beds",
+            "Median Rent", "Active Bonds"}
+    if not need <= set(rows[0]):
+        die("MBIE bond data schema changed: %s" % sorted(rows[0]))
+    key = lambda t: (int(t.split("/")[2]), int(t.split("/")[1]))
+    latest = max({r["TimeFrame"] for r in rows}, key=key)
+    out = {}
+    for r in rows:
+        if (r["TimeFrame"] == latest and r["Dwelling Type"] == "ALL"
+                and r["Number Of Beds"] == "ALL" and r["Median Rent"] not in ("NULL", "")):
+            act = r["Active Bonds"]
+            out[r["Location Id"]] = {
+                "median": float(r["Median Rent"]),
+                "active": int(act) if act not in ("NULL", "") else None,
+            }
+    y, m = key(latest)
+    label = {1: "Jan–Mar", 4: "Apr–Jun", 7: "Jul–Sep", 10: "Oct–Dec"}[m] + " %d" % y
+    return out, label
+
+
+def read_schools(path):
+    """MoE directory -> {sa2_code: [school, ...]} for the Auckland region."""
+    from collections import defaultdict
+    with open(path, encoding="utf-8-sig") as f:
+        rows = list(csv.DictReader(f))
+    need = {"Org_Name", "Org_Type", "Authority", "Statistical_Area_2_Code",
+            "EQi_Index", "Total", "Regional_Council"}
+    if not need <= set(rows[0]):
+        die("schools directory schema changed: %s" % sorted(rows[0])[:20])
+    out = defaultdict(list)
+    for r in rows:
+        if r["Regional_Council"] != "Auckland Region":
+            continue
+        eqi, roll = (r["EQi_Index"] or "").strip(), (r["Total"] or "").strip()
+        out[r["Statistical_Area_2_Code"]].append({
+            "name": r["Org_Name"], "type": r["Org_Type"], "authority": r["Authority"],
+            "roll": int(roll) if roll.isdigit() else None,
+            "eqi": int(eqi) if eqi.isdigit() else None,
+        })
+    for lst in out.values():
+        lst.sort(key=lambda s: -(s["roll"] or 0))
+    return out
+
+
+def read_consents(zip_path):
+    """Stats NZ new dwellings consented -> {sa2: {...}} summed over latest 12 months."""
+    import zipfile
+    from collections import defaultdict
+    with zipfile.ZipFile(zip_path) as z:
+        names = [n for n in z.namelist() if "2023 statistical area 2" in n]
+        if not names:
+            die("consents zip no longer contains a 2023-SA2 file: %s" % z.namelist())
+        with z.open(names[0]) as f:
+            rows = list(csv.DictReader(io.TextIOWrapper(f, encoding="utf-8-sig")))
+    if "total_dwelling_units" not in rows[0]:
+        die("consents CSV schema changed: %s" % sorted(rows[0]))
+    months = sorted({r["month"] for r in rows})
+    last12 = set(months[-12:])
+    out = defaultdict(lambda: {"units": 0, "houses": 0, "apartments": 0,
+                               "townhouses": 0, "retirement": 0})
+    for r in rows:
+        if r["month"] not in last12:
+            continue
+        o = out[r["SA2_code"]]
+        o["units"] += int(r["total_dwelling_units"] or 0)
+        o["houses"] += int(r["houses"] or 0)
+        o["apartments"] += int(r["apartments"] or 0)
+        o["townhouses"] += int(r["townhouses_flats_units_other"] or 0)
+        o["retirement"] += int(r["retirement_village_units"] or 0)
+    label = "%s – %s" % (months[-12][:7], months[-1][:7])
+    return out, label
+
+
+def flood_pcts(akl_codes):
+    """% of each SA2's (clipped) area inside an Auckland Council flood plain.
+    Ratio computed in EPSG:4326 - distortion cancels at equal latitude, so the
+    percentage is accurate to well under a point. Cached (slow: polygon union
+    + intersection per SA2). '_region' holds the area-weighted regional figure."""
+    cache = RAW / "flood_pct.json"
+    if cache.exists():
+        return json.loads(cache.read_text())
+    src = RAW / "flood_plains.geojson"
+    if not src.exists():
+        print("  flood plains file missing - fetching (fetch_flood.py)")
+        subprocess.run([sys.executable, str(ROOT / "fetch_flood.py")], check=True)
+    try:
+        from shapely.geometry import shape
+        from shapely.strtree import STRtree
+        from shapely.ops import unary_union
+    except ImportError:
+        die("shapely not installed - pip3 install --user shapely")
+    flood = json.loads(src.read_text())
+    polys = [shape(f["geometry"]).buffer(0) for f in flood["features"]
+             if f.get("geometry")]  # a handful of records have null geometry
+    tree = STRtree(polys)
+    fc = json.loads((RAW / "sa2_2023_clipped_generalised.geojson").read_text())
+    out = {}
+    tot_a = tot_i = 0.0
+    for f in fc["features"]:
+        code = f["properties"]["SA22023_V1_00"]
+        if code not in akl_codes:
+            continue
+        g = shape(f["geometry"]).buffer(0)
+        idx = tree.query(g)
+        inter = 0.0
+        if len(idx):
+            u = unary_union([polys[i] for i in idx])  # scenarios overlap: union first
+            inter = g.intersection(u).area
+        out[code] = round(100.0 * inter / g.area, 1) if g.area else None
+        tot_a += g.area
+        tot_i += inter
+    out["_region"] = round(100.0 * tot_i / tot_a, 1)
+    cache.write_text(json.dumps(out))
+    return out
+
+
 # ---------------------------------------------------------------- derive
 
 
@@ -439,12 +599,19 @@ def build():
     geo = read_geo_areas(RAW / "geographic_areas_2023.csv")
     print("reading NZDep2023")
     dep = read_nzdep(RAW / NZDEP_FILE)
+    print("reading MBIE bonds, schools directory, building consents")
+    bonds, bond_label = read_bonds(RAW / "mbie_bonds_quarterly.csv")
+    sa18 = read_sa18_map(RAW / "geographic_areas_2023.csv")
+    schools = read_schools(RAW / "schools.csv")
+    consents, consents_label = read_consents(RAW / "consents_sa2.zip")
 
     akl_codes = sorted(c for c, g in geo.items() if g["region"] == "Auckland Region")
     if not 500 <= len(akl_codes) <= 700:
         die("expected roughly 500-700 Auckland SA2s, got %d - concordance filter "
             "looks wrong" % len(akl_codes))
     print("Auckland region SA2s: %d" % len(akl_codes))
+    print("computing flood-plain coverage per SA2 (cached after first run)")
+    flood = flood_pcts(set(akl_codes))
 
     missing = [c for c in akl_codes if c not in p1 or c not in p2]
     if missing:
@@ -580,6 +747,16 @@ def build():
             "median_hh_income": c4.get("VAR_4_225"),
             "median_rent": c4.get("VAR_4_261"),
         }
+        # MBIE bonds: exact SA2-2023 code where the 2019-era code survived,
+        # else the modal SA2-2018 parent's figure (same rental market area)
+        bond = bonds.get(code) or bonds.get(sa18.get(code, ""))
+        s["bond_rent"] = bond["median"] if bond else None
+        s["bond_active"] = bond["active"] if bond else None
+        cons = consents.get(code)
+        s["consents_12m"] = cons["units"] if cons else 0
+        s["consents_rate"] = pct(s["consents_12m"], c3.get("VAR_3_80"))
+        s["flood_pct"] = flood.get(code)
+        s["n_schools"] = len(schools.get(code, []))
         suburbs.append(s)
 
     n_dep = sum(1 for s in suburbs if s["dep_decile"] is not None)
@@ -671,6 +848,14 @@ def build():
         [(s["median_hh_income"], p4.get(s["code"], {}).get("VAR_4_57")) for s in suburbs])
     region["median_rent"] = weighted_median(
         [(s["median_rent"], p4.get(s["code"], {}).get("VAR_4_260")) for s in suburbs])
+    region["bond_rent"] = weighted_median(
+        [(s["bond_rent"], s["bond_active"]) for s in suburbs])
+    region["consents_12m"] = sum(s["consents_12m"] for s in suburbs)
+    region["consents_rate"] = pct(
+        sum(s["consents_12m"] for s in suburbs if s["consents_rate"] is not None),
+        sum(p3[s["code"]]["VAR_3_80"] for s in suburbs
+            if s["consents_rate"] is not None and p3.get(s["code"], {}).get("VAR_3_80")))
+    region["flood_pct"] = flood.get("_region")
     # historical regional references for the time toggle
     region["hist"] = {}
     for year in ("2013", "2018"):
@@ -732,6 +917,10 @@ def build():
             "crowded_pct": s["crowded_pct"],
             "median_hh_income": s["median_hh_income"],
             "median_rent": s["median_rent"],
+            "bond_rent": s["bond_rent"],
+            "consents_12m": s["consents_12m"],
+            "consents_rate": s["consents_rate"],
+            "flood_pct": s["flood_pct"],
         }
         feats.append(f)
     have = {f["properties"]["code"] for f in feats}
@@ -753,10 +942,16 @@ def build():
     (OUT / "suburbs.json").write_text(json.dumps({
         "generated": date.today().isoformat(),
         "sources": manifest,
+        "meta": {"bond_quarter": bond_label, "consents_window": consents_label},
         "region": region,
         "suburbs": suburbs,
     }, ensure_ascii=False, separators=(",", ":")))
     print("wrote docs/data/suburbs.json (%d suburbs)" % len(suburbs))
+    (OUT / "schools.json").write_text(json.dumps(
+        {c: lst for c, lst in schools.items() if c in set(akl_codes)},
+        ensure_ascii=False, separators=(",", ":")))
+    print("wrote docs/data/schools.json (%d SA2s with schools)" %
+          len([c for c in schools if c in set(akl_codes)]))
     pre = OUT / "auckland_full.geojson"
     pre.write_text(json.dumps({"type": "FeatureCollection", "features": feats},
                               ensure_ascii=False, separators=(",", ":")))

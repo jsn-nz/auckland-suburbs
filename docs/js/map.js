@@ -70,10 +70,14 @@ const MapView = (() => {
         `</div><div class="legend-strip-labels"><span>1 least</span><span>10 most deprived</span></div>`;
     } else {
       const f = m.fmt;
+      const vals = values().filter(v => v != null);
+      const min = vals.length ? Math.min(...vals) : null;
       const rows = [];
       for (let i = 0; i < sc.colors.length; i++) {
         const lo = i === 0 ? null : sc.thresholds[i - 1];
         const hi = i === sc.colors.length - 1 ? null : sc.thresholds[i];
+        // skip the open "< t0" bin when no value can fall in it
+        if (lo == null && min != null && hi != null && min >= hi) continue;
         let lab;
         if (lo == null) lab = "< " + f(hi);
         else if (hi == null) lab = "≥ " + f(lo);
@@ -148,9 +152,8 @@ const MapView = (() => {
     map.on("click", "sa2-fill", e => selectCb(e.features[0].properties.code, false));
 
     document.getElementById("metric-select").addEventListener("change", e => {
-      metric = e.target.value;
-      map.setPaintProperty("sa2-fill", "fill-color", fillColorExpr());
-      renderLegend();
+      setMetric(e.target.value);
+      document.dispatchEvent(new CustomEvent("metricchange", { detail: metric }));
     });
     populateMetricSelect();
     renderLegend();
@@ -171,10 +174,13 @@ const MapView = (() => {
   let selectedCode = null;
   function select(code, zoom) {
     selectedCode = code;
-    map.setFilter("sa2-selected", ["==", ["get", "code"], code || "__none__"]);
-    if (code && zoom && bboxByCode[code]) {
-      map.fitBounds(bboxByCode[code], { padding: 90, maxZoom: 13.5, duration: 700 });
-    }
+    const apply = () => {
+      map.setFilter("sa2-selected", ["==", ["get", "code"], code || "__none__"]);
+      if (code && zoom && bboxByCode[code]) {
+        map.fitBounds(bboxByCode[code], { padding: 90, maxZoom: 13.5, duration: 700 });
+      }
+    };
+    try { apply(); } catch (e) { map.once("load", apply); }  // deep link before style load
   }
 
   function refreshTheme() {
@@ -188,5 +194,17 @@ const MapView = (() => {
 
   const resize = () => map && map.resize();
 
-  return { init, select, refreshTheme, resize };
+  function setMetric(m) {
+    if (!Palette.METRICS[m]) return;
+    metric = m;
+    document.getElementById("metric-select").value = m;
+    if (map) {
+      const apply = () => map.setPaintProperty("sa2-fill", "fill-color", fillColorExpr());
+      try { apply(); } catch (e) { map.once("load", apply); }  // deep link before style load
+    }
+    renderLegend();
+  }
+  const getMetric = () => metric;
+
+  return { init, select, refreshTheme, resize, setMetric, getMetric };
 })();

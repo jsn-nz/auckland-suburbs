@@ -3,7 +3,7 @@
 
 (async function () {
   const state = { view: "map", selected: null };
-  let DATA, GEO, EXTRAS = {}, byCode;
+  let DATA, GEO, EXTRAS = {}, SCHOOLS = {}, byCode;
 
   // ---------------------------------------------------------------- theme
   const themeBtn = document.getElementById("theme-toggle");
@@ -19,10 +19,11 @@
 
   // ---------------------------------------------------------------- data
   try {
-    [DATA, GEO, EXTRAS] = await Promise.all([
+    [DATA, GEO, EXTRAS, SCHOOLS] = await Promise.all([
       fetch("data/suburbs.json").then(r => { if (!r.ok) throw new Error("suburbs.json " + r.status); return r.json(); }),
       fetch("data/auckland.geojson").then(r => { if (!r.ok) throw new Error("auckland.geojson " + r.status); return r.json(); }),
       fetch("data/extras.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
+      fetch("data/schools.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
     ]);
   } catch (err) {
     document.getElementById("loading").textContent =
@@ -43,6 +44,8 @@
     region: DATA.region,
     suburbs: DATA.suburbs,
     extras: EXTRAS,
+    schools: SCHOOLS,
+    meta: DATA.meta || {},
     onSelect: code => { setView("map"); select(code, true); },
     onClose: () => { state.selected = null; MapView.select(null, false); },
   });
@@ -129,7 +132,19 @@
         ${row("geographic_areas_2023.csv", "SA2 → region / local board / SA3 concordance")}
         ${row("sa2_2023_clipped_generalised.geojson", "SA2 2023 boundaries (generalised, clipped to coastline)")}
         ${row("NZDep2023_WgtAvSA2.xlsx", "NZDep2023 SA2-level index, University of Otago")}
+        ${row("mbie_bonds_quarterly.csv", "MBIE/Tenancy Services rental bond data (median new-bond rents)")}
+        ${row("schools.csv", "Ministry of Education schools directory + Equity Index")}
+        ${row("consents_sa2.zip", "Stats NZ new dwellings consented by SA2 (monthly)")}
       </table>
+      <p>Flood-plain shares are computed from Auckland Council's open
+      <a href="https://data-aucklandcouncil.opendata.arcgis.com/">Flood Plains</a> layer as the
+      share of each SA2's coastline-clipped area that intersects modelled flood plains — an
+      <strong>area exposure indicator only</strong>, not a property-level flood assessment.
+      New-bond rents use MBIE's SA2-2019 areas mapped onto 2023 boundaries (a few merged areas
+      share their parent's figure). School Equity Index (EQI): higher = more socioeconomic
+      barriers; school zones don't follow SA2 boundaries. Home values are <strong>not</strong>
+      shown because Auckland Council's bulk rating-valuation data is a paid commercial product —
+      we only publish what's genuinely open.</p>
       <p>Census tables and boundaries are © Stats NZ, licensed under
       <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. NZDep2023 is
       produced by the Department of Public Health, University of Otago, Wellington.
@@ -198,4 +213,46 @@
   document.addEventListener("keydown", e => {
     if (e.key === "Escape" && state.selected) { select(null); }
   });
+
+  // ------------------------------------------------ shareable URLs
+  // #takanini-north            -> that suburb selected + zoomed
+  // #takanini-north/median_rent -> plus that choropleth metric
+  // #m/median_rent              -> metric only, nothing selected
+  const slug = s => s.toLowerCase()
+    .replace(/[āä]/g, "a").replace(/[ēë]/g, "e").replace(/[īï]/g, "i")
+    .replace(/[ōö]/g, "o").replace(/[ūü]/g, "u")
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const codeBySlug = Object.fromEntries(DATA.suburbs.map(s => [slug(s.name), s.code]));
+  let applyingHash = false;
+
+  function updateHash() {
+    if (applyingHash) return;
+    const m = MapView.getMetric();
+    const parts = [];
+    if (state.selected && byCode[state.selected]) parts.push(slug(byCode[state.selected].name));
+    if (m !== "pop2023") parts.push(state.selected ? m : "m/" + m);
+    const h = parts.length ? "#" + parts.join("/") : "";
+    if (h !== location.hash) history.replaceState(null, "", h || location.pathname);
+  }
+
+  function applyHash() {
+    const h = decodeURIComponent(location.hash.replace(/^#/, ""));
+    if (!h) return;
+    applyingHash = true;
+    const parts = h.split("/");
+    if (parts[0] === "m" && parts[1]) {
+      MapView.setMetric(parts[1]);
+    } else {
+      const code = codeBySlug[parts[0]];
+      if (code) { setView("map"); select(code, true); }
+      if (parts[1]) MapView.setMetric(parts[1]);
+    }
+    applyingHash = false;
+  }
+
+  const origSelect = select;
+  select = function (code, zoom = true) { origSelect(code, zoom); updateHash(); };
+  document.addEventListener("metricchange", updateHash);
+  window.addEventListener("hashchange", applyHash);
+  applyHash();
 })();

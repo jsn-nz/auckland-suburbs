@@ -152,6 +152,89 @@ const Panel = (() => {
         in it. Deciles are national: decile 10 = the most deprived 10% of NZ small areas.</p>`;
   }
 
+  function schoolsBlock(s) {
+    const list = (ctx.schools || {})[s.code] || [];
+    if (!list.length) {
+      return `<section><h4>Schools</h4>
+        <p class="h4-note">No schools are located within this SA2 (children here are
+        typically zoned for schools in neighbouring areas).</p></section>`;
+    }
+    const rows = list.map(sc => `<li><strong>${esc(sc.name)}</strong>
+      <span class="school-meta">${esc(sc.type)} · ${esc(sc.authority)}${sc.roll != null
+        ? ` · roll ${sc.roll.toLocaleString("en-NZ")}` : ""}${sc.eqi != null
+        ? ` · EQI ${sc.eqi}` : ""}</span></li>`).join("");
+    return `<section><h4>Schools located here <span class="h4-year">${list.length}</span></h4>
+      <ul class="school-list">${rows}</ul>
+      <p class="footnote">Ministry of Education directory. EQI = Equity Index (roughly 340–570):
+        <strong>higher = more socioeconomic barriers</strong> faced by the school's students.
+        School zones don't follow SA2 boundaries.</p></section>`;
+  }
+
+  /* ------------------------------------------------ compare mode */
+  function compareRow(label, fmt, get, a, b) {
+    const va = get(a), vb = get(b);
+    return `<tr><td class="cmp-label">${esc(label)}</td>
+      <td>${esc(fmt(va))}</td><td>${esc(fmt(vb))}</td></tr>`;
+  }
+
+  function renderCompare(a, b) {
+    const F = Palette;
+    const rows = [
+      ["Population 2023", F.fmtInt, s => s.pop2023],
+      ["Change since 2018", F.fmtPctSigned, s => s.pop_change_pct],
+      ["Median age", F.fmtAge, s => s.median_age],
+      ["Median personal income", F.fmtDollar, s => s.median_income],
+      ["Median household income", F.fmtDollar, s => s.median_hh_income],
+      ["Median rent (census)", F.fmtDollar, s => s.median_rent],
+      ["Median rent (new bonds)", F.fmtDollar, s => s.bond_rent],
+      ["Bachelor's or higher", F.fmtPct, s => s.bachelor_pct],
+      ["Own or partly own home", F.fmtPct, s => s.home_own_pct],
+      ["Unemployment", F.fmtPct, s => s.unemployment_pct],
+      ["Born overseas", F.fmtPct, s => s.overseas_born_pct],
+      ["PT commute", F.fmtPct, s => s.travel["Public transport"].pct],
+      ["Work from home", F.fmtPct, s => s.travel["Work from home"].pct],
+      ["European", F.fmtPct, s => s.ethnicity.European.pct],
+      ["Māori", F.fmtPct, s => s.ethnicity["Māori"].pct],
+      ["Pacific", F.fmtPct, s => s.ethnicity.Pacific.pct],
+      ["Asian", F.fmtPct, s => s.ethnicity.Asian.pct],
+      ["Damp homes", F.fmtPct, s => s.damp_pct],
+      ["Crowded households", F.fmtPct, s => s.crowded_pct],
+      ["New homes consented (12m)", F.fmtInt, s => s.consents_12m],
+      ["Land in flood plain", F.fmtPct, s => s.flood_pct],
+      ["NZDep decile (10 = most deprived)", F.fmtDecile, s => s.dep_decile],
+    ].map(([l, f, g]) => compareRow(l, f, g, a, b)).join("");
+    body.innerHTML = `
+      <h2 class="cmp-title">Compare</h2>
+      <table class="cmp-table">
+        <thead><tr><th></th>
+          <th><button class="cmp-head" data-goto="${a.code}">${esc(a.name)}</button></th>
+          <th><button class="cmp-head" data-goto="${b.code}">${esc(b.name)}</button></th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <p class="footnote">“S” = suppressed by Stats NZ. Click a suburb name for its full profile.
+        Ethnicity is multi-response (columns sum past 100%).</p>`;
+    el.hidden = false;
+  }
+
+  function compareUI(s) {
+    return `<div class="cmp-launch">
+      <input id="cmp-input" list="cmp-list" placeholder="Compare with another suburb…"
+        aria-label="Compare with another suburb">
+      <datalist id="cmp-list">${ctx.suburbs.map(x =>
+        x.code === s.code ? "" : `<option value="${esc(x.name)}">`).join("")}</datalist>
+    </div>`;
+  }
+
+  function wireCompare(s) {
+    const input = body.querySelector("#cmp-input");
+    if (!input) return;
+    input.addEventListener("change", () => {
+      const other = ctx.suburbs.find(x => x.name === input.value);
+      if (other && other.code !== s.code) renderCompare(s, other);
+    });
+  }
+
   /* ------------------------------------------------ header pieces */
   function photoBlock(ex) {
     if (!ex || !ex.img) return "";
@@ -236,6 +319,8 @@ const Panel = (() => {
     const rInc = year === "2023" ? rank("median_income", x => x.median_income, s.median_income) : null;
     const rRent = rank("median_rent", x => x.median_rent, s.median_rent);
     const rHh = rank("median_hh_income", x => x.median_hh_income, s.median_hh_income);
+    const rBond = rank("bond_rent", x => x.bond_rent, s.bond_rent);
+    const rCons = rank("consents_12m", x => x.consents_12m, s.consents_12m);
 
     const sims = similar(s);
 
@@ -309,9 +394,11 @@ const Panel = (() => {
       <section>
         <h4>Homes &amp; households <span class="h4-year">2023</span></h4>
         <div class="stat-grid">
-          ${statCard("Median weekly rent", Palette.fmtDollar(s.median_rent),
-              "Region " + Palette.fmtDollar(ctx.region.median_rent) + rankTxt(rRent),
-              "renting households")}
+          ${statCard("Median rent — census night 2023", Palette.fmtDollar(s.median_rent),
+              "Region " + Palette.fmtDollar(ctx.region.median_rent) + rankTxt(rRent))}
+          ${statCard("Median rent — new bonds, " + (ctx.meta.bond_quarter || "latest"),
+              Palette.fmtDollar(s.bond_rent),
+              "Region " + Palette.fmtDollar(ctx.region.bond_rent) + rankTxt(rBond))}
           ${statCard("Median household income", Palette.fmtDollar(s.median_hh_income),
               "Region " + Palette.fmtDollar(ctx.region.median_hh_income) + rankTxt(rHh))}
           ${statCard("Homes damp (at least sometimes)", Palette.fmtPct(s.damp_pct),
@@ -323,7 +410,25 @@ const Panel = (() => {
           ${statCard("Stand-alone houses", Palette.fmtPct(s.separate_house_pct),
               "Region " + Palette.fmtPct(ctx.region.separate_house_pct))}
         </div>
+        <p class="footnote">New-bond rent: MBIE tenancy bond lodgements (SA2-2019 areas mapped
+          to 2023 boundaries)${s.bond_active ? ` · ${s.bond_active.toLocaleString("en-NZ")} active bonds here` : ""}.</p>
       </section>
+
+      <section>
+        <h4>Growth &amp; hazards</h4>
+        <div class="stat-grid">
+          ${statCard("New homes consented", Palette.fmtInt(s.consents_12m),
+              "Region " + Palette.fmtInt(ctx.region.consents_12m) + rankTxt(rCons),
+              s.consents_rate != null ? s.consents_rate.toFixed(1) + " per 100 existing homes" : "")}
+          ${statCard("Land in a flood plain", Palette.fmtPct(s.flood_pct),
+              "Region " + Palette.fmtPct(ctx.region.flood_pct))}
+        </div>
+        <p class="footnote">Consents: Stats NZ, 12 months ${esc(ctx.meta.consents_window || "")}.
+          Flood plain: Auckland Council flood-plain modelling as a share of this area's land
+          (an exposure indicator, not a property-level assessment).</p>
+      </section>
+
+      ${schoolsBlock(s)}
 
       <section>
         <h4>NZDep2023 deprivation</h4>
@@ -339,9 +444,15 @@ const Panel = (() => {
              <span>${esc(t.board)}</span></button>`).join("")}</div>
       </section>` : ""}
 
+      <section>
+        <h4>Compare</h4>
+        ${compareUI(s)}
+      </section>
+
       <p class="footnote">Counts are randomly rounded to base 3 by Stats NZ, so figures may not
         sum exactly. “S” = suppressed. “Own or partly own” includes family trusts (not asked
         separately in 2013). Regional medians are population-weighted medians of SA2 medians.</p>`;
+    wireCompare(s);
     el.hidden = false;
   }
 

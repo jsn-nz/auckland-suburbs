@@ -187,6 +187,27 @@ main { flex: 1; min-height: 0; display: flex; }
 .sim-chip span { display: block; font-size: 10.5px; color: var(--muted); }
 .sim-chip:hover { border-color: var(--accent); }
 
+.school-list { margin: 6px 0 0; padding: 0 0 0 2px; list-style: none; }
+.school-list li { padding: 5px 0; border-bottom: 1px solid var(--grid); font-size: 12.5px; }
+.school-list li:last-child { border-bottom: 0; }
+.school-meta { display: block; color: var(--muted); font-size: 11px; }
+
+.cmp-launch input {
+  width: 100%; font: inherit; padding: 7px 10px;
+  border: 1px solid var(--grid); border-radius: 8px;
+  background: var(--plane); color: var(--ink);
+}
+.cmp-title { margin-bottom: 8px; }
+.cmp-table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+.cmp-table th { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--baseline); }
+.cmp-table td { text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--grid);
+  font-variant-numeric: tabular-nums; }
+.cmp-table .cmp-label { text-align: left; color: var(--ink-2); font-variant-numeric: normal; }
+.cmp-head {
+  font: inherit; font-weight: 650; cursor: pointer; border: 0; background: none;
+  color: var(--accent-ink); padding: 0; text-align: right;
+}
+
 .panel h2 { margin: 0 42px 2px 0; font-size: 19px; line-height: 1.2; }
 .panel .p-sub { color: var(--ink-2); font-size: 12.5px; margin: 0 0 2px; }
 .panel .p-colloquial { color: var(--muted); font-size: 12px; margin: 0; }
