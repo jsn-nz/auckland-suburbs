@@ -37,20 +37,36 @@ const Palette = (() => {
   // ---------- metrics available on the map (property names match auckland.geojson)
   const METRICS = {
     dep_decile: { label: "NZDep2023 deprivation decile", short: "NZDep decile",
-                  kind: "decile", fmt: fmtDecile,
+                  kind: "decile", fmt: fmtDecile, group: "Deprivation & housing",
                   note: "1 = least deprived · 10 = most deprived (area measure)" },
-    median_age: { label: "Median age", short: "Median age", kind: "seq", fmt: fmtAge },
-    median_income: { label: "Median personal income", short: "Median income", kind: "seq", fmt: fmtDollar },
-    pop2023: { label: "Population (2023)", short: "Population", kind: "seq", fmt: fmtInt },
+    home_own_pct: { label: "Home ownership rate (15+)", short: "Home ownership", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
+    median_rent: { label: "Median weekly rent", short: "Median rent", kind: "seq", fmt: fmtDollar, group: "Deprivation & housing" },
+    crowded_pct: { label: "Crowded households %", short: "Crowded households", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
+    damp_pct: { label: "Damp homes %", short: "Damp homes", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
+    mould_pct: { label: "Homes with mould %", short: "Mould", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
+    separate_house_pct: { label: "Stand-alone houses %", short: "Stand-alone houses", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
+
+    pop2023: { label: "Population (2023)", short: "Population", kind: "seq", fmt: fmtInt, group: "People" },
     pop_change_pct: { label: "Population change 2018–2023", short: "Pop. change 2018–23",
-                      kind: "div", fmt: fmtPctSigned },
-    home_own_pct: { label: "Home ownership rate (15+)", short: "Home ownership", kind: "seq", fmt: fmtPct },
-    eth_European: { label: "European (% of stated)", short: "European", kind: "seq", fmt: fmtPct, multi: true },
-    "eth_Māori": { label: "Māori (% of stated)", short: "Māori", kind: "seq", fmt: fmtPct, multi: true },
-    eth_Pacific: { label: "Pacific Peoples (% of stated)", short: "Pacific", kind: "seq", fmt: fmtPct, multi: true },
-    eth_Asian: { label: "Asian (% of stated)", short: "Asian", kind: "seq", fmt: fmtPct, multi: true },
-    eth_MELAA: { label: "MELAA (% of stated)", short: "MELAA", kind: "seq", fmt: fmtPct, multi: true },
-    eth_Other: { label: "Other ethnicity (% of stated)", short: "Other ethnicity", kind: "seq", fmt: fmtPct, multi: true },
+                      kind: "div", fmt: fmtPctSigned, group: "People" },
+    median_age: { label: "Median age", short: "Median age", kind: "seq", fmt: fmtAge, group: "People" },
+    overseas_born_pct: { label: "Overseas-born %", short: "Overseas-born", kind: "seq", fmt: fmtPct, group: "People" },
+    same_home_5y_pct: { label: "Same home as 5 years ago %", short: "Same home 5 yrs", kind: "seq", fmt: fmtPct, group: "People" },
+    te_reo_pct: { label: "Te reo Māori speakers %", short: "Te reo speakers", kind: "seq", fmt: fmtPct, group: "People" },
+
+    median_income: { label: "Median personal income (15+)", short: "Median income", kind: "seq", fmt: fmtDollar, group: "Work & income" },
+    median_hh_income: { label: "Median household income", short: "Household income", kind: "seq", fmt: fmtDollar, group: "Work & income" },
+    unemployment_pct: { label: "Unemployment rate", short: "Unemployment", kind: "seq", fmt: fmtPct, group: "Work & income" },
+    travel_pt: { label: "Commute by public transport %", short: "PT commute", kind: "seq", fmt: fmtPct, group: "Work & income" },
+    travel_wfh: { label: "Work from home %", short: "Work from home", kind: "seq", fmt: fmtPct, group: "Work & income" },
+    travel_active: { label: "Walk or cycle to work %", short: "Walk/cycle commute", kind: "seq", fmt: fmtPct, group: "Work & income" },
+
+    eth_European: { label: "European (% of stated)", short: "European", kind: "seq", fmt: fmtPct, multi: true, group: "Ethnicity" },
+    "eth_Māori": { label: "Māori (% of stated)", short: "Māori", kind: "seq", fmt: fmtPct, multi: true, group: "Ethnicity" },
+    eth_Pacific: { label: "Pacific Peoples (% of stated)", short: "Pacific", kind: "seq", fmt: fmtPct, multi: true, group: "Ethnicity" },
+    eth_Asian: { label: "Asian (% of stated)", short: "Asian", kind: "seq", fmt: fmtPct, multi: true, group: "Ethnicity" },
+    eth_MELAA: { label: "MELAA (% of stated)", short: "MELAA", kind: "seq", fmt: fmtPct, multi: true, group: "Ethnicity" },
+    eth_Other: { label: "Other ethnicity (% of stated)", short: "Other ethnicity", kind: "seq", fmt: fmtPct, multi: true, group: "Ethnicity" },
   };
 
   // quantile thresholds -> 6 classes, snapped to "nice" values

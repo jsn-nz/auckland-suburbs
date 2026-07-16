@@ -3,7 +3,7 @@
 
 (async function () {
   const state = { view: "map", selected: null };
-  let DATA, GEO, byCode;
+  let DATA, GEO, EXTRAS = {}, byCode;
 
   // ---------------------------------------------------------------- theme
   const themeBtn = document.getElementById("theme-toggle");
@@ -11,7 +11,7 @@
     const cur = Palette.dark();
     document.documentElement.setAttribute("data-theme", cur ? "light" : "dark");
     MapView.refreshTheme();
-    if (state.selected) Panel.show(byCode[state.selected], DATA.region); // re-ink charts
+    Panel.refresh(); // re-ink charts
   });
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
     if (!document.documentElement.getAttribute("data-theme")) MapView.refreshTheme();
@@ -19,9 +19,10 @@
 
   // ---------------------------------------------------------------- data
   try {
-    [DATA, GEO] = await Promise.all([
+    [DATA, GEO, EXTRAS] = await Promise.all([
       fetch("data/suburbs.json").then(r => { if (!r.ok) throw new Error("suburbs.json " + r.status); return r.json(); }),
       fetch("data/auckland.geojson").then(r => { if (!r.ok) throw new Error("auckland.geojson " + r.status); return r.json(); }),
+      fetch("data/extras.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
     ]);
   } catch (err) {
     document.getElementById("loading").textContent =
@@ -34,11 +35,17 @@
   function select(code, zoom = true) {
     state.selected = code;
     MapView.select(code, zoom);
-    if (code && byCode[code]) Panel.show(byCode[code], DATA.region);
+    if (code && byCode[code]) Panel.show(byCode[code]);
     else Panel.hide();
   }
 
-  Panel.init(() => { state.selected = null; MapView.select(null, false); });
+  Panel.init({
+    region: DATA.region,
+    suburbs: DATA.suburbs,
+    extras: EXTRAS,
+    onSelect: code => { setView("map"); select(code, true); },
+    onClose: () => { state.selected = null; MapView.select(null, false); },
+  });
   MapView.init(GEO, code => select(code, false));
   Table.init(DATA.suburbs, code => { setView("map"); select(code, true); });
   renderAbout();
@@ -116,7 +123,9 @@
       <table>
         <tr><th>Dataset</th><th>Source</th><th>Downloaded</th></tr>
         ${row("census_sa2_part1.csv", "Census 2023, individuals part 1 (population, age, ethnicity)")}
-        ${row("census_sa2_part2.csv", "Census 2023, individuals part 2 (income, qualifications, home ownership)")}
+        ${row("census_sa2_part2.csv", "Census 2023, individuals part 2 (income, qualifications, home ownership, work, travel)")}
+        ${row("census_sa2_dwellings.csv", "Census 2023, dwellings (damp, mould, dwelling type)")}
+        ${row("census_sa2_households.csv", "Census 2023, households (household income, rent, crowding)")}
         ${row("geographic_areas_2023.csv", "SA2 → region / local board / SA3 concordance")}
         ${row("sa2_2023_clipped_generalised.geojson", "SA2 2023 boundaries (generalised, clipped to coastline)")}
         ${row("NZDep2023_WgtAvSA2.xlsx", "NZDep2023 SA2-level index, University of Otago")}
@@ -156,6 +165,19 @@
       of an <strong>area</strong>, not of any individual living there. The SA2-level file used
       here (<code>NZDep2023_WgtAvSA2</code>) is Otago’s population-weighted average of SA1
       scores; non-residential areas have no score.</p>
+
+      <h3>Photos &amp; descriptions</h3>
+      <p>Suburb photos and the one-line descriptions come from
+      <a href="https://en.wikipedia.org/">Wikipedia</a> (text CC BY-SA 4.0) and
+      <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> (each photo's author and
+      licence are credited on the image and link to the source). Articles are matched to SA2s
+      by name and validated by coordinates inside the Auckland region; where a broader suburb
+      article covers several SA2s (e.g. “Ponsonby” for Ponsonby East and West) the same
+      description is shown for each. Areas with no confident match get a plain data-derived
+      line instead — descriptions are never invented. Census years shown as 2013/2018/2023 use
+      each census's own questions; “own or partly own” had no separate family-trust option
+      in 2013, and the travel-to-work question changed after 2018, so 2023 travel figures
+      aren't shown for earlier years.</p>
 
       <h3>Other definitions</h3>
       <p>Population is the census usually resident population. Income, qualifications and home

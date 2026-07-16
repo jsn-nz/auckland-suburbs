@@ -12,6 +12,7 @@ https://datafinder.stats.govt.nz/my/api/), Python 3.9+ with `openpyxl`
 ```
 python3 build.py            # uses cached downloads in data/raw/
 python3 build.py --force    # re-download everything
+python3 enrich.py           # Wikipedia/Commons photos + descriptions (cached)
 ```
 
 Outputs `docs/data/auckland.geojson` (simplified geometry + choropleth metrics)
@@ -31,6 +32,7 @@ external requests at view time are the Carto basemap tiles.)
 ## Layout
 
 - `build.py` — the whole data pipeline (downloads, verification, join, simplify)
+- `enrich.py` — Wikipedia/Wikimedia Commons matching for suburb photos + blurbs
 - `data/raw/` — cached source downloads + `manifest.json` (download dates)
 - `docs/` — the static site (vanilla JS + vendored MapLibre GL)
 

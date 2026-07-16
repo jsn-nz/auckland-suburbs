@@ -158,8 +158,13 @@ const MapView = (() => {
 
   function populateMetricSelect() {
     const sel = document.getElementById("metric-select");
-    sel.innerHTML = Object.entries(Palette.METRICS)
-      .map(([k, m]) => `<option value="${k}">${m.label}</option>`).join("");
+    const groups = {};
+    for (const [k, m] of Object.entries(Palette.METRICS))
+      (groups[m.group] = groups[m.group] || []).push([k, m]);
+    sel.innerHTML = Object.entries(groups).map(([g, items]) =>
+      `<optgroup label="${g}">` +
+      items.map(([k, m]) => `<option value="${k}">${m.label}</option>`).join("") +
+      `</optgroup>`).join("");
     sel.value = metric;
   }
 
