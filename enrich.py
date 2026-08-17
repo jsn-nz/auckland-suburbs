@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parent
 CACHE_PATH = ROOT / "data" / "raw" / "wiki_cache.json"
 OUT_PATH = ROOT / "docs" / "data" / "extras.json"
 
-UA = "AucklandSuburbProfiles/1.0 (https://query.co.nz; jason.duong77@gmail.com)"
+UA = "AucklandSuburbProfiles/1.0 (https://count.nz; jason.duong77@gmail.com)"
 # Auckland region bounding box (generous)
 LAT = (-37.75, -35.75)
 LON = (173.8, 176.2)
