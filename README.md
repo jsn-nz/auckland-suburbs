@@ -27,7 +27,8 @@ cd docs && python3 -m http.server 8092
 ```
 
 Then open http://localhost:8092. (Any static file server works; the only
-external requests at view time are the Carto basemap tiles.)
+external requests at view time are the OpenFreeMap basemap tiles, fonts and
+sprites - no API key needed.)
 
 ## Layout
 

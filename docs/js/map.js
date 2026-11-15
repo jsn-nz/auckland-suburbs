@@ -1,4 +1,4 @@
-/* Map view: MapLibre GL choropleth over a subtle Carto raster basemap
+/* Map view: MapLibre GL choropleth over an OpenFreeMap vector basemap
    (light/dark aware, labels drawn above the fills). Hover tooltip, click to
    open the detail panel, legend rebuilt per metric + theme. */
 "use strict";
@@ -8,37 +8,32 @@ const MapView = (() => {
   let hoveredCode = null;
   const bboxByCode = {};
 
-  const CARTO_ATTR = '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>';
-  const tiles = kind => ["a", "b", "c", "d"].map(s =>
-    `https://${s}.basemaps.cartocdn.com/${kind}/{z}/{x}/{y}@2x.png`);
-
+  // Basemap: OpenFreeMap vector tiles (no API key). BASEMAPS comes from
+  // vendor/basemap-styles.js. The basemap's own layers are split so the SA2
+  // choropleth sits above land/roads but below every label.
   function baseStyle() {
     const dark = Palette.dark();
+    const base = JSON.parse(JSON.stringify(BASEMAPS[dark ? "dark" : "light"]));
+    const sa2Layers = [
+      { id: "sa2-fill", type: "fill", source: "sa2",
+        paint: { "fill-color": fillColorExpr(), "fill-opacity": 0.78 } },
+      { id: "sa2-line", type: "line", source: "sa2",
+        paint: { "line-color": dark ? "rgba(255,255,255,0.25)" : "rgba(11,11,11,0.22)",
+                 "line-width": 0.5 } },
+      { id: "sa2-hover", type: "line", source: "sa2",
+        paint: { "line-color": dark ? "#ffffff" : "#0b0b0b", "line-width": 1.6 },
+        filter: ["==", ["get", "code"], "__none__"] },
+      { id: "sa2-selected", type: "line", source: "sa2",
+        paint: { "line-color": dark ? "#ffffff" : "#0b0b0b", "line-width": 2.5 },
+        filter: ["==", ["get", "code"], "__none__"] },
+    ];
     return {
-      version: 8,
-      sources: {
-        base: { type: "raster", tiles: tiles(dark ? "dark_nolabels" : "light_nolabels"),
-                tileSize: 256, attribution: CARTO_ATTR },
-        labels: { type: "raster", tiles: tiles(dark ? "dark_only_labels" : "light_only_labels"),
-                  tileSize: 256 },
-        sa2: { type: "geojson", data: geojson, promoteId: "code" },
-      },
+      ...base,
+      sources: { ...base.sources, sa2: { type: "geojson", data: geojson, promoteId: "code" } },
       layers: [
-        { id: "base", type: "raster", source: "base",
-          paint: { "raster-opacity": dark ? 0.85 : 0.7 } },
-        { id: "sa2-fill", type: "fill", source: "sa2",
-          paint: { "fill-color": fillColorExpr(), "fill-opacity": 0.78 } },
-        { id: "sa2-line", type: "line", source: "sa2",
-          paint: { "line-color": dark ? "rgba(255,255,255,0.25)" : "rgba(11,11,11,0.22)",
-                   "line-width": 0.5 } },
-        { id: "sa2-hover", type: "line", source: "sa2",
-          paint: { "line-color": dark ? "#ffffff" : "#0b0b0b", "line-width": 1.6 },
-          filter: ["==", ["get", "code"], "__none__"] },
-        { id: "sa2-selected", type: "line", source: "sa2",
-          paint: { "line-color": dark ? "#ffffff" : "#0b0b0b", "line-width": 2.5 },
-          filter: ["==", ["get", "code"], "__none__"] },
-        { id: "labels", type: "raster", source: "labels",
-          paint: { "raster-opacity": dark ? 0.9 : 0.95 } },
+        ...base.layers.filter(l => l.type !== "symbol"),
+        ...sa2Layers,
+        ...base.layers.filter(l => l.type === "symbol"),
       ],
     };
   }
