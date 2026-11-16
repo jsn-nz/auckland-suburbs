@@ -25,6 +25,11 @@ Outputs, under `docs/data/`:
   region, loaded when that region is opened
 - `extras.json` — Wikipedia photos + blurbs (Auckland only so far)
 
+Then run `python3 seo.py` to regenerate the static, crawlable pages
+(`docs/<region>/` and `docs/<region>/<suburb>/`), `sitemap.xml` and `robots.txt`
+from that data. The map itself routes on `#fragments`, which search engines
+don't index, so these pages are what gets found in search.
+
 The build aborts loudly if a download fails or a schema changes — it never
 falls back to hardcoded figures.
 

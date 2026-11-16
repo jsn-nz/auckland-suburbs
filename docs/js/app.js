@@ -205,7 +205,7 @@
       bSel.innerHTML = `<option value="">All of ${cur.rec.name}</option>` +
         cur.boards.map(b => `<option>${b}</option>`).join("");
     }
-    document.title = nz ? SITE + ": every suburb in New Zealand, mapped"
+    document.title = nz ? "New Zealand population by suburb: 2023 Census map | " + SITE
                         : cur.rec.name + " suburbs | " + SITE;
   }
 
@@ -309,6 +309,9 @@
       produced or endorsed by Stats NZ or any other source.
       ${dates.length ? `Data downloaded ${dates[0]}${dates[dates.length - 1] !== dates[0] ? " to " + dates[dates.length - 1] : ""}.` : ""}</p>
 
+      <h3>Browse by region</h3>
+      <p>${NZ.regions.map(r => `<a href="/${r.slug}/">${r.name}</a>`).join(" · ")}</p>
+
       <h3>Reading the figures</h3>
       <p>General information only, not financial, property or legal advice, and provided
       without warranty. Areas are Stats NZ “SA2” statistical areas, which only approximate
@@ -334,6 +337,11 @@
       else if (e.target === dlg) dlg.close();          // click on the backdrop
     });
     $("legal-close").addEventListener("click", () => dlg.close());
+    // the static region / suburb pages link here as /#sources
+    if (location.hash === "#sources") {
+      history.replaceState(null, "", location.pathname + location.search);
+      dlg.showModal();
+    }
   }
 
   // keyboard: Escape closes panel

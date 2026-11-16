@@ -160,7 +160,8 @@ const MapView = (() => {
     }
     let b = EMPTY;
     for (const f of picked) b = grow(b, bboxByCode[f.properties.code]);
-    const dx = (b[2] - b[0]) * 0.12, dy = (b[3] - b[1]) * 0.12;
+    // generous margin: show the town or city with its surroundings, not edge to edge
+    const dx = (b[2] - b[0]) * 0.45, dy = (b[3] - b[1]) * 0.45;
     return [b[0] - dx, b[1] - dy, b[2] + dx, b[3] + dy];
   }
 
@@ -242,7 +243,7 @@ const MapView = (() => {
     // arriving from a click on the national map: land on the part of the
     // region that was clicked (its district), not the whole region
     const near = level.focus && boundsAround(level.focus);
-    if (near) map.fitBounds(near, { padding: 40, maxZoom: 12.5, duration: 900 });
+    if (near) map.fitBounds(near, { padding: 40, maxZoom: 10.5, duration: 1200 });
     else map.fitBounds(bounds, { padding: 24, duration: 700 });
     renderLegend();
   }
@@ -276,11 +277,12 @@ const MapView = (() => {
         // are readable; if it is already a decent size, leave the view alone
         const p1 = map.project([b[0], b[1]]), p2 = map.project([b[2], b[3]]);
         const px = Math.max(Math.abs(p2.x - p1.x), Math.abs(p2.y - p1.y));
-        if (px < 80) {
+        // a gentle step: at most two zoom levels per click, and only for specks
+        if (px < 45) {
           map.easeTo({
             center: [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2],
-            zoom: Math.min(map.getZoom() + Math.log2(170 / Math.max(px, 3)), 13.5),
-            duration: 800,
+            zoom: Math.min(map.getZoom() + Math.min(Math.log2(90 / Math.max(px, 3)), 2), 12.5),
+            duration: 1100,
           });
         }
       } else {
