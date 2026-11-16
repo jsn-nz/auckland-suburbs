@@ -1,7 +1,7 @@
 /* Colour ramps + metric definitions.
    Ramps follow the dataviz palette: sequential = one hue (blue) light->dark;
    diverging = blue <-> red with a neutral grey midpoint; never red-green.
-   In dark mode sequential ramps flip so "low" recedes toward the dark surface.
+   Sequential ramps read the same way in both themes: darker = more.
    NZDep: decile 1 = LEAST deprived (light), 10 = most deprived (dark). */
 "use strict";
 
@@ -22,8 +22,9 @@ const Palette = (() => {
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
   };
   const noData = () => dark() ? "#3a3a37" : "#e8e7e2";
-  const seq6 = () => dark() ? [...SEQ6].reverse() : SEQ6;
-  const decile10 = () => dark() ? [...DECILE10].reverse() : DECILE10;
+  // same direction in light and dark mode: light = low, dark = high
+  const seq6 = () => SEQ6;
+  const decile10 = () => DECILE10;
   const div7 = () => dark() ? DIV7_DARK : DIV7_LIGHT;
 
   // ---------- formatting
@@ -65,7 +66,7 @@ const Palette = (() => {
                   note: "1 = least deprived · 10 = most deprived (area measure)" },
     home_own_pct: { label: "Home ownership rate (15+)", short: "Home ownership", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
     median_rent: { label: "Median weekly rent (Census 2023)", short: "Median rent (census)", kind: "seq", fmt: fmtDollar, group: "Deprivation & housing" },
-    bond_rent: { label: "Median rent — new bonds (MBIE)", short: "Median rent (bonds)", kind: "seq", fmt: fmtDollar, group: "Deprivation & housing" },
+    bond_rent: { label: "Median rent, new bonds (MBIE)", short: "Median rent (bonds)", kind: "seq", fmt: fmtDollar, group: "Deprivation & housing" },
     flood_pct: { label: "Land in a flood plain %", short: "Flood-plain land", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
     crowded_pct: { label: "Crowded households %", short: "Crowded households", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
     damp_pct: { label: "Damp homes %", short: "Damp homes", kind: "seq", fmt: fmtPct, group: "Deprivation & housing" },
@@ -80,8 +81,18 @@ const Palette = (() => {
     const qs = [1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6].map(q => v[Math.floor(q * (v.length - 1))]);
     const range = v[v.length - 1] - v[0];
     const step = Math.pow(10, Math.floor(Math.log10(range / 6 || 1)));
-    const nice = qs.map(t => Math.round(t / step) * step);
-    return [...new Set(nice)]; // dedupe if data is tight
+    const nice = [...new Set(qs.map(t => Math.round(t / step) * step))]; // dedupe if data is tight
+    if (nice.length === qs.length) return nice;
+    // very skewed data (e.g. region populations, where Auckland dwarfs the
+    // rest) collapses under one shared step: round each break to 2 significant
+    // figures instead so the classes stay distinct
+    const sig2 = t => {
+      if (!t) return 0;
+      const p = Math.pow(10, Math.floor(Math.log10(Math.abs(t))) - 1);
+      return Math.round(t / p) * p;
+    };
+    const alt = [...new Set(qs.map(sig2))];
+    return alt.length > nice.length ? alt : nice;
   }
 
   const DIV_THRESHOLDS = [-10, -5, -1, 1, 5, 10]; // % change bins around 0

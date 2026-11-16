@@ -1,15 +1,25 @@
-/* Bootstrap: load data, wire views, search, theme. */
+/* Bootstrap: load data, wire navigation, search, theme.
+
+   Two levels share one map / panel:
+     "nz"          the 16 regions (+ Chatham Islands) of New Zealand
+     <region slug> the suburbs (SA2s) of one region, loaded on demand
+   The small national bundle (data/nz.json, nz.geojson, index.json) loads up
+   front; each region's files (data/r/<slug>/…) load when you first open it. */
 "use strict";
 
 (async function () {
-  const state = { view: "map", selected: null };
-  let DATA, GEO, EXTRAS = {}, SCHOOLS = {}, byCode;
+  const state = { level: null, selected: null, board: "" };
+  let NZ, NZGEO, INDEX, regionBySlug, ctxNZ;
+  let cur = null;                 // the loaded bundle for the region being shown
+  const bundles = {};             // slug -> Promise<bundle>
+  let mapReady = false, navToken = 0, applyingHash = false;
+  const $ = id => document.getElementById(id);
+  const SITE = "NZ Census";
 
   // ---------------------------------------------------------------- theme
-  const themeBtn = document.getElementById("theme-toggle");
-  themeBtn.addEventListener("click", () => {
-    const cur = Palette.dark();
-    document.documentElement.setAttribute("data-theme", cur ? "light" : "dark");
+  $("theme-toggle").addEventListener("click", () => {
+    const cur_ = Palette.dark();
+    document.documentElement.setAttribute("data-theme", cur_ ? "light" : "dark");
     MapView.refreshTheme();
     Panel.refresh(); // re-ink charts
   });
@@ -18,195 +28,312 @@
   });
 
   // ---------------------------------------------------------------- data
+  const getJSON = url => fetch(url).then(r => {
+    if (!r.ok) throw new Error(url.split("/").pop() + " " + r.status);
+    return r.json();
+  });
+  const optional = url => getJSON(url).catch(() => ({}));
+  const slug = s => s.toLowerCase()
+    .replace(/[āä]/g, "a").replace(/[ēë]/g, "e").replace(/[īï]/g, "i")
+    .replace(/[ōö]/g, "o").replace(/[ūü]/g, "u")
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+  function veil(text) {
+    const el = $("loading");
+    if (text == null) { el.classList.add("hide"); return; }
+    el.textContent = text;
+    el.classList.toggle("soft", mapReady);
+    el.classList.remove("hide");
+  }
+
   try {
-    [DATA, GEO, EXTRAS, SCHOOLS] = await Promise.all([
-      fetch("data/suburbs.json").then(r => { if (!r.ok) throw new Error("suburbs.json " + r.status); return r.json(); }),
-      fetch("data/auckland.geojson").then(r => { if (!r.ok) throw new Error("auckland.geojson " + r.status); return r.json(); }),
-      fetch("data/extras.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
-      fetch("data/schools.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
+    [NZ, NZGEO, INDEX] = await Promise.all([
+      getJSON("data/nz.json"), getJSON("data/nz.geojson"), getJSON("data/index.json"),
     ]);
   } catch (err) {
-    document.getElementById("loading").textContent =
-      "Failed to load data files (" + err.message + "). Run `python3 build.py` first, and serve the site/ directory.";
+    veil("Failed to load data files (" + err.message + "). Run `python3 build.py` first, and serve the docs/ directory.");
     return;
   }
-  byCode = Object.fromEntries(DATA.suburbs.map(s => [s.code, s]));
+  regionBySlug = Object.fromEntries(NZ.regions.map(r => [r.slug, r]));
+  // national search index: every suburb, plus the districts they sit in
+  INDEX = INDEX.map(([name, code, region, board, colloquial]) =>
+    ({ name, code, region, board, colloquial, slug: slug(name) }));
+  const districts = [...new Map(INDEX
+    .filter(x => !x.board.startsWith("Area Outside"))
+    .map(x => [x.region + "|" + x.board, { board: x.board, region: x.region }])).values()];
+
+  // panel context for region profiles: peers = regions, reference = all of NZ
+  ctxNZ = {
+    region: NZ.nz, suburbs: NZ.regions, extras: {}, schools: {}, meta: NZ.meta || {},
+    kind: "region", noun: "region", refName: "New Zealand", refLabel: "NZ",
+    onSelect: s => go({ region: s, profile: true }),
+    onClose: () => {},
+  };
+
+  function loadRegion(s) {
+    if (!bundles[s]) {
+      const rec = regionBySlug[s];
+      const dir = "data/r/" + s + "/";
+      bundles[s] = Promise.all([
+        getJSON(dir + "suburbs.json"), getJSON(dir + "geo.geojson"),
+        optional(dir + "schools.json"),
+        // Wikipedia photos + blurbs exist for Auckland only so far
+        s === "auckland" ? optional("data/extras.json") : Promise.resolve({}),
+      ]).then(([data, geo, schools, extras]) => {
+        const b = {
+          slug: s, rec, geo, suburbs: data.suburbs,
+          byCode: Object.fromEntries(data.suburbs.map(x => [x.code, x])),
+          boards: [...new Set(data.suburbs.map(x => x.board))]
+            .filter(x => !x.startsWith("Area Outside")).sort(),
+        };
+        b.ctx = {
+          region: data.region, suburbs: data.suburbs, extras, schools, meta: NZ.meta || {},
+          kind: "suburb", noun: "suburb", refName: rec.name, refLabel: "Region",
+          boardLabel: rec.board_label,
+          onSelect: code => select(code, true),
+          onClose: () => { state.selected = null; MapView.select(null, false); updateHash(); },
+        };
+        return b;
+      }).catch(err => { delete bundles[s]; throw err; });
+    }
+    return bundles[s];
+  }
+
+  // ---------------------------------------------------------------- levels
+  function showOnMap(geo, opts) {
+    if (mapReady) { MapView.setData(geo, opts); return; }
+    MapView.init(geo, (code, zoom, point) => {
+      if (state.level === "nz") go({ region: code, focus: point });
+      else select(code, "auto");   // zooms in only if the suburb is tiny on screen
+    }, opts);
+    mapReady = true;
+  }
+
+  function enterNZ() {
+    state.level = "nz"; cur = null; state.selected = null; state.board = "";
+    Panel.hide();
+    showOnMap(NZGEO, { exclude: ["chatham-islands"], bold: true,
+                       hint: "Click to explore its suburbs" });
+    syncControls();
+  }
+
+  function enterRegion(b, focus) {
+    state.level = b.slug; cur = b; state.selected = null; state.board = "";
+    Panel.hide();
+    showOnMap(b.geo, { focus });   // focus = where on the NZ map the region was clicked
+    syncControls();
+  }
+
+  /* the one way to move around: {region, suburb, board, metric, profile, focus} */
+  async function go(t) {
+    const my = ++navToken;
+    const target = t.region || "nz";
+    let changed = false;
+    if (target !== state.level) {
+      if (target === "nz") enterNZ();
+      else {
+        veil("Loading " + regionBySlug[target].name + "…");
+        let b;
+        try { b = await loadRegion(target); }
+        catch (err) {
+          if (my === navToken) veil("Couldn’t load " + regionBySlug[target].name + " (" + err.message + ").");
+          return;
+        }
+        if (my !== navToken) return;   // a newer navigation won
+        enterRegion(b, t.focus);
+        veil(null);
+      }
+      changed = true;
+    }
+    if (t.metric) MapView.setMetric(t.metric);
+    if (state.level !== "nz") {
+      const board = t.board || "";
+      if (t.suburb && cur.byCode[t.suburb]) {
+        setBoard(board, false);
+        select(t.suburb, true);
+      } else {
+        if (state.selected) select(null);
+        setBoard(board, !!board || !changed);
+        if (t.profile) showProfile();
+      }
+    }
+    updateHash(changed);
+  }
+
+  function setBoard(board, zoom) {
+    state.board = board;
+    $("board-select").value = board;
+    MapView.zoomToBoard(board || null, zoom);
+  }
+
+  function showProfile() {
+    state.selected = null;
+    MapView.select(null, false);
+    Panel.show(cur.rec, ctxNZ);
+    updateHash();
+  }
 
   // ---------------------------------------------------------------- select
   function select(code, zoom = true) {
     state.selected = code;
     MapView.select(code, zoom);
-    if (code && byCode[code]) Panel.show(byCode[code]);
+    if (code && cur && cur.byCode[code]) Panel.show(cur.byCode[code], cur.ctx);
     else Panel.hide();
+    updateHash();
   }
 
-  Panel.init({
-    region: DATA.region,
-    suburbs: DATA.suburbs,
-    extras: EXTRAS,
-    schools: SCHOOLS,
-    meta: DATA.meta || {},
-    onSelect: code => { setView("map"); select(code, true); },
-    onClose: () => { state.selected = null; MapView.select(null, false); },
-  });
-  MapView.init(GEO, code => select(code, false));
-  Table.init(DATA.suburbs, code => { setView("map"); select(code, true); });
-  renderAbout();
-  document.getElementById("loading").classList.add("hide");
+  // ---------------------------------------------------------------- controls
+  const regionSel = $("region-select");
+  const islands = [...new Set(NZ.regions.map(r => r.island))];
+  regionSel.innerHTML = `<option value="">Choose a region…</option>` +
+    islands.map(isl => `<optgroup label="${isl}">` +
+      NZ.regions.filter(r => r.island === isl)
+        .map(r => `<option value="${r.slug}">${r.name}</option>`).join("") +
+      `</optgroup>`).join("");
 
-  // ---------------------------------------------------------------- tabs
-  function setView(v) {
-    state.view = v;
-    document.querySelectorAll(".tab").forEach(t => {
-      const on = t.dataset.view === v;
-      t.classList.toggle("active", on);
-      t.setAttribute("aria-selected", on);
-    });
-    document.querySelectorAll(".view").forEach(s =>
-      s.classList.toggle("active", s.id === "view-" + v));
-    if (v === "map") MapView.resize();
-    if (v === "table") Table.refresh(); // view was hidden at init: row window was computed at 0 height
+  function syncControls() {
+    const nz = state.level === "nz";
+    regionSel.value = nz ? "" : state.level;
+    $("crumb-nz").disabled = nz;
+    $("nav-hint").hidden = !nz;
+    $("region-profile").hidden = nz;
+    const bSel = $("board-select");
+    const show = !nz && cur.boards.length > 1;
+    bSel.hidden = $("board-sep").hidden = !show;
+    if (show) {
+      bSel.setAttribute("aria-label", cur.rec.board_label);
+      bSel.innerHTML = `<option value="">All of ${cur.rec.name}</option>` +
+        cur.boards.map(b => `<option>${b}</option>`).join("");
+    }
+    document.title = nz ? SITE + ": every suburb in New Zealand, mapped"
+                        : cur.rec.name + " suburbs | " + SITE;
   }
-  window.addEventListener("resize", () => { if (state.view === "table") Table.refresh(); });
-  document.querySelectorAll(".tab").forEach(t =>
-    t.addEventListener("click", () => setView(t.dataset.view)));
+
+  regionSel.addEventListener("change", () => go({ region: regionSel.value || null }));
+  $("crumb-nz").addEventListener("click", () => go({}));
+  $("brand-home").addEventListener("click", e => { e.preventDefault(); go({}); });
+  $("board-select").addEventListener("change", e => setBoard(e.target.value, true));
+  $("region-profile").addEventListener("click", showProfile);
 
   // ---------------------------------------------------------------- search
-  const input = document.getElementById("search-input");
-  const list = document.getElementById("search-results");
+  // one box for the whole country: regions, districts / local boards, suburbs
+  const input = $("search-input");
+  const list = $("search-results");
   let focusIdx = -1, matches = [];
 
+  function findMatches(q) {
+    const out = [];
+    NZ.regions.filter(r => r.name.toLowerCase().includes(q)).slice(0, 3).forEach(r =>
+      out.push({ kind: "Region", label: r.name, hint: r.n_areas + " suburbs",
+                 target: { region: r.slug } }));
+    districts.filter(d => d.board.toLowerCase().includes(q)).slice(0, 4).forEach(d =>
+      out.push({ kind: regionBySlug[d.region].board_label, label: d.board,
+                 hint: regionBySlug[d.region].name,
+                 target: { region: d.region, board: d.board } }));
+    const subs = INDEX.filter(s =>
+      s.name.toLowerCase().includes(q) || (s.colloquial || "").toLowerCase().includes(q));
+    subs.sort((a, b) => a.name.toLowerCase().startsWith(q) === b.name.toLowerCase().startsWith(q)
+      ? 0 : a.name.toLowerCase().startsWith(q) ? -1 : 1);
+    subs.slice(0, 12 - out.length).forEach(s =>
+      out.push({ label: s.name,
+                 hint: (s.colloquial ? s.colloquial + " · " : "") + s.board + " · " + regionBySlug[s.region].name,
+                 target: { region: s.region, suburb: s.code } }));
+    return out;
+  }
   function renderMatches() {
     if (!matches.length) { list.hidden = true; return; }
-    list.innerHTML = matches.map((s, i) =>
-      `<li data-code="${s.code}" class="${i === focusIdx ? "focused" : ""}">${s.name}` +
-      `<span class="hint">${s.colloquial ? s.colloquial + " · " : ""}${s.board}</span></li>`).join("");
+    list.innerHTML = matches.map((m, i) =>
+      `<li data-i="${i}" class="${i === focusIdx ? "focused" : ""}">` +
+      (m.kind ? `<span class="kind">${m.kind}</span>` : "") + m.label +
+      `<span class="hint">${m.hint}</span></li>`).join("");
     list.hidden = false;
   }
-  function choose(code) {
-    list.hidden = true; input.value = byCode[code].name;
-    setView("map"); select(code, true);
+  function choose(m) {
+    list.hidden = true; input.value = m.label;
+    go(m.target);
   }
   input.addEventListener("input", () => {
     const q = input.value.trim().toLowerCase();
     focusIdx = -1;
     if (q.length < 2) { matches = []; list.hidden = true; return; }
-    matches = DATA.suburbs.filter(s =>
-      s.name.toLowerCase().includes(q) || (s.colloquial || "").toLowerCase().includes(q)
-    ).slice(0, 12);
+    matches = findMatches(q);
     renderMatches();
   });
   input.addEventListener("keydown", e => {
     if (e.key === "ArrowDown") { focusIdx = Math.min(focusIdx + 1, matches.length - 1); renderMatches(); e.preventDefault(); }
     else if (e.key === "ArrowUp") { focusIdx = Math.max(focusIdx - 1, 0); renderMatches(); e.preventDefault(); }
-    else if (e.key === "Enter" && matches.length) choose(matches[Math.max(focusIdx, 0)].code);
+    else if (e.key === "Enter" && matches.length) choose(matches[Math.max(focusIdx, 0)]);
     else if (e.key === "Escape") list.hidden = true;
   });
   list.addEventListener("mousedown", e => {
-    const li = e.target.closest("li[data-code]");
-    if (li) choose(li.dataset.code);
+    const li = e.target.closest("li[data-i]");
+    if (li) choose(matches[+li.dataset.i]);
   });
   document.addEventListener("click", e => {
-    if (!document.getElementById("search").contains(e.target)) list.hidden = true;
+    if (!$("search").contains(e.target)) list.hidden = true;
   });
 
-  // ---------------------------------------------------------------- about
-  function renderAbout() {
-    const src = DATA.sources || {};
-    const row = (name, what) => src[name] ? `<tr><td>${what}</td>
-      <td>${src[name].source}</td><td>${src[name].downloaded}</td></tr>` : "";
-    document.getElementById("about-body").innerHTML = `
-      <h2>About the data</h2>
-      <p>This site profiles every <strong>Statistical Area 2 (SA2)</strong> in the Auckland
-      region using 2023 Census data joined to the NZDep2023 Index of Socioeconomic
-      Deprivation. It is a static site — everything you see was produced by a build script
-      (<code>build.py</code>) on the date shown below, with no live queries.</p>
+  // ---------------------------------------------------------------- legal
+  // The one place for everything the licences and the Privacy Act 2020 ask
+  // for: who the data belongs to and what was changed (CC BY 4.0 attribution),
+  // what the figures can't tell you, and what is collected about visitors.
+  // Opened from the "Sources & privacy" link in the map's attribution strip.
+  const CONTACT = "";   // email shown for privacy requests; the line is omitted while empty
 
-      <h3>Sources</h3>
-      <table>
-        <tr><th>Dataset</th><th>Source</th><th>Downloaded</th></tr>
-        ${row("census_sa2_part1.csv", "Census 2023, individuals part 1 (population, age, ethnicity)")}
-        ${row("census_sa2_part2.csv", "Census 2023, individuals part 2 (income, qualifications, home ownership, work, travel)")}
-        ${row("census_sa2_dwellings.csv", "Census 2023, dwellings (damp, mould, dwelling type)")}
-        ${row("census_sa2_households.csv", "Census 2023, households (household income, rent, crowding)")}
-        ${row("geographic_areas_2023.csv", "SA2 → region / local board / SA3 concordance")}
-        ${row("sa2_2023_clipped_generalised.geojson", "SA2 2023 boundaries (generalised, clipped to coastline)")}
-        ${row("NZDep2023_WgtAvSA2.xlsx", "NZDep2023 SA2-level index, University of Otago")}
-        ${row("mbie_bonds_quarterly.csv", "MBIE/Tenancy Services rental bond data (median new-bond rents)")}
-        ${row("schools.csv", "Ministry of Education schools directory + Equity Index")}
-        ${row("consents_sa2.zip", "Stats NZ new dwellings consented by SA2 (monthly)")}
-      </table>
-      <p>Flood-plain shares are computed from Auckland Council's open
-      <a href="https://data-aucklandcouncil.opendata.arcgis.com/">Flood Plains</a> layer as the
-      share of each SA2's coastline-clipped area that intersects modelled flood plains — an
-      <strong>area exposure indicator only</strong>, not a property-level flood assessment.
-      New-bond rents use MBIE's SA2-2019 areas mapped onto 2023 boundaries (a few merged areas
-      share their parent's figure). School Equity Index (EQI): higher = more socioeconomic
-      barriers; school zones don't follow SA2 boundaries. Home values are <strong>not</strong>
-      shown because Auckland Council's bulk rating-valuation data is a paid commercial product —
-      we only publish what's genuinely open.</p>
-      <p>Census tables and boundaries are © Stats NZ, licensed under
-      <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. NZDep2023 is
-      produced by the Department of Public Health, University of Otago, Wellington.
-      Site generated on <strong>${DATA.generated}</strong>.</p>
+  function initLegal() {
+    const dlg = $("legal");
+    const dates = Object.values(NZ.sources || {}).map(s => s.downloaded).filter(Boolean).sort();
+    const by = '<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>';
+    $("legal-body").innerHTML = `
+      <h2>Sources &amp; privacy</h2>
 
-      <h3>SA2s are not quite suburbs</h3>
-      <p>Statistical Area 2 is the Stats NZ geography that most closely approximates suburbs,
-      but the fit is imperfect: <strong>large suburbs are split</strong> across several SA2s
-      (e.g. “Ponsonby East” / “Ponsonby West”), and <strong>some SA2s merge</strong> a few small
-      localities. The official SA2 name is the source of truth everywhere on this site. Where an
-      SA2 belongs to a broader commonly-named area, the “part of” field shows the official
-      <em>SA3</em> name that groups it (e.g. Ponsonby West → Ponsonby) — it is never a guess,
-      and it is blank where no unambiguous grouping exists.</p>
+      <h3>Where the data comes from</h3>
+      <ul>
+        <li><strong>Census 2013, 2018 and 2023, area boundaries, building consents</strong>:
+          <a href="https://www.stats.govt.nz/" target="_blank" rel="noopener">Stats NZ</a>,
+          licensed ${by}.</li>
+        <li><strong>NZDep2023 deprivation index</strong>: Department of Public Health,
+          University of Otago, Wellington.</li>
+        <li><strong>Rents from new bonds</strong>: Tenancy Services, Ministry of Business,
+          Innovation and Employment, ${by}.</li>
+        <li><strong>Schools and Equity Index</strong>: Ministry of Education, ${by}.</li>
+        <li><strong>Flood plains (Auckland)</strong>: Auckland Council open data.</li>
+        <li><strong>Base map</strong>: ©
+          <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>
+          contributors, via OpenMapTiles and OpenFreeMap.</li>
+        <li><strong>Photos and descriptions</strong>: Wikipedia (CC BY-SA 4.0) and Wikimedia
+          Commons; each photo credits its author and licence.</li>
+      </ul>
+      <p>This site has adapted that data: percentages, regional totals and regional medians are
+      our own calculations, and boundaries are simplified. It is an independent project, not
+      produced or endorsed by Stats NZ or any other source.
+      ${dates.length ? `Data downloaded ${dates[0]}${dates[dates.length - 1] !== dates[0] ? " to " + dates[dates.length - 1] : ""}.` : ""}</p>
 
-      <h3>Ethnicity is multi-response</h3>
-      <p>People can and do identify with more than one ethnic group, so the six group shares
-      <strong>intentionally sum to more than 100%</strong>. Shares are calculated against the
-      number of people who <em>stated</em> an ethnicity. They are never normalised to 100%, and
-      ethnicity is never shown as a pie chart, because the groups overlap.</p>
+      <h3>Reading the figures</h3>
+      <p>General information only, not financial, property or legal advice, and provided
+      without warranty. Areas are Stats NZ “SA2” statistical areas, which only approximate
+      suburbs. Census counts are randomly rounded by Stats NZ, and “S” marks figures it has
+      suppressed. Regional medians and regional deprivation scores are estimates built from
+      the areas inside each region. Flood-plain shares show how much of an area's land is in a
+      modelled flood plain; they say nothing about any individual property.</p>
 
-      <h3>Random rounding &amp; suppression</h3>
-      <p>Stats NZ applies <strong>fixed random rounding to base 3</strong> to all census counts
-      to protect confidentiality. Small-area figures therefore may not add up to published
-      totals — this is by design and has not been “corrected”. Cells that Stats NZ suppresses
-      entirely appear as <strong>“S”</strong> and are never interpolated or estimated. A handful
-      of water-only SA2s (inlets, oceanic areas) appear in the table but not on the map, because
-      the coastline-clipped boundary file has no land to draw for them.</p>
-
-      <h3>Reading NZDep2023 the right way round</h3>
-      <p>NZDep2023 deciles run from <strong>1 = least deprived</strong> to
-      <strong>10 = most deprived</strong>. Deciles are national: a decile-10 area is among the
-      most deprived 10% of small areas in New Zealand. NZDep measures the socioeconomic position
-      of an <strong>area</strong>, not of any individual living there. The SA2-level file used
-      here (<code>NZDep2023_WgtAvSA2</code>) is Otago’s population-weighted average of SA1
-      scores; non-residential areas have no score.</p>
-
-      <h3>Photos &amp; descriptions</h3>
-      <p>Suburb photos and the one-line descriptions come from
-      <a href="https://en.wikipedia.org/">Wikipedia</a> (text CC BY-SA 4.0) and
-      <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> (each photo's author and
-      licence are credited on the image and link to the source). Articles are matched to SA2s
-      by name and validated by coordinates inside the Auckland region; where a broader suburb
-      article covers several SA2s (e.g. “Ponsonby” for Ponsonby East and West) the same
-      description is shown for each. Areas with no confident match get a plain data-derived
-      line instead — descriptions are never invented. Census years shown as 2013/2018/2023 use
-      each census's own questions; “own or partly own” had no separate family-trust option
-      in 2013, and the travel-to-work question changed after 2018, so 2023 travel figures
-      aren't shown for earlier years.</p>
-
-      <h3>Other definitions</h3>
-      <p>Population is the census usually resident population. Income, qualifications and home
-      ownership are for people aged 15+; “owns home” includes homes held in a family trust;
-      qualification shares are of people who stated one. Regional medians (age, income) are
-      population-weighted medians of SA2 medians, because Stats NZ does not publish region-level
-      medians in this dataset. The University of Otago website blocks automated downloads, so the
-      build fetches NZDep2023 from the Internet Archive’s capture of the official file when the
-      direct download is refused — the file is byte-identical to Otago’s release of 31 October 2024.</p>
-
-      <h3>Colour scales</h3>
-      <p>Continuous metrics use a single-hue blue scale (light = low, dark = high — reversed in
-      dark mode so low values recede). Population change uses a blue↔red diverging scale with a
-      neutral midpoint at zero. No red-green pairings are used anywhere.</p>`;
+      <h3>Privacy</h3>
+      <p>There are no accounts or forms here and we don't ask for your name or contact details.
+      We use Google Analytics (loaded through Google Tag Manager) to count visits. It sets
+      cookies and collects usage information such as the pages viewed, your approximate
+      location (from your IP address) and your device and browser type. Google holds this for
+      us, possibly on servers outside New Zealand, and we use it only as overall visitor
+      statistics. You can block it with your browser's cookie or tracking settings or Google's
+      <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">opt-out add-on</a>;
+      the site works the same without it. Map tiles and photos load from OpenFreeMap and
+      Wikimedia, which see your IP address as any website does.</p>
+      <p>Under the Privacy Act 2020 you can ask what information is held about you and ask for
+      it to be corrected${CONTACT ? `. Email <a href="mailto:${CONTACT}">${CONTACT}</a>` : ""}.</p>`;
+    document.addEventListener("click", e => {
+      if (e.target.closest("[data-legal]")) { e.preventDefault(); dlg.showModal(); }
+      else if (e.target === dlg) dlg.close();          // click on the backdrop
+    });
+    $("legal-close").addEventListener("click", () => dlg.close());
   }
 
   // keyboard: Escape closes panel
@@ -215,44 +342,60 @@
   });
 
   // ------------------------------------------------ shareable URLs
-  // #takanini-north            -> that suburb selected + zoomed
-  // #takanini-north/median_rent -> plus that choropleth metric
-  // #m/median_rent              -> metric only, nothing selected
-  const slug = s => s.toLowerCase()
-    .replace(/[āä]/g, "a").replace(/[ēë]/g, "e").replace(/[īï]/g, "i")
-    .replace(/[ōö]/g, "o").replace(/[ūü]/g, "u")
-    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  const codeBySlug = Object.fromEntries(DATA.suburbs.map(s => [slug(s.name), s.code]));
-  let applyingHash = false;
-
-  function updateHash() {
-    if (applyingHash) return;
+  // #canterbury                         -> that region's suburbs
+  // #canterbury/riccarton               -> that suburb selected + zoomed
+  // #canterbury/riccarton/median_rent   -> plus that choropleth metric
+  // #canterbury/m/median_rent           -> region + metric, nothing selected
+  // #m/median_rent                      -> all of NZ, that metric
+  // #takanini-north[/metric]            -> old Auckland-era links still resolve
+  function currentHash() {
     const m = MapView.getMetric();
     const parts = [];
-    if (state.selected && byCode[state.selected]) parts.push(slug(byCode[state.selected].name));
-    if (m !== "pop2023") parts.push(state.selected ? m : "m/" + m);
-    const h = parts.length ? "#" + parts.join("/") : "";
-    if (h !== location.hash) history.replaceState(null, "", h || location.pathname);
+    if (state.level !== "nz") parts.push(state.level);
+    const sel = state.selected && cur && cur.byCode[state.selected];
+    if (sel) parts.push(slug(sel.name));
+    if (m !== "pop2023") parts.push(...(sel ? [m] : ["m", m]));
+    return parts.length ? "#" + parts.join("/") : "";
   }
 
-  function applyHash() {
-    const h = decodeURIComponent(location.hash.replace(/^#/, ""));
-    if (!h) return;
-    applyingHash = true;
-    const parts = h.split("/");
-    if (parts[0] === "m" && parts[1]) {
-      MapView.setMetric(parts[1]);
-    } else {
-      const code = codeBySlug[parts[0]];
-      if (code) { setView("map"); select(code, true); }
-      if (parts[1]) MapView.setMetric(parts[1]);
+  function updateHash(push) {
+    if (applyingHash || !state.level) return;
+    const h = currentHash();
+    if (h === location.hash) return;
+    history[push ? "pushState" : "replaceState"](null, "", h || location.pathname + location.search);
+  }
+
+  function parseHash() {
+    let raw = location.hash.replace(/^#/, "");
+    try { raw = decodeURIComponent(raw); } catch (e) { /* keep raw */ }
+    const parts = raw.split("/").filter(Boolean);
+    const t = {};
+    let rest = parts;
+    if (parts[0] && regionBySlug[parts[0]]) { t.region = parts[0]; rest = parts.slice(1); }
+    if (rest[0] === "m") { t.metric = rest[1]; return t; }
+    if (rest[0]) {
+      const hit = INDEX.find(x => x.slug === rest[0] && (!t.region || x.region === t.region));
+      if (hit) { t.region = hit.region; t.suburb = hit.code; }
+      if (rest[1]) t.metric = rest[1];
     }
-    applyingHash = false;
+    return t;
   }
 
-  const origSelect = select;
-  select = function (code, zoom = true) { origSelect(code, zoom); updateHash(); };
-  document.addEventListener("metricchange", updateHash);
+  async function applyHash() {
+    if (state.level && location.hash === currentHash()) return;
+    const t = parseHash();
+    if (!t.metric) t.metric = "pop2023";
+    applyingHash = true;
+    try { await go(t); } finally { applyingHash = false; }
+    updateHash(false);   // canonicalise (e.g. old #suburb links gain their region)
+  }
+
+  // ---------------------------------------------------------------- start
+  Panel.init();
+  initLegal();
+  document.addEventListener("metricchange", () => updateHash(false));
   window.addEventListener("hashchange", applyHash);
-  applyHash();
+  window.addEventListener("popstate", applyHash);
+  await applyHash();
+  if (state.level) veil(null);
 })();

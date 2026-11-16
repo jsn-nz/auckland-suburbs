@@ -183,8 +183,9 @@ DIRECTIONAL = re.compile(
 
 
 def main():
-    data = json.loads((ROOT / "docs" / "data" / "suburbs.json").read_text())
-    cents = centroids(ROOT / "docs" / "data" / "auckland.geojson")
+    # Auckland only for now: the matching rules are tuned to Auckland place names
+    data = json.loads((ROOT / "docs" / "data" / "r" / "auckland" / "suburbs.json").read_text())
+    cents = centroids(ROOT / "docs" / "data" / "r" / "auckland" / "geo.geojson")
     extras = {}
     n_desc = n_img = 0
     for i, s in enumerate(data["suburbs"]):

@@ -461,7 +461,7 @@ def read_bonds(path):
 
 
 def read_schools(path):
-    """MoE directory -> {sa2_code: [school, ...]} for the Auckland region."""
+    """MoE directory -> {sa2_code: [school, ...]} for every SA2 in NZ."""
     from collections import defaultdict
     with open(path, encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
@@ -471,8 +471,6 @@ def read_schools(path):
         die("schools directory schema changed: %s" % sorted(rows[0])[:20])
     out = defaultdict(list)
     for r in rows:
-        if r["Regional_Council"] != "Auckland Region":
-            continue
         eqi, roll = (r["EQi_Index"] or "").strip(), (r["Total"] or "").strip()
         out[r["Statistical_Area_2_Code"]].append({
             "name": r["Org_Name"], "type": r["Org_Type"], "authority": r["Authority"],
@@ -556,6 +554,41 @@ def flood_pcts(akl_codes):
     return out
 
 
+# ---------------------------------------------------------------- regions
+
+# (concordance name, display name, island) in north -> south order
+REGIONS = [
+    ("Northland Region", "Northland", "North Island"),
+    ("Auckland Region", "Auckland", "North Island"),
+    ("Waikato Region", "Waikato", "North Island"),
+    ("Bay of Plenty Region", "Bay of Plenty", "North Island"),
+    ("Gisborne Region", "Gisborne", "North Island"),
+    ("Hawke's Bay Region", "Hawke's Bay", "North Island"),
+    ("Taranaki Region", "Taranaki", "North Island"),
+    ("Manawatū-Whanganui Region", "Manawatū-Whanganui", "North Island"),
+    ("Wellington Region", "Wellington", "North Island"),
+    ("Tasman Region", "Tasman", "South Island"),
+    ("Nelson Region", "Nelson", "South Island"),
+    ("Marlborough Region", "Marlborough", "South Island"),
+    ("West Coast Region", "West Coast", "South Island"),
+    ("Canterbury Region", "Canterbury", "South Island"),
+    ("Otago Region", "Otago", "South Island"),
+    ("Southland Region", "Southland", "South Island"),
+    ("Chatham Islands", "Chatham Islands", "Islands"),
+]
+
+SIMPLIFY_SA2 = "15%"     # suburb boundaries
+SIMPLIFY_REGION = "1.5%"  # dissolved region outlines for the national map
+
+
+def slugify(name):
+    import re
+    import unicodedata
+    s = unicodedata.normalize("NFKD", name.replace("'", "").replace("’", ""))
+    s = "".join(ch for ch in s if not unicodedata.combining(ch)).lower()
+    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+
+
 # ---------------------------------------------------------------- derive
 
 
@@ -605,17 +638,33 @@ def build():
     schools = read_schools(RAW / "schools.csv")
     consents, consents_label = read_consents(RAW / "consents_sa2.zip")
 
-    akl_codes = sorted(c for c, g in geo.items() if g["region"] == "Auckland Region")
+    # every SA2 gets a region. "Area Outside Region" is the Chatham Islands
+    # plus oceanic SA2s with no land or people: keep the former as its own
+    # pseudo-region, drop the latter.
+    region_of = {}
+    for c, g in geo.items():
+        if g["region"] == "Area Outside Region":
+            if g["board"] == "Chatham Islands Territory":
+                region_of[c] = "Chatham Islands"
+        else:
+            region_of[c] = g["region"]
+    unknown = sorted(set(region_of.values()) - {r[0] for r in REGIONS})
+    if unknown:
+        die("unexpected region names in the concordance: %s" % unknown)
+    all_codes = sorted(region_of)
+    akl_codes = [c for c in all_codes if region_of[c] == "Auckland Region"]
     if not 500 <= len(akl_codes) <= 700:
         die("expected roughly 500-700 Auckland SA2s, got %d - concordance filter "
             "looks wrong" % len(akl_codes))
-    print("Auckland region SA2s: %d" % len(akl_codes))
-    print("computing flood-plain coverage per SA2 (cached after first run)")
+    if not 2200 <= len(all_codes) <= 2600:
+        die("expected roughly 2,400 SA2s nationally, got %d" % len(all_codes))
+    print("SA2s: %d nationally, %d in Auckland" % (len(all_codes), len(akl_codes)))
+    print("computing flood-plain coverage per SA2 (Auckland only; cached after first run)")
     flood = flood_pcts(set(akl_codes))
 
-    missing = [c for c in akl_codes if c not in p1 or c not in p2]
+    missing = [c for c in all_codes if c not in p1 or c not in p2]
     if missing:
-        die("%d Auckland SA2s missing from census layers, e.g. %s" %
+        die("%d SA2s missing from census layers, e.g. %s" %
             (len(missing), missing[:5]))
 
     def sum_(*vals):
@@ -673,7 +722,7 @@ def build():
     ]
 
     suburbs = []
-    for code in akl_codes:
+    for code in all_codes:
         a, b, g = p1[code], p2[code], geo[code]
         c3 = p3.get(code, {})
         c4 = p4.get(code, {})
@@ -755,7 +804,7 @@ def build():
         cons = consents.get(code)
         s["consents_12m"] = cons["units"] if cons else 0
         s["consents_rate"] = pct(s["consents_12m"], c3.get("VAR_3_80"))
-        s["flood_pct"] = flood.get(code)
+        s["flood_pct"] = flood.get(code)   # None outside Auckland (no national layer)
         s["n_schools"] = len(schools.get(code, []))
         suburbs.append(s)
 
@@ -763,140 +812,159 @@ def build():
     print("SA2s with an NZDep2023 decile: %d / %d (rest are non-residential "
           "areas such as inlets/islands/ports)" % (n_dep, len(suburbs)))
 
-    # ---- regional reference values (aggregated from the Auckland SA2 rows)
-    def total(key_fn):
-        vals = [key_fn(s) for s in suburbs]
-        return sum(v for v in vals if v is not None)
+    # ---- aggregates: each region and the whole country, in the same shape as
+    # a suburb record so the site can treat a region as just another area
+    def aggregate(subs, code, name):
+        def total(key_fn):
+            return sum(v for v in (key_fn(s) for s in subs) if v is not None)
 
-    reg_pop23 = total(lambda s: s["pop2023"])
-    reg_pop18 = total(lambda s: s["pop2018"])
-    reg_eth_stated = total(lambda s: s["eth_stated"])
-    reg_age_total = total(lambda s: sum(a["n"] for a in s["age"].values())
+        def agg_pct(metric_key, num_fn, den_fn):
+            # sum numerators/denominators over the SA2s where the suburb-level
+            # share could be computed
+            num = den = 0
+            for s in subs:
+                if s[metric_key] is None:
+                    continue
+                num += num_fn(s["code"])
+                den += den_fn(s["code"])
+            return pct(num, den)
+
+        pop23 = total(lambda s: s["pop2023"])
+        pop18 = total(lambda s: s["pop2018"])
+        eth_stated = total(lambda s: s["eth_stated"])
+        age_total = total(lambda s: sum(a["n"] for a in s["age"].values())
                           if all(a["n"] is not None for a in s["age"].values()) else None)
-    region = {
-        "pop2023": reg_pop23,
-        "pop_change_pct": pct(reg_pop23 - reg_pop18, reg_pop18),
-        # population-weighted median of SA2 medians (no region-level medians
-        # are published in this dataset) - labelled as derived in the UI
-        "median_age": weighted_median([(s["median_age"], s["pop2023"]) for s in suburbs]),
-        "median_income": weighted_median([(s["median_income"], s["pop2023"]) for s in suburbs]),
-        "ethnicity": {k: pct(total(lambda s, k=k: s["ethnicity"][k]["n"]), reg_eth_stated)
-                      for k in ("European", "Māori", "Pacific", "Asian", "MELAA", "Other")},
-        "age": {k: pct(total(lambda s, k=k: s["age"][k]["n"]), reg_age_total)
-                for k in ("0-14", "15-29", "30-64", "65+")},
-        "bachelor_pct": pct(
-            sum(p2[s["code"]]["VAR_2_245"] + p2[s["code"]]["VAR_2_246"] +
-                p2[s["code"]]["VAR_2_247"] + p2[s["code"]]["VAR_2_248"]
-                for s in suburbs if s["bachelor_pct"] is not None),
-            sum(p2[s["code"]]["VAR_2_252"] for s in suburbs
-                if s["bachelor_pct"] is not None)),
-        "home_own_pct": pct(
-            sum((p2[s["code"]]["VAR_2_13"] or 0) + p2[s["code"]]["VAR_2_14"]
-                for s in suburbs if s["home_own_pct"] is not None),
-            sum(p2[s["code"]]["VAR_2_18"] for s in suburbs
-                if s["home_own_pct"] is not None)),
-    }
 
-    # regional shares for the new topics: sum numerators/denominators over the
-    # SA2s where the suburb-level share could be computed
-    def agg_pct(metric_key, num_fn, den_fn):
-        num = den = 0
-        for s in suburbs:
-            if s[metric_key] is None:
-                continue
-            num += num_fn(s["code"])
-            den += den_fn(s["code"])
-        return pct(num, den)
+        # per category: aggregate over the SA2s where that category + the
+        # denominator are both published (suppression differs per category)
+        travel = {}
+        for label, cols in TRAVEL:
+            num = den = 0
+            for s in subs:
+                vals = [p2[s["code"]][c] for c in cols]
+                stated = p2[s["code"]]["VAR_2_786"]
+                if stated is None or any(v is None for v in vals):
+                    continue
+                num += sum(vals)
+                den += stated
+            travel[label] = {"n": num, "pct": pct(num, den)}
 
-    # per category: aggregate over the SA2s where that category + the
-    # denominator are both published (suppression differs per category)
-    region["travel"] = {}
-    for label, cols in TRAVEL:
-        num = den = 0
-        for s in suburbs:
-            vals = [p2[s["code"]][c] for c in cols]
-            stated = p2[s["code"]]["VAR_2_786"]
-            if stated is None or any(v is None for v in vals):
-                continue
-            num += sum(vals)
-            den += stated
-        region["travel"][label] = pct(num, den)
-    region["unemployment_pct"] = agg_pct(
-        "unemployment_pct", lambda c: p2[c]["VAR_2_431"],
-        lambda c: p2[c]["VAR_2_429"] + p2[c]["VAR_2_430"] + p2[c]["VAR_2_431"])
-    region["overseas_born_pct"] = agg_pct(
-        "overseas_born_pct", lambda c: p1[c]["VAR_1_96"], lambda c: p1[c]["VAR_1_99"])
-    region["te_reo_pct"] = agg_pct(
-        "te_reo_pct", lambda c: p1[c]["VAR_1_206"], lambda c: p1[c]["VAR_1_213"])
-    region["samoan_pct"] = agg_pct(
-        "samoan_pct", lambda c: p1[c]["VAR_1_207"], lambda c: p1[c]["VAR_1_213"])
-    region["same_home_5y_pct"] = agg_pct(
-        "same_home_5y_pct", lambda c: p2[c]["VAR_2_61"], lambda c: p2[c]["VAR_2_71"])
-    region["damp_pct"] = agg_pct(
-        "damp_pct", lambda c: p3[c]["VAR_3_29"] + p3[c]["VAR_3_30"],
-        lambda c: p3[c]["VAR_3_34"])
-    region["mould_pct"] = agg_pct(
-        "mould_pct", lambda c: p3[c]["VAR_3_41"] + p3[c]["VAR_3_42"],
-        lambda c: p3[c]["VAR_3_46"])
-    region["separate_house_pct"] = agg_pct(
-        "separate_house_pct", lambda c: p3[c]["VAR_3_82"], lambda c: p3[c]["VAR_3_80"])
-    region["crowded_pct"] = agg_pct(
-        "crowded_pct", lambda c: p4[c]["VAR_4_48"], lambda c: p4[c]["VAR_4_57"])
-    # weighted medians of SA2 medians (weight = households with a stated value,
-    # approximated by the crowding/rent "total stated" counts)
-    region["median_hh_income"] = weighted_median(
-        [(s["median_hh_income"], p4.get(s["code"], {}).get("VAR_4_57")) for s in suburbs])
-    region["median_rent"] = weighted_median(
-        [(s["median_rent"], p4.get(s["code"], {}).get("VAR_4_260")) for s in suburbs])
-    region["bond_rent"] = weighted_median(
-        [(s["bond_rent"], s["bond_active"]) for s in suburbs])
-    region["consents_12m"] = sum(s["consents_12m"] for s in suburbs)
-    region["consents_rate"] = pct(
-        sum(s["consents_12m"] for s in suburbs if s["consents_rate"] is not None),
-        sum(p3[s["code"]]["VAR_3_80"] for s in suburbs
-            if s["consents_rate"] is not None and p3.get(s["code"], {}).get("VAR_3_80")))
-    region["flood_pct"] = flood.get("_region")
-    # historical regional references for the time toggle
-    region["hist"] = {}
-    for year in ("2013", "2018"):
-        eb, ab = ETH_BASE[year], AGE_BASE[year]
-        eth_stated_y = sum(p1[s["code"]]["VAR_1_%d" % (eb + 10)] or 0 for s in suburbs)
-        age_tot_y = sum(p1[s["code"]]["VAR_1_%d" % (ab + 4)] or 0 for s in suburbs)
-        region["hist"][year] = {
-            "median_age": weighted_median(
-                [(s["hist"][year]["median_age"], s["hist"][year]["pop"]) for s in suburbs]),
+        hist = {}
+        for year in ("2013", "2018"):
+            eb, ab = ETH_BASE[year], AGE_BASE[year]
+            eth_stated_y = sum(p1[s["code"]]["VAR_1_%d" % (eb + 10)] or 0 for s in subs)
+            age_tot_y = sum(p1[s["code"]]["VAR_1_%d" % (ab + 4)] or 0 for s in subs)
+            hist[year] = {
+                "pop": total(lambda s: s["hist"][year]["pop"]),
+                "median_age": weighted_median(
+                    [(s["hist"][year]["median_age"], s["hist"][year]["pop"]) for s in subs]),
+                "median_income": weighted_median(
+                    [(s["hist"][year]["median_income"], s["hist"][year]["pop"]) for s in subs]),
+                "home_own_pct": pct(
+                    sum((p2[s["code"]]["VAR_2_%d" % OWN_BASE[year]] or 0) +
+                        (p2[s["code"]]["VAR_2_%d" % (OWN_BASE[year] + 1)] or 0) for s in subs),
+                    sum(p2[s["code"]]["VAR_2_%d" % (OWN_BASE[year] + 5)] or 0 for s in subs)),
+                "bachelor_pct": pct(
+                    sum(sum(p2[s["code"]]["VAR_2_%d" % (QUAL_BASE[year] + o)] or 0
+                            for o in (7, 8, 9, 10)) for s in subs),
+                    sum(p2[s["code"]]["VAR_2_%d" % (QUAL_BASE[year] + 14)] or 0 for s in subs)),
+                "ethnicity": {k: pct(
+                    sum(p1[s["code"]]["VAR_1_%d" % (eb + i)] or 0 for s in subs), eth_stated_y)
+                    for i, k in enumerate(ETH_KEYS)},
+                "age": {k: pct(
+                    sum(p1[s["code"]]["VAR_1_%d" % (ab + i)] or 0 for s in subs), age_tot_y)
+                    for i, k in enumerate(AGE_KEYS)},
+            }
+
+        # NZDep is published per small area, not per region: the regional
+        # figure is the population-weighted average of its SA2s (flagged in the UI)
+        dep = [(s["dep_decile"], s["dep_score"], s["pop2023"]) for s in subs
+               if s["dep_decile"] is not None and s["pop2023"]]
+        dep_w = sum(w for _, _, w in dep)
+
+        return {
+            "code": code,
+            "name": name,
+            "board": "",
+            "colloquial": "",
+            "n_areas": len(subs),
+            "pop2023": pop23,
+            "pop2018": pop18,
+            "pop_change_pct": pct(pop23 - pop18, pop18),
+            # population-weighted median of SA2 medians (no region-level medians
+            # are published in this dataset) - labelled as derived in the UI
+            "median_age": weighted_median([(s["median_age"], s["pop2023"]) for s in subs]),
+            "age": {k: {"n": total(lambda s, k=k: s["age"][k]["n"]),
+                        "pct": pct(total(lambda s, k=k: s["age"][k]["n"]), age_total)}
+                    for k in AGE_KEYS},
+            "ethnicity": {k: {"n": total(lambda s, k=k: s["ethnicity"][k]["n"]),
+                              "pct": pct(total(lambda s, k=k: s["ethnicity"][k]["n"]),
+                                         eth_stated)}
+                          for k in ETH_KEYS},
+            "eth_stated": eth_stated,
             "median_income": weighted_median(
-                [(s["hist"][year]["median_income"], s["hist"][year]["pop"]) for s in suburbs]),
-            "home_own_pct": pct(
-                sum((p2[s["code"]]["VAR_2_%d" % OWN_BASE[year]] or 0) +
-                    (p2[s["code"]]["VAR_2_%d" % (OWN_BASE[year] + 1)] or 0) for s in suburbs),
-                sum(p2[s["code"]]["VAR_2_%d" % (OWN_BASE[year] + 5)] or 0 for s in suburbs)),
+                [(s["median_income"], s["pop2023"]) for s in subs]),
             "bachelor_pct": pct(
-                sum(sum(p2[s["code"]]["VAR_2_%d" % (QUAL_BASE[year] + o)] or 0
-                        for o in (7, 8, 9, 10)) for s in suburbs),
-                sum(p2[s["code"]]["VAR_2_%d" % (QUAL_BASE[year] + 14)] or 0 for s in suburbs)),
-            "ethnicity": {k: pct(
-                sum(p1[s["code"]]["VAR_1_%d" % (eb + i)] or 0 for s in suburbs), eth_stated_y)
-                for i, k in enumerate(ETH_KEYS)},
-            "age": {k: pct(
-                sum(p1[s["code"]]["VAR_1_%d" % (ab + i)] or 0 for s in suburbs), age_tot_y)
-                for i, k in enumerate(AGE_KEYS)},
+                sum(p2[s["code"]]["VAR_2_245"] + p2[s["code"]]["VAR_2_246"] +
+                    p2[s["code"]]["VAR_2_247"] + p2[s["code"]]["VAR_2_248"]
+                    for s in subs if s["bachelor_pct"] is not None),
+                sum(p2[s["code"]]["VAR_2_252"] for s in subs
+                    if s["bachelor_pct"] is not None)),
+            "home_own_pct": pct(
+                sum((p2[s["code"]]["VAR_2_13"] or 0) + p2[s["code"]]["VAR_2_14"]
+                    for s in subs if s["home_own_pct"] is not None),
+                sum(p2[s["code"]]["VAR_2_18"] for s in subs
+                    if s["home_own_pct"] is not None)),
+            "dep_decile": int(round(sum(d * w for d, _, w in dep) / dep_w)) if dep_w else None,
+            "dep_score": int(round(sum(sc * w for _, sc, w in dep) / dep_w)) if dep_w else None,
+            "dep_avg": True,
+            "pop2013": total(lambda s: s["pop2013"]),
+            "hist": hist,
+            "travel": travel,
+            "unemployment_pct": agg_pct(
+                "unemployment_pct", lambda c: p2[c]["VAR_2_431"],
+                lambda c: p2[c]["VAR_2_429"] + p2[c]["VAR_2_430"] + p2[c]["VAR_2_431"]),
+            "overseas_born_pct": agg_pct(
+                "overseas_born_pct", lambda c: p1[c]["VAR_1_96"], lambda c: p1[c]["VAR_1_99"]),
+            "te_reo_pct": agg_pct(
+                "te_reo_pct", lambda c: p1[c]["VAR_1_206"], lambda c: p1[c]["VAR_1_213"]),
+            "samoan_pct": agg_pct(
+                "samoan_pct", lambda c: p1[c]["VAR_1_207"], lambda c: p1[c]["VAR_1_213"]),
+            "same_home_5y_pct": agg_pct(
+                "same_home_5y_pct", lambda c: p2[c]["VAR_2_61"], lambda c: p2[c]["VAR_2_71"]),
+            "damp_pct": agg_pct(
+                "damp_pct", lambda c: p3[c]["VAR_3_29"] + p3[c]["VAR_3_30"],
+                lambda c: p3[c]["VAR_3_34"]),
+            "mould_pct": agg_pct(
+                "mould_pct", lambda c: p3[c]["VAR_3_41"] + p3[c]["VAR_3_42"],
+                lambda c: p3[c]["VAR_3_46"]),
+            "separate_house_pct": agg_pct(
+                "separate_house_pct", lambda c: p3[c]["VAR_3_82"], lambda c: p3[c]["VAR_3_80"]),
+            "crowded_pct": agg_pct(
+                "crowded_pct", lambda c: p4[c]["VAR_4_48"], lambda c: p4[c]["VAR_4_57"]),
+            # weighted medians of SA2 medians (weight = households with a stated
+            # value, approximated by the crowding/rent "total stated" counts)
+            "median_hh_income": weighted_median(
+                [(s["median_hh_income"], p4.get(s["code"], {}).get("VAR_4_57")) for s in subs]),
+            "median_rent": weighted_median(
+                [(s["median_rent"], p4.get(s["code"], {}).get("VAR_4_260")) for s in subs]),
+            "bond_rent": weighted_median([(s["bond_rent"], s["bond_active"]) for s in subs]),
+            "bond_active": total(lambda s: s["bond_active"]),
+            "consents_12m": sum(s["consents_12m"] for s in subs),
+            "consents_rate": pct(
+                sum(s["consents_12m"] for s in subs if s["consents_rate"] is not None),
+                sum(p3[s["code"]]["VAR_3_80"] for s in subs
+                    if s["consents_rate"] is not None
+                    and p3.get(s["code"], {}).get("VAR_3_80"))),
+            "flood_pct": None,
+            "n_schools": sum(s["n_schools"] for s in subs),
+            "on_map": True,
         }
 
-    OUT.mkdir(parents=True, exist_ok=True)
-
-    # ---- geometry: filter to Auckland, attach core metrics, simplify
-    print("filtering boundaries + attaching choropleth metrics")
-    fc = json.loads((RAW / "sa2_2023_clipped_generalised.geojson").read_text())
-    by_code = {s["code"]: s for s in suburbs}
-    feats = []
-    for f in fc["features"]:
-        code = f["properties"].get("SA22023_V1_00")
-        s = by_code.get(code)
-        if s is None:
-            continue
-        f["properties"] = {
-            "code": code, "name": s["name"], "board": s["board"],
+    def geo_props(s):
+        """choropleth properties for one area (suburb or region record)."""
+        return {
+            "code": s["code"], "name": s["name"], "board": s["board"],
             "dep_decile": s["dep_decile"], "median_age": s["median_age"],
             "median_income": s["median_income"], "pop2023": s["pop2023"],
             "pop_change_pct": s["pop_change_pct"], "home_own_pct": s["home_own_pct"],
@@ -922,60 +990,140 @@ def build():
             "consents_rate": s["consents_rate"],
             "flood_pct": s["flood_pct"],
         }
+
+    by_code = {s["code"]: s for s in suburbs}
+    slug_of = {full: slugify(disp) for full, disp, _ in REGIONS}
+    subs_by_region = {full: [] for full, _, _ in REGIONS}
+    for s in suburbs:
+        subs_by_region[region_of[s["code"]]].append(s)
+
+    regions = []
+    for full, disp, island in REGIONS:
+        subs = subs_by_region[full]
+        if not subs:
+            die("region %s has no SA2s - concordance changed?" % full)
+        rec = aggregate(subs, slug_of[full], disp)
+        rec.update({
+            "slug": slug_of[full], "island": island,
+            # the level below a region: local boards in Auckland, councils elsewhere
+            "board_label": "Local board" if full == "Auckland Region" else "District",
+        })
+        if full == "Auckland Region":
+            rec["flood_pct"] = flood.get("_region")
+        regions.append(rec)
+    nz = aggregate(suburbs, "nz", "New Zealand")
+    print("regions: %d · national population %s" % (len(regions), format(nz["pop2023"], ",")))
+
+    # ---- geometry: attach core metrics, simplify, split per region
+    print("attaching choropleth metrics to boundaries")
+    fc = json.loads((RAW / "sa2_2023_clipped_generalised.geojson").read_text())
+    feats = []
+    for f in fc["features"]:
+        s = by_code.get(f["properties"].get("SA22023_V1_00"))
+        if s is None:
+            continue
+        f["properties"] = {**geo_props(s), "region": slug_of[region_of[s["code"]]]}
         feats.append(f)
     have = {f["properties"]["code"] for f in feats}
     no_geom = [s for s in suburbs if s["code"] not in have]
     # The clipped boundary layer intentionally drops SA2s that are entirely
-    # water (inlets/oceanic/bays). Those stay in suburbs.json but can't be
+    # water (inlets/oceanic/bays). Those stay in the tables but can't be
     # drawn. Anything populated going missing means the wrong layer.
     bad = [s for s in no_geom if (s["pop2023"] or 0) > 100]
     if bad:
-        die("boundary file is missing populated Auckland SA2s: %s - wrong "
-            "boundary layer?" % [(s["code"], s["name"]) for s in bad])
+        die("boundary file is missing populated SA2s: %s - wrong boundary layer?"
+            % [(s["code"], s["name"]) for s in bad])
     for s in suburbs:
         s["on_map"] = s["code"] in have
     if no_geom:
-        print("  %d water-only SA2s have no clipped geometry (kept in table, "
-              "not on map): %s" % (len(no_geom),
-              ", ".join(s["name"] for s in no_geom)))
+        print("  %d water-only SA2s have no clipped geometry (kept in tables, "
+              "not on the map)" % len(no_geom))
 
-    (OUT / "suburbs.json").write_text(json.dumps({
+    OUT.mkdir(parents=True, exist_ok=True)
+    pre = OUT / "_all_full.geojson"
+    pre.write_text(json.dumps({"type": "FeatureCollection", "features": feats},
+                              ensure_ascii=False, separators=(",", ":")))
+
+    def mapshaper(*args):
+        try:
+            subprocess.run(["mapshaper", str(pre), *args], check=True,
+                           capture_output=True, text=True)
+        except FileNotFoundError:
+            die("mapshaper not found - install with: npm install -g mapshaper")
+        except subprocess.CalledProcessError as e:
+            die("mapshaper failed:\n" + e.stderr)
+
+    def unwrap(geom):
+        """The Chatham Islands sit east of the antimeridian (~176.5°W). Shift
+        negative longitudes by 360 so they draw to the right of the mainland."""
+        def fix(c):
+            if isinstance(c[0], (int, float)):
+                return [round(c[0] + 360, 5), c[1]] if c[0] < 0 else c
+            return [fix(x) for x in c]
+        geom["coordinates"] = fix(geom["coordinates"])
+
+    print("simplifying suburb boundaries with mapshaper (%s, shapes preserved)" % SIMPLIFY_SA2)
+    tmp = OUT / "_sa2.geojson"
+    mapshaper("-simplify", SIMPLIFY_SA2, "keep-shapes",
+              "-o", "precision=0.00001", "format=geojson", "force", str(tmp))
+    split = {r["slug"]: [] for r in regions}
+    for f in json.loads(tmp.read_text())["features"]:
+        slug = f["properties"].pop("region")
+        unwrap(f["geometry"])
+        split[slug].append(f)
+    tmp.unlink()
+
+    print("dissolving suburbs into region outlines (%s)" % SIMPLIFY_REGION)
+    mapshaper("-dissolve", "region", "-simplify", SIMPLIFY_REGION, "keep-shapes",
+              "-o", "precision=0.0001", "format=geojson", "force", str(tmp))
+    rec_by_slug = {r["slug"]: r for r in regions}
+    region_feats = []
+    for f in json.loads(tmp.read_text())["features"]:
+        rec = rec_by_slug[f["properties"]["region"]]
+        f["properties"] = geo_props(rec)
+        unwrap(f["geometry"])
+        region_feats.append(f)
+    tmp.unlink()
+    pre.unlink()
+    if len(region_feats) != len(regions):
+        die("dissolve produced %d region shapes for %d regions"
+            % (len(region_feats), len(regions)))
+
+    # ---- write: one small national bundle + one folder per region
+    def dump(path, obj):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(obj, ensure_ascii=False, separators=(",", ":")))
+        return path.stat().st_size
+
+    sizes = {}
+    sizes["nz.json"] = dump(OUT / "nz.json", {
         "generated": date.today().isoformat(),
         "sources": manifest,
         "meta": {"bond_quarter": bond_label, "consents_window": consents_label},
-        "region": region,
-        "suburbs": suburbs,
-    }, ensure_ascii=False, separators=(",", ":")))
-    print("wrote docs/data/suburbs.json (%d suburbs)" % len(suburbs))
-    (OUT / "schools.json").write_text(json.dumps(
-        {c: lst for c, lst in schools.items() if c in set(akl_codes)},
-        ensure_ascii=False, separators=(",", ":")))
-    print("wrote docs/data/schools.json (%d SA2s with schools)" %
-          len([c for c in schools if c in set(akl_codes)]))
-    pre = OUT / "auckland_full.geojson"
-    pre.write_text(json.dumps({"type": "FeatureCollection", "features": feats},
-                              ensure_ascii=False, separators=(",", ":")))
-    size_before = pre.stat().st_size
+        "nz": nz,
+        "regions": regions,
+    })
+    sizes["nz.geojson"] = dump(OUT / "nz.geojson",
+                               {"type": "FeatureCollection", "features": region_feats})
+    # search index across the whole country: [name, code, region slug, board, part-of]
+    sizes["index.json"] = dump(OUT / "index.json", [
+        [s["name"], s["code"], slug_of[region_of[s["code"]]], s["board"], s["colloquial"]]
+        for s in suburbs])
+    print("wrote nz.json (%.0f KB), nz.geojson (%.0f KB), index.json (%.0f KB)"
+          % tuple(sizes[k] / 1e3 for k in ("nz.json", "nz.geojson", "index.json")))
 
-    print("simplifying with mapshaper (15%%, shapes preserved)")
-    final = OUT / "auckland.geojson"
-    try:
-        subprocess.run(
-            ["mapshaper", str(pre), "-simplify", "15%", "keep-shapes",
-             "-o", "precision=0.00001", "format=geojson", "force", str(final)],
-            check=True, capture_output=True, text=True)
-    except FileNotFoundError:
-        die("mapshaper not found - install with: npm install -g mapshaper")
-    except subprocess.CalledProcessError as e:
-        die("mapshaper failed:\n" + e.stderr)
-    size_after = final.stat().st_size
-    pre.unlink()
-    print("geometry size: %.1f MB before -> %.1f MB after simplification"
-          % (size_before / 1e6, size_after / 1e6))
-    total_out = size_after + (OUT / "suburbs.json").stat().st_size
-    print("total payload (auckland.geojson + suburbs.json): %.2f MB" % (total_out / 1e6))
-    if size_after > 3_000_000:
-        print("WARNING: geometry still over 3 MB - consider a lower simplify %")
+    for rec in regions:
+        slug = rec["slug"]
+        subs = subs_by_region[next(f for f, d, _ in REGIONS if slugify(d) == slug)]
+        d = OUT / "r" / slug
+        a = dump(d / "suburbs.json", {"region": rec, "suburbs": subs})
+        b = dump(d / "geo.geojson", {"type": "FeatureCollection", "features": split[slug]})
+        codes = {s["code"] for s in subs}
+        dump(d / "schools.json", {c: lst for c, lst in schools.items() if c in codes})
+        print("  %-20s %4d suburbs · data %.2f MB · boundaries %.2f MB"
+              % (rec["name"], len(subs), a / 1e6, b / 1e6))
+        if b > 3_000_000:
+            print("  WARNING: %s boundaries over 3 MB - consider a lower simplify %%" % slug)
     print("done.")
 
 

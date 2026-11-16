@@ -6,15 +6,17 @@
 "use strict";
 
 const Panel = (() => {
-  let el, body, ctx;           // ctx = {region, suburbs, extras, onSelect, onClose}
+  /* ctx describes the level being shown and is passed to show():
+       {region: reference record (the parent area), suburbs: peer areas,
+        extras, schools, meta, onSelect, onClose,
+        kind: "suburb" | "region", noun, refName ("Canterbury" / "New Zealand"),
+        refLabel ("Region" / "NZ"), boardLabel ("Local board" / "District")}
+     Rank + similarity caches live on the ctx so each level keeps its own. */
+  let el, body, ctx;
   let year = "2023";
   let current = null;
-  let rankCache = {};
-  let simCache = {};
-  let zStats = null;
 
-  function init(context) {
-    ctx = context;
+  function init() {
     el = document.getElementById("panel");
     body = document.getElementById("panel-body");
     document.getElementById("panel-close").addEventListener("click", () => {
@@ -34,10 +36,9 @@ const Panel = (() => {
   /* ------------------------------------------------ ranks & similarity */
   function rank(key, get, value) {
     if (value == null) return null;
-    if (!rankCache[key]) {
-      rankCache[key] = ctx.suburbs.map(get).filter(v => v != null);
-    }
-    const arr = rankCache[key];
+    const cache = (ctx._rank = ctx._rank || {});
+    if (!cache[key]) cache[key] = ctx.suburbs.map(get).filter(v => v != null);
+    const arr = cache[key];
     return { n: arr.filter(v => v > value).length + 1, of: arr.length };
   }
   const rankTxt = r => r ? ` · #${r.n} of ${r.of}` : "";
@@ -48,15 +49,17 @@ const Panel = (() => {
     ...["European", "Māori", "Pacific", "Asian"].map(k => (s => s.ethnicity[k].pct)),
   ];
   function similar(s0) {
+    const simCache = (ctx._sim = ctx._sim || {});
     if (simCache[s0.code]) return simCache[s0.code];
-    if (!zStats) {
-      zStats = SIM_DIMS.map(get => {
+    if (!ctx._z) {
+      ctx._z = SIM_DIMS.map(get => {
         const v = ctx.suburbs.map(get).filter(x => x != null);
         const mean = v.reduce((a, b) => a + b, 0) / v.length;
         const sd = Math.sqrt(v.reduce((a, b) => a + (b - mean) ** 2, 0) / v.length) || 1;
         return { mean, sd };
       });
     }
+    const zStats = ctx._z;
     const vec = s => SIM_DIMS.map((get, i) => {
       const v = get(s);
       return v == null ? null : (v - zStats[i].mean) / zStats[i].sd;
@@ -92,11 +95,11 @@ const Panel = (() => {
               fill="var(--ink-2)">${esc(r.label)}</text>`;
       const tick = (r.ref != null)
         ? `<rect x="${labelW + x(r.ref) - 1}" y="${y - 2}" width="2" height="${barH + 4}"
-             fill="var(--ink)" opacity="0.85"><title>Auckland average: ${esc(r.refFmt)}</title></rect>`
+             fill="var(--ink)" opacity="0.85"><title>${esc(ctx.refName)} average: ${esc(r.refFmt)}</title></rect>`
         : "";
       if (r.value == null) {
         s += `<text x="${labelW + 4}" y="${cy + 4}" font-size="11.5" font-style="italic"
-                fill="var(--muted)">S — suppressed</text>` + tick;
+                fill="var(--muted)">S (suppressed)</text>` + tick;
       } else {
         const w = Math.max(x(r.value), 1.5);
         const rr = Math.min(4, w);
@@ -124,35 +127,43 @@ const Panel = (() => {
     </div>`;
   }
   const signTxt = (d, unit, fmt) => d == null ? "" :
-    (d >= 0 ? "+" : "−") + fmt(Math.abs(d)) + unit + " vs region";
+    (d >= 0 ? "+" : "−") + fmt(Math.abs(d)) + unit + " vs " +
+    (ctx.refLabel === "Region" ? "region" : ctx.refLabel);
 
   function depStrip(s) {
     const colors = Palette.decile10();
     if (s.dep_decile == null) {
-      return `<p class="dep-caption suppressed">No NZDep2023 score — Stats NZ does not
+      return `<p class="dep-caption suppressed">No NZDep2023 score. Stats NZ does not
         publish one for this area (typically non-residential: inlets, islands, ports).</p>`;
     }
     const cells = colors.map((c, i) => {
       const d = i + 1;
       const cur = d === s.dep_decile;
-      const lightFill = Palette.dark() ? i >= 5 : i < 5;
+      const lightFill = i < 5;
       return `<div class="dep-cell ${cur ? "current" : ""} ${cur && lightFill ? "light-fill" : ""}"
         style="background:${c}" title="Decile ${d}">${cur ? d : ""}</div>`;
     }).join("");
-    const side = s.dep_decile <= 3 ? "among Auckland’s least deprived areas"
+    const side = s.dep_decile <= 3 ? "among New Zealand’s least deprived areas"
       : s.dep_decile <= 5 ? "less deprived than the national midpoint"
       : s.dep_decile <= 7 ? "more deprived than the national midpoint"
       : "among the most deprived areas";
     return `
       <div class="dep-strip">${cells}</div>
       <div class="dep-strip-labels"><span>1 · least deprived</span><span>10 · most deprived</span></div>
-      <p class="dep-caption"><strong>Decile ${s.dep_decile} of 10</strong>
-        (score ${s.dep_score.toLocaleString("en-NZ")}) — ${side}.</p>
+      <p class="dep-caption"><strong>${s.dep_avg ? "Average decile" : "Decile"} ${s.dep_decile} of 10</strong>
+        (score ${s.dep_score.toLocaleString("en-NZ")}): ${s.dep_avg
+          ? "the population-weighted average of its suburbs; NZDep is published per small area, not per region"
+          : side}.</p>
       <p class="dep-note">NZDep2023 measures the <strong>area</strong>, not the individuals living
         in it. Deciles are national: decile 10 = the most deprived 10% of NZ small areas.</p>`;
   }
 
   function schoolsBlock(s) {
+    if (ctx.kind === "region") {
+      return `<section><h4>Schools</h4>
+        <p class="h4-note">${Palette.fmtInt(s.n_schools)} schools across ${esc(s.name)}.
+        Open a suburb to see the ones located there.</p></section>`;
+    }
     const list = (ctx.schools || {})[s.code] || [];
     if (!list.length) {
       return `<section><h4>Schools</h4>
@@ -202,7 +213,8 @@ const Panel = (() => {
       ["New homes consented (12m)", F.fmtInt, s => s.consents_12m],
       ["Land in flood plain", F.fmtPct, s => s.flood_pct],
       ["NZDep decile (10 = most deprived)", F.fmtDecile, s => s.dep_decile],
-    ].map(([l, f, g]) => compareRow(l, f, g, a, b)).join("");
+    ].filter(r => r[0] !== "Land in flood plain" || a.flood_pct != null || b.flood_pct != null)
+     .map(([l, f, g]) => compareRow(l, f, g, a, b)).join("");
     body.innerHTML = `
       <h2 class="cmp-title">Compare</h2>
       <table class="cmp-table">
@@ -212,15 +224,15 @@ const Panel = (() => {
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>
-      <p class="footnote">“S” = suppressed by Stats NZ. Click a suburb name for its full profile.
+      <p class="footnote">“S” = suppressed by Stats NZ. Click a name for its full profile.
         Ethnicity is multi-response (columns sum past 100%).</p>`;
     el.hidden = false;
   }
 
   function compareUI(s) {
     return `<div class="cmp-launch">
-      <input id="cmp-input" list="cmp-list" placeholder="Compare with another suburb…"
-        aria-label="Compare with another suburb">
+      <input id="cmp-input" list="cmp-list" placeholder="Compare with another ${ctx.noun}…"
+        aria-label="Compare with another ${ctx.noun}">
       <datalist id="cmp-list">${ctx.suburbs.map(x =>
         x.code === s.code ? "" : `<option value="${esc(x.name)}">`).join("")}</datalist>
     </div>`;
@@ -250,12 +262,19 @@ const Panel = (() => {
   function descBlock(s, ex) {
     if (ex && ex.desc) {
       return `<p class="p-desc">${esc(ex.desc)}
-        <a href="${esc(ex.wiki || "#")}" target="_blank" rel="noopener" class="p-desc-src">—
+        <a href="${esc(ex.wiki || "#")}" target="_blank" rel="noopener" class="p-desc-src">Source:
         Wikipedia (CC BY-SA)</a></p>`;
     }
     const pop = s.pop2023 == null ? null : s.pop2023.toLocaleString("en-NZ");
-    return `<p class="p-desc p-desc-gen">${esc(s.name)} is a statistical area (SA2) in the
-      ${esc(s.board)} Local Board area${pop ? `, home to about ${pop} people at the 2023 Census` : ""}.</p>`;
+    const home = pop ? `, home to about ${pop} people at the 2023 Census` : "";
+    if (ctx.kind === "region") {
+      return `<p class="p-desc p-desc-gen">${esc(s.name)} covers ${s.n_areas} suburbs and
+        localities (SA2s)${home}. Figures here are totals and averages across all of them.</p>`;
+    }
+    const where = ctx.boardLabel === "Local board"
+      ? `the ${esc(s.board)} Local Board area` : `${esc(s.board)}, ${esc(ctx.refName)}`;
+    return `<p class="p-desc p-desc-gen">${esc(s.name)} is a statistical area (SA2) in
+      ${where}${home}.</p>`;
   }
 
   /* ------------------------------------------------ year-aware getters */
@@ -265,7 +284,7 @@ const Panel = (() => {
         eth: k => s.ethnicity[k], age: k => s.age[k],
         median_age: s.median_age, median_income: s.median_income,
         home_own_pct: s.home_own_pct, bachelor_pct: s.bachelor_pct,
-        refEth: k => ctx.region.ethnicity[k], refAge: k => ctx.region.age[k],
+        refEth: k => ctx.region.ethnicity[k].pct, refAge: k => ctx.region.age[k].pct,
         ref: m => ctx.region[m],
       };
     }
@@ -306,7 +325,7 @@ const Panel = (() => {
     }));
     const travelRows = Object.entries(s.travel).map(([k, v]) => ({
       label: k, value: v.pct, count: v.n, fmt: Palette.fmtPct(v.pct),
-      ref: ctx.region.travel[k], refFmt: Palette.fmtPct(ctx.region.travel[k]),
+      ref: ctx.region.travel[k].pct, refFmt: Palette.fmtPct(ctx.region.travel[k].pct),
     }));
 
     const dAge = yd.median_age == null ? null : yd.median_age - yd.ref("median_age");
@@ -323,11 +342,17 @@ const Panel = (() => {
     const rCons = rank("consents_12m", x => x.consents_12m, s.consents_12m);
 
     const sims = similar(s);
+    const RL = ctx.refLabel + " ";          // "Region " / "NZ "
+    const avg = esc(ctx.refName) + " average";
+    const hasFlood = s.flood_pct != null || ctx.region.flood_pct != null;
+    const sub = ctx.kind === "region"
+      ? `${esc(s.island || "Region")} · ${s.n_areas} suburbs`
+      : `${esc(s.board)}${ctx.boardLabel === "Local board" ? " Local Board" : ""} · SA2 ${esc(s.code)}`;
 
     body.innerHTML = `
       ${photoBlock(ex)}
       <h2>${esc(s.name)}</h2>
-      <p class="p-sub">${esc(s.board)} Local Board · SA2 ${esc(s.code)}</p>
+      <p class="p-sub">${sub}</p>
       ${s.colloquial ? `<p class="p-colloquial">Part of the wider “${esc(s.colloquial)}” area (SA3)</p>` : ""}
       ${descBlock(s, ex)}
       <div class="p-pop">${Palette.fmtInt(s.pop2023)} ${chgHtml}</div>
@@ -339,8 +364,8 @@ const Panel = (() => {
 
       <section>
         <h4>Age distribution <span class="h4-year">${year}</span></h4>
-        ${barChart(ageRows, { aria: "Age distribution vs Auckland average" })}
-        <div class="chart-key"><span class="key-tick"></span> Auckland average (${year})
+        ${barChart(ageRows, { aria: "Age distribution vs " + ctx.refName + " average" })}
+        <div class="chart-key"><span class="key-tick"></span> ${avg} (${year})
           ${yd.median_age != null ? `&nbsp;·&nbsp; Median age <strong>&nbsp;${Palette.fmtAge(yd.median_age)}</strong>` : ""}</div>
       </section>
 
@@ -348,67 +373,67 @@ const Panel = (() => {
         <h4>Income · education · housing (aged 15+) <span class="h4-year">${year}</span></h4>
         <div class="stat-grid">
           ${statCard("Median personal income", Palette.fmtDollar(yd.median_income),
-              "Region " + Palette.fmtDollar(yd.ref("median_income")) + rankTxt(rInc),
+              RL + Palette.fmtDollar(yd.ref("median_income")) + rankTxt(rInc),
               signTxt(dInc, "", v => "$" + Math.round(v).toLocaleString("en-NZ")))}
           ${statCard("Bachelor’s degree or higher", Palette.fmtPct(yd.bachelor_pct),
-              "Region " + Palette.fmtPct(yd.ref("bachelor_pct")),
+              RL + Palette.fmtPct(yd.ref("bachelor_pct")),
               signTxt(dBach, " pts", v => v.toFixed(1)))}
           ${statCard("Own or partly own home", Palette.fmtPct(yd.home_own_pct),
-              "Region " + Palette.fmtPct(yd.ref("home_own_pct")),
+              RL + Palette.fmtPct(yd.ref("home_own_pct")),
               signTxt(dOwn, " pts", v => v.toFixed(1)))}
           ${statCard("Median age", Palette.fmtAge(yd.median_age),
-              "Region " + Palette.fmtAge(yd.ref("median_age")),
+              RL + Palette.fmtAge(yd.ref("median_age")),
               signTxt(dAge, " yrs", v => v.toFixed(1)))}
         </div>
       </section>
 
       <section>
         <h4>Getting to work <span class="h4-year">2023</span></h4>
-        <p class="h4-note">Main means of travel to work — share of employed people who stated one.</p>
-        ${barChart(travelRows, { aria: "Travel to work vs Auckland average", labelW: 104 })}
-        <div class="chart-key"><span class="key-tick"></span> Auckland average</div>
+        <p class="h4-note">Main means of travel to work, as a share of employed people who stated one.</p>
+        ${barChart(travelRows, { aria: "Travel to work vs " + ctx.refName + " average", labelW: 104 })}
+        <div class="chart-key"><span class="key-tick"></span> ${avg}</div>
       </section>
 
       <section>
         <h4>Work &amp; mobility <span class="h4-year">2023</span></h4>
         <div class="stat-grid">
           ${statCard("Unemployment rate", Palette.fmtPct(s.unemployment_pct),
-              "Region " + Palette.fmtPct(ctx.region.unemployment_pct))}
+              RL + Palette.fmtPct(ctx.region.unemployment_pct))}
           ${statCard("Born overseas", Palette.fmtPct(s.overseas_born_pct),
-              "Region " + Palette.fmtPct(ctx.region.overseas_born_pct))}
+              RL + Palette.fmtPct(ctx.region.overseas_born_pct))}
           ${statCard("Same home as 5 years ago", Palette.fmtPct(s.same_home_5y_pct),
-              "Region " + Palette.fmtPct(ctx.region.same_home_5y_pct))}
+              RL + Palette.fmtPct(ctx.region.same_home_5y_pct))}
           ${statCard("Speak te reo Māori", Palette.fmtPct(s.te_reo_pct),
-              "Region " + Palette.fmtPct(ctx.region.te_reo_pct))}
+              RL + Palette.fmtPct(ctx.region.te_reo_pct))}
         </div>
       </section>
 
       <section>
-        <h4>Ethnicity — share of people who stated an ethnicity <span class="h4-year">${year}</span></h4>
+        <h4>Ethnicity, share of people who stated an ethnicity <span class="h4-year">${year}</span></h4>
         <p class="h4-note">Multi-response: people can identify with several groups, so shares
           sum to more than 100%. Never normalised.</p>
-        ${barChart(ethRows, { aria: "Ethnicity shares vs Auckland average" })}
-        <div class="chart-key"><span class="key-tick"></span> Auckland average (${year})</div>
+        ${barChart(ethRows, { aria: "Ethnicity shares vs " + ctx.refName + " average" })}
+        <div class="chart-key"><span class="key-tick"></span> ${avg} (${year})</div>
       </section>
 
       <section>
         <h4>Homes &amp; households <span class="h4-year">2023</span></h4>
         <div class="stat-grid">
-          ${statCard("Median rent — census night 2023", Palette.fmtDollar(s.median_rent),
-              "Region " + Palette.fmtDollar(ctx.region.median_rent) + rankTxt(rRent))}
-          ${statCard("Median rent — new bonds, " + (ctx.meta.bond_quarter || "latest"),
+          ${statCard("Median rent, census night 2023", Palette.fmtDollar(s.median_rent),
+              RL + Palette.fmtDollar(ctx.region.median_rent) + rankTxt(rRent))}
+          ${statCard("Median rent, new bonds, " + (ctx.meta.bond_quarter || "latest"),
               Palette.fmtDollar(s.bond_rent),
-              "Region " + Palette.fmtDollar(ctx.region.bond_rent) + rankTxt(rBond))}
+              RL + Palette.fmtDollar(ctx.region.bond_rent) + rankTxt(rBond))}
           ${statCard("Median household income", Palette.fmtDollar(s.median_hh_income),
-              "Region " + Palette.fmtDollar(ctx.region.median_hh_income) + rankTxt(rHh))}
+              RL + Palette.fmtDollar(ctx.region.median_hh_income) + rankTxt(rHh))}
           ${statCard("Homes damp (at least sometimes)", Palette.fmtPct(s.damp_pct),
-              "Region " + Palette.fmtPct(ctx.region.damp_pct))}
+              RL + Palette.fmtPct(ctx.region.damp_pct))}
           ${statCard("Mould over A4 size", Palette.fmtPct(s.mould_pct),
-              "Region " + Palette.fmtPct(ctx.region.mould_pct))}
+              RL + Palette.fmtPct(ctx.region.mould_pct))}
           ${statCard("Crowded households", Palette.fmtPct(s.crowded_pct),
-              "Region " + Palette.fmtPct(ctx.region.crowded_pct))}
+              RL + Palette.fmtPct(ctx.region.crowded_pct))}
           ${statCard("Stand-alone houses", Palette.fmtPct(s.separate_house_pct),
-              "Region " + Palette.fmtPct(ctx.region.separate_house_pct))}
+              RL + Palette.fmtPct(ctx.region.separate_house_pct))}
         </div>
         <p class="footnote">New-bond rent: MBIE tenancy bond lodgements (SA2-2019 areas mapped
           to 2023 boundaries)${s.bond_active ? ` · ${s.bond_active.toLocaleString("en-NZ")} active bonds here` : ""}.</p>
@@ -418,14 +443,14 @@ const Panel = (() => {
         <h4>Growth &amp; hazards</h4>
         <div class="stat-grid">
           ${statCard("New homes consented", Palette.fmtInt(s.consents_12m),
-              "Region " + Palette.fmtInt(ctx.region.consents_12m) + rankTxt(rCons),
+              RL + Palette.fmtInt(ctx.region.consents_12m) + rankTxt(rCons),
               s.consents_rate != null ? s.consents_rate.toFixed(1) + " per 100 existing homes" : "")}
-          ${statCard("Land in a flood plain", Palette.fmtPct(s.flood_pct),
-              "Region " + Palette.fmtPct(ctx.region.flood_pct))}
+          ${hasFlood ? statCard("Land in a flood plain", Palette.fmtPct(s.flood_pct),
+              RL + Palette.fmtPct(ctx.region.flood_pct)) : ""}
         </div>
         <p class="footnote">Consents: Stats NZ, 12 months ${esc(ctx.meta.consents_window || "")}.
-          Flood plain: Auckland Council flood-plain modelling as a share of this area's land
-          (an exposure indicator, not a property-level assessment).</p>
+          ${hasFlood ? `Flood plain: Auckland Council flood-plain modelling as a share of this
+          area's land (an exposure indicator, not a property-level assessment).` : ""}</p>
       </section>
 
       ${schoolsBlock(s)}
@@ -436,12 +461,12 @@ const Panel = (() => {
       </section>
 
       ${sims.length ? `<section>
-        <h4>Statistically similar suburbs</h4>
+        <h4>Statistically similar ${ctx.noun}s</h4>
         <p class="h4-note">Nearest neighbours on income, age, tenure, rent, deprivation and
-          ethnic mix — not geography.</p>
+          ethnic mix, not geography.</p>
         <div class="sim-chips">${sims.map(t =>
           `<button class="sim-chip" data-goto="${t.code}">${esc(t.name)}
-             <span>${esc(t.board)}</span></button>`).join("")}</div>
+             <span>${esc(t.board || t.island || "")}</span></button>`).join("")}</div>
       </section>` : ""}
 
       <section>
@@ -456,7 +481,10 @@ const Panel = (() => {
     el.hidden = false;
   }
 
-  function show(s) { current = s; render(); body.scrollTop = 0; }
+  function show(s, context) {
+    if (context) ctx = context;
+    current = s; render(); body.scrollTop = 0;
+  }
   function hide() { el.hidden = true; current = null; }
   function refresh() { if (current && !el.hidden) render(); }
 
