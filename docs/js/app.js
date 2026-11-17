@@ -284,7 +284,8 @@
     const dlg = $("legal");
     const dates = Object.values(NZ.sources || {}).map(s => s.downloaded).filter(Boolean).sort();
     const by = '<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>';
-    $("legal-body").innerHTML = `
+    // the region links at the end of the dialog are plain HTML in index.html
+    $("legal-body").insertAdjacentHTML("afterbegin", `
       <h2>Sources &amp; privacy</h2>
 
       <h3>Where the data comes from</h3>
@@ -309,9 +310,6 @@
       produced or endorsed by Stats NZ or any other source.
       ${dates.length ? `Data downloaded ${dates[0]}${dates[dates.length - 1] !== dates[0] ? " to " + dates[dates.length - 1] : ""}.` : ""}</p>
 
-      <h3>Browse by region</h3>
-      <p>${NZ.regions.map(r => `<a href="/${r.slug}/">${r.name}</a>`).join(" · ")}</p>
-
       <h3>Reading the figures</h3>
       <p>General information only, not financial, property or legal advice, and provided
       without warranty. Areas are Stats NZ “SA2” statistical areas, which only approximate
@@ -331,7 +329,7 @@
       the site works the same without it. Map tiles and photos load from OpenFreeMap and
       Wikimedia, which see your IP address as any website does.</p>
       <p>Under the Privacy Act 2020 you can ask what information is held about you and ask for
-      it to be corrected${CONTACT ? `. Email <a href="mailto:${CONTACT}">${CONTACT}</a>` : ""}.</p>`;
+      it to be corrected${CONTACT ? `. Email <a href="mailto:${CONTACT}">${CONTACT}</a>` : ""}.</p>`);
     document.addEventListener("click", e => {
       if (e.target.closest("[data-legal]")) { e.preventDefault(); dlg.showModal(); }
       else if (e.target === dlg) dlg.close();          // click on the backdrop

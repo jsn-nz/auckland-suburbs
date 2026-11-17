@@ -131,6 +131,9 @@ svg .nd{fill:var(--nodata)}
 .key{font-size:11px;color:var(--muted);margin-top:6px}
 .key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg h3{font-size:13.5px;margin:14px 0 2px}
+.rk{display:flex;justify-content:space-between;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--grid)}
+.rk:last-child{border:0}.rk a{text-decoration:none}.rk b{font-weight:600;white-space:nowrap}
 .pg table{border-collapse:collapse;width:100%;font-size:13px}
 .pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
   font-variant-numeric:tabular-nums}
@@ -357,6 +360,29 @@ def suburb_page(s, reg, peers, feats):
     if s["median_age"] is not None and reg["median_age"] is not None:
         lead += " The median age is %.1f, compared with %.1f across %s." % (
             s["median_age"], reg["median_age"], e(rn))
+    # the questions people type into search, answered in a sentence each
+    n = e(s["name"])
+    qa = [("What is the population of %s?" % n,
+           "%s had %s usually resident people at the 2023 Census%s." % (
+               n, pop, (", %s %.1f%% from %s in 2018" % (
+                   "up" if s["pop_change_pct"] >= 0 else "down", abs(s["pop_change_pct"]),
+                   num(s["pop2018"]))) if s["pop_change_pct"] is not None else ""))]
+    if s["median_income"] is not None:
+        qa.append(("What is the median income in %s?" % n,
+                   "The median personal income in %s is %s a year (2023 Census, people aged 15 "
+                   "and over)%s." % (n, money(s["median_income"]),
+                                     ", compared with %s across %s" % (money(reg["median_income"]), e(rn))
+                                     if reg["median_income"] is not None else "")))
+    if s["median_rent"] is not None:
+        qa.append(("How much is rent in %s?" % n,
+                   "Households renting in %s paid a median of %s a week at the 2023 Census%s." % (
+                       n, money(s["median_rent"]),
+                       (". Newly lodged bonds more recently had a median rent of %s a week"
+                        % money(s["bond_rent"])) if s["bond_rent"] is not None else "")))
+    if s["median_age"] is not None:
+        qa.append(("What is the median age in %s?" % n,
+                   "The median age in %s is %.1f years (2023 Census)." % (n, s["median_age"])))
+    qa = "<h2>Quick answers</h2>" + "".join("<h3>%s</h3><p>%s</p>" % q for q in qa)
     ref = lambda v, f: None if v is None else "%s %s" % (rn, f(v))
     body = """<h1>%s population and demographics</h1>
 <p class="where">%s · %s%s</p>
@@ -402,7 +428,7 @@ def suburb_page(s, reg, peers, feats):
             ("Crowded households", pct(s["crowded_pct"]), ref(reg["crowded_pct"], pct)),
             ("Damp homes", pct(s["damp_pct"]), ref(reg["damp_pct"], pct)),
         ]),
-        people_sections(s, reg, rn),
+        people_sections(s, reg, rn) + qa,
         e(where),
         "".join('<li><a href="/%s/%s/">%s</a></li>' % (rs, slug(p["name"]), e(p["name"]))
                 for p in peers if p["code"] != s["code"]) or
@@ -450,6 +476,23 @@ def region_page(reg, subs, feats, nz):
     if reg["pop_change_pct"] is not None:
         lead += " It %s %.1f%% between the 2018 and 2023 censuses." % (
             "grew" if reg["pop_change_pct"] >= 0 else "shrank", abs(reg["pop_change_pct"]))
+    # the two lists people most often search for
+    def ranked(heading, note, items, value):
+        return '<div><h2>%s</h2><p class="note">%s</p><div class="bars">%s</div></div>' % (
+            e(heading), e(note), "".join(
+                '<div class="rk"><a href="/%s/%s/">%d. %s</a><b>%s</b></div>'
+                % (rs, slug(s["name"]), i + 1, e(s["name"]), value(s))
+                for i, s in enumerate(items)))
+    biggest = sorted(subs, key=lambda s: -s["pop2023"])[:10]
+    growing = sorted((s for s in subs if s["pop_change_pct"] is not None
+                      and (s["pop2018"] or 0) >= 500),
+                     key=lambda s: -s["pop_change_pct"])[:10]
+    ranks = '<div class="two">%s%s</div>' % (
+        ranked("Largest suburbs in %s" % rn, "By usually resident population, 2023 Census.",
+               biggest, lambda s: num(s["pop2023"])),
+        ranked("Fastest-growing suburbs in %s" % rn,
+               "Population change 2018 to 2023, suburbs with at least 500 people in 2018.",
+               growing, lambda s: signed(s["pop_change_pct"]))) if len(subs) >= 10 else ""
     ref = lambda v, f: None if v is None else "NZ %s" % f(v)
     rows = "".join(
         '<tr><td><a href="/%s/%s/">%s</a></td><td class="t">%s</td><td>%s</td><td>%s</td>'
@@ -495,7 +538,7 @@ def region_page(reg, subs, feats, nz):
             ("Unemployment rate", pct(reg["unemployment_pct"]), ref(nz["unemployment_pct"], pct)),
             ("Born overseas", pct(reg["overseas_born_pct"]), ref(nz["overseas_born_pct"], pct)),
         ]),
-        people_sections(reg, nz, "New Zealand"),
+        people_sections(reg, nz, "New Zealand") + ranks,
         e(rn), e(reg["board_label"]), rows)
     page(path, title, desc, [("New Zealand", "/"), (rn, None)], body, "/#" + rs)
     return path
