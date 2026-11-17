@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Auckland", "item": "https://population.co.nz/auckland/"}, {"@type": "ListItem", "position": 3, "name": "Remuera West", "item": "https://population.co.nz/auckland/remuera-west/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#auckland/remuera-west" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Remuera West</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Remuera West</nav>
 <h1>Remuera West population and demographics</h1>
-<p>Remuera West is a statistical area in Ōrākei Local Board, Auckland. At the 2023 Census it had <strong>2,682</strong>
-usually resident people (-4.4% since 2018). It is part of the wider Remuera area.</p>
-<a class="cta" href="/#auckland/remuera-west">Open Remuera West on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>2,682</strong></div><div class="card"><span>Population 2018</span><strong>2,805</strong></div><div class="card"><span>Population 2013</span><strong>2,544</strong></div><div class="card"><span>Median age</span><strong>40.9</strong></div><div class="card"><span>Median personal income</span><strong>$57,900</strong></div><div class="card"><span>Median household income</span><strong>$169,800</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>56.8%</strong></div><div class="card"><span>Unemployment rate</span><strong>2.4%</strong></div><div class="card"><span>Born overseas</span><strong>42.4%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>2</strong></div></div>
+<p class="where">Ōrākei Local Board · Auckland · part of the wider Remuera area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">2,682</span><span class="chip">-4.4% since 2018</span></div>
+    <div class="trend"><div><b>2,544</b><i style="height:63%"></i><span>2013</span></div><div><b>2,805</b><i style="height:70%"></i><span>2018</span></div><div><b>2,682</b><i style="height:67%"></i><span>2023</span></div></div>
+    <p class="lead">Remuera West is in Ōrākei Local Board, Auckland. Its population fell 4.4% between the 2018 and 2023 censuses. The median age is 40.9, compared with 35.9 across Auckland.</p>
+    <a class="cta" href="/#auckland/remuera-west">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 230" role="img" fill-rule="evenodd"><path class="a" d="M188 95 179 90 172 87 166 83 157 79 151 78 150 80 148 105 151 104 165 106 167 99 171 101 173 98 178 97 180 105 182 103 187 98 188 95Z"/><path class="a" d="M255 53 247 49 246 51 240 47 235 54 230 56 235 58 234 60 230 78 226 82 229 88 228 92 232 93 239 94 246 94 256 89 257 85 254 80 252 72 253 70 256 60 253 59 255 53Z"/><path class="a" d="M101 29 88 20 82 28 69 33 65 34 59 34 50 30 47 28 38 18 73 59 62 45 64 41 58 38 54 36 55 34 63 35 74 33 75 37 77 39 81 40 85 42 86 45 85 54 89 58 94 62 93 65 95 63 100 65 105 71 110 72 113 75 116 70 117 61 122 59 119 54 117 48 117 44 113 39 108 32 103 31 101 29Z"/><path class="a" d="M61 66 54 64 50 66 48 73 47 70 37 70 31 72 27 69 23 74 29 78 36 84 37 87 37 93 33 98 22 103 17 107 15 112 26 119 29 125 42 130 53 132 54 119 53 116 53 111 56 102 58 92 59 77 58 73 61 66Z"/><path class="a" d="M139 8 133 4 126 2 125 5 121 7 108 6 106 8 107 13 110 21 108 24 101 29 103 31 108 32 113 39 117 44 117 48 119 54 122 59 117 61 116 70 113 75 118 77 126 75 133 72 137 50 140 12 139 8Z"/><path class="a" d="M93 65 88 63 85 66 81 65 84 71 82 74 80 78 76 81 72 79 73 74 68 68 61 66 58 73 59 77 58 92 56 102 62 103 64 106 64 109 68 110 69 108 73 104 80 103 84 103 87 106 93 112 96 113 105 114 106 110 106 107 109 101 111 100 111 96 111 90 108 85 106 88 101 94 96 96 93 96 86 92 83 89 83 85 84 80 87 72 92 70 109 78 110 76 93 69 93 65Z"/><path class="a" d="M49 162 63 151 82 138 76 136 62 133 53 132 42 130 29 125 26 119 15 112 7 122 12 128 22 141 27 146 35 153 49 162Z"/><path class="a" d="M165 14 160 12 156 16 147 13 139 8 140 12 137 50 140 49 147 50 153 46 156 50 158 49 162 51 161 45 166 23 169 22 169 19 165 17 165 14Z"/><path class="a" d="M162 51 158 49 156 50 153 46 147 50 140 49 137 50 135 72 139 71 144 74 147 75 150 77 157 79 159 70 160 65 158 60 162 59 163 56 163 52Z"/><path class="a" d="M87 106 84 103 80 103 73 104 69 108 68 110 64 109 64 106 62 103 56 102 53 111 53 116 54 119 53 132 62 133 76 136 82 138 85 137 92 131 87 126 83 116 84 111 87 106Z"/><path class="a" d="M191 25 188 24 177 21 165 14 165 17 169 19 169 22 166 23 161 45 162 51 166 52 172 48 176 47 178 44 180 43 183 48 183 54 189 55 193 38 189 35 191 25Z"/><path class="a" d="M178 74 182 71 184 70 188 67 190 56 183 54 183 48 180 43 178 44 176 47 172 48 166 52 163 52 163 56 162 59 158 60 160 65 159 70 157 79 166 83 172 87 173 85 179 86 168 79 174 75 178 74Z"/><path class="a" d="M150 77 146 76 134 76 129 79 122 81 117 80 109 78 111 80 111 85 113 89 113 98 118 100 123 101 126 108 132 114 131 118 138 113 140 108 148 105 150 80 151 78Z"/><path class="a" d="M211 25 208 25 203 22 198 23 194 25 191 25 189 35 193 38 189 55 188 67 184 70 182 71 178 74 185 78 191 74 197 65 199 67 205 65 214 61 212 57 215 55 218 56 220 59 224 56 230 56 230 49 223 48 218 48 214 43 215 35 211 25Z"/><path class="a" d="M123 101 119 103 114 100 110 102 109 107 106 110 105 114 96 113 93 112 87 106 84 111 83 116 87 126 92 131 96 130 100 131 112 127 119 128 126 122 131 118 132 114 126 108 123 101Z"/><path class="a" d="M256 6 251 5 243 2 240 0 235 6 232 13 231 19 218 25 211 25 215 35 214 43 218 48 223 48 230 49 230 56 235 54 240 47 252 31 258 21 257 17 255 9 256 6Z"/><path class="a" d="M115 157 110 156 109 151 113 147 113 143 111 136 112 127 100 131 96 130 92 131 85 137 82 138 63 151 64 153 70 152 85 153 96 166 99 164 103 165 106 159 107 163 112 165 115 158Z"/><path class="a" d="M99 164 96 166 85 155 70 152 64 153 63 151 49 162 65 175 60 180 56 180 61 183 63 186 71 189 72 187 76 189 79 188 82 196 88 198 89 195 95 197 101 183 104 184 106 177 105 168 99 166Z"/><path class="a" d="M230 56 224 56 220 59 218 56 215 55 212 57 214 61 205 65 199 67 197 65 191 74 185 78 178 74 174 75 168 79 179 86 173 85 172 87 179 90 188 95 188 88 198 86 205 80 216 84 221 91 228 92 229 88 226 82 231 79 234 60 235 58 230 56Z"/><path class="a" d="M165 141 162 140 155 142 150 147 147 145 149 140 150 133 153 131 158 132 157 135 160 137 165 131 168 122 164 121 161 124 160 128 157 129 152 125 155 121 160 116 154 113 149 119 139 122 136 123 134 128 130 121 126 122 119 128 112 127 111 136 113 143 113 147 109 151 110 156 115 155 128 155 135 166 139 162 141 159 144 157 148 158 156 152 159 146 165 141Z"/><path class="a" d="M181 106 178 97 173 98 171 101 167 99 165 106 151 104 148 105 140 108 138 113 131 118 126 122 130 121 134 128 136 123 139 122 148 119 154 113 160 116 155 121 152 125 157 129 160 128 161 124 164 121 168 122 165 131 160 137 157 135 158 132 153 131 150 133 149 140 147 145 150 147 155 142 162 140 165 141 168 138 172 129 174 128 176 121 179 118 180 115 180 109 181 106Z"/><path class="a" d="M287 66 290 66 295 61 296 57 293 55 294 52 292 48 294 45 293 41 288 35 288 31 285 29 281 25 277 22 273 15 273 10 268 10 256 6 255 9 257 17 258 21 252 31 240 47 246 51 247 49 255 53 273 57 276 62 280 63 283 67 287 66Z"/><path class="a" d="M135 166 128 155 115 157 112 165 107 163 106 159 103 165 99 164 105 168 106 177 104 184 103 187 114 186 117 189 117 194 122 195 124 191 128 185 126 183 127 179 131 172 132 168 135 166Z"/><path class="a" d="M174 128 180 128 184 126 199 130 198 127 197 119 198 115 201 111 200 109 205 104 202 102 188 95 187 98 182 103 181 106 180 109 180 115 179 118 176 121 174 128Z"/><path class="a" d="M122 195 117 194 117 189 114 186 103 187 104 184 101 183 95 197 89 195 88 198 82 196 87 209 88 214 91 213 98 219 109 224 112 223 109 213 119 199 122 195Z"/><path class="a" d="M166 174 163 171 168 168 167 163 168 161 179 146 175 140 173 136 174 129 168 138 165 141 159 146 156 152 148 158 154 166 166 175Z"/><path class="a" d="M287 66 283 67 280 63 276 62 273 57 255 53 253 59 256 60 253 70 252 72 254 80 257 85 256 89 269 92 278 88 291 101 290 104 303 105 309 102 314 100 318 101 320 100 309 96 299 91 292 84 288 78 286 71 287 66Z"/><path class="a" d="M191 165 195 158 193 157 179 146 168 161 167 163 168 168 163 171 166 174 170 169 175 173 177 172 182 172 184 168 191 165Z"/><path class="on" d="M23 74 15 76 9 80 6 85 10 95 4 103 0 110 4 117 7 122 15 112 17 107 22 103 33 98 37 93 37 87 36 84 29 78 23 74Z"/></svg><figcaption>Remuera West within Ōrākei Local Board</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$57,900</strong><em>Auckland $44,800</em></div><div class="card"><span>Median household income</span><strong>$169,800</strong><em>Auckland $118,200</em></div><div class="card"><span>Median age</span><strong>40.9</strong><em>Auckland 35.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>56.8%</strong><em>Auckland 32.9%</em></div><div class="card"><span>Unemployment rate</span><strong>2.4%</strong><em>Auckland 4.8%</em></div><div class="card"><span>Born overseas</span><strong>42.4%</strong><em>Auckland 42.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>2 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>51.1%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$710</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$880</strong></div><div class="card"><span>Stand-alone houses</span><strong>66.8%</strong></div><div class="card"><span>Crowded households</span><strong>4.2%</strong></div><div class="card"><span>Damp homes</span><strong>19.4%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>64.0%</strong></div><div class="card"><span>Asian</span><strong>33.2%</strong></div><div class="card"><span>Māori</span><strong>4.0%</strong></div><div class="card"><span>Pacific</span><strong>2.9%</strong></div><div class="card"><span>MELAA</span><strong>2.2%</strong></div><div class="card"><span>Other</span><strong>0.6%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>51.1%</strong><em>Auckland 44.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$710</strong><em>Auckland $540</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$880</strong><em>Auckland $655</em></div><div class="card"><span>Stand-alone houses</span><strong>66.8%</strong><em>Auckland 71.5%</em></div><div class="card"><span>Crowded households</span><strong>4.2%</strong><em>Auckland 8.8%</em></div><div class="card"><span>Damp homes</span><strong>19.4%</strong><em>Auckland 20.1%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:30.5%"></i><u style="left:39.3%" title="Auckland: 19.2%"></u></div><b>14.9%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:45.9%"></i><u style="left:42.8%" title="Auckland: 20.9%"></u></div><b>22.4%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:92.6%"></i><u style="left:95.2%" title="Auckland: 46.5%"></u></div><b>45.2%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:35.6%"></i><u style="left:27.2%" title="Auckland: 13.3%"></u></div><b>17.4%</b></div><div class="key"><u></u>Auckland average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:74.1%" title="Auckland: 49.8%"></u></div><b>64.0%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:49.4%"></i><u style="left:46.6%" title="Auckland: 31.3%"></u></div><b>33.2%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:6.0%"></i><u style="left:18.3%" title="Auckland: 12.3%"></u></div><b>4.0%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:4.3%"></i><u style="left:24.7%" title="Auckland: 16.6%"></u></div><b>2.9%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:3.3%"></i><u style="left:4.0%" title="Auckland: 2.7%"></u></div><b>2.2%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.9%"></i><u style="left:1.3%" title="Auckland: 0.9%"></u></div><b>0.6%</b></div><div class="key"><u></u>Auckland average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:37.4%"></i><u style="left:26.6%" title="Auckland: 18.1%"></u></div><b>25.5%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:72.2%"></i><u style="left:95.2%" title="Auckland: 64.9%"></u></div><b>49.2%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:3.2%"></i><u style="left:5.4%" title="Auckland: 3.7%"></u></div><b>2.2%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:15.8%"></i><u style="left:11.4%" title="Auckland: 7.8%"></u></div><b>10.8%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:2.9%"></i><u style="left:1.3%" title="Auckland: 0.9%"></u></div><b>2.0%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:10.7%"></i><u style="left:4.8%" title="Auckland: 3.3%"></u></div><b>7.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:3.5%"></i><u style="left:1.8%" title="Auckland: 1.2%"></u></div><b>2.4%</b></div><div class="key"><u></u>Auckland average</div></div>
 <h2>Nearby in Ōrākei Local Board</h2>
 <ul class="links"><li><a href="/auckland/ellerslie-central/">Ellerslie Central</a></li><li><a href="/auckland/ellerslie-east/">Ellerslie East</a></li><li><a href="/auckland/ellerslie-south/">Ellerslie South</a></li><li><a href="/auckland/glendowie-north/">Glendowie North</a></li><li><a href="/auckland/glendowie-south-east/">Glendowie South East</a></li><li><a href="/auckland/glendowie-south-west/">Glendowie South West</a></li><li><a href="/auckland/kohimarama-bay/">Kohimarama Bay</a></li><li><a href="/auckland/kohimarama-stadium/">Kohimarama Stadium</a></li><li><a href="/auckland/meadowbank-east/">Meadowbank East</a></li><li><a href="/auckland/meadowbank-west/">Meadowbank West</a></li><li><a href="/auckland/mission-bay/">Mission Bay</a></li><li><a href="/auckland/mission-bay-eastridge/">Mission Bay Eastridge</a></li><li><a href="/auckland/orakei-east/">Orakei East</a></li><li><a href="/auckland/orakei-west/">Orakei West</a></li><li><a href="/auckland/remuera-abbotts-park/">Remuera Abbotts Park</a></li><li><a href="/auckland/remuera-east/">Remuera East</a></li><li><a href="/auckland/remuera-north/">Remuera North</a></li><li><a href="/auckland/remuera-south/">Remuera South</a></li><li><a href="/auckland/remuera-waiata/">Remuera Waiata</a></li><li><a href="/auckland/remuera-waiatarua/">Remuera Waiatarua</a></li><li><a href="/auckland/remuera-waitaramoa/">Remuera Waitaramoa</a></li><li><a href="/auckland/saint-heliers-north/">Saint Heliers North</a></li><li><a href="/auckland/saint-heliers-south/">Saint Heliers South</a></li><li><a href="/auckland/saint-heliers-west/">Saint Heliers West</a></li><li><a href="/auckland/saint-johns-east/">Saint Johns East</a></li><li><a href="/auckland/saint-johns-west/">Saint Johns West</a></li><li><a href="/auckland/stonefields-east/">Stonefields East</a></li><li><a href="/auckland/stonefields-west/">Stonefields West</a></li></ul>
 

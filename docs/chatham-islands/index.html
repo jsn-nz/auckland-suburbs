@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Chatham Islands", "item": "https://population.co.nz/chatham-islands/"}]}</script>
 </head>
@@ -52,18 +105,33 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#chatham-islands" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › Chatham Islands</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › Chatham Islands</nav>
+<style>svg .c0{fill:#cde2fb;stroke:var(--surface);stroke-width:.6}svg .c1{fill:#9ec5f4;stroke:var(--surface);stroke-width:.6}svg .c2{fill:#6da7ec;stroke:var(--surface);stroke-width:.6}svg .c3{fill:#3987e5;stroke:var(--surface);stroke-width:.6}svg .c4{fill:#256abf;stroke:var(--surface);stroke-width:.6}svg .c5{fill:#184f95;stroke:var(--surface);stroke-width:.6}</style>
 <h1>Chatham Islands population by suburb</h1>
-<p>Chatham Islands had <strong>612</strong> usually resident people at the 2023 Census (-7.7% since 2018), across 1
-suburbs and localities.</p>
-<a class="cta" href="/#chatham-islands">Open Chatham Islands on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>612</strong></div><div class="card"><span>Population 2018</span><strong>663</strong></div><div class="card"><span>Median age (estimate)</span><strong>44.0</strong></div><div class="card"><span>Median personal income (estimate)</span><strong>$46,600</strong></div><div class="card"><span>Median weekly rent (estimate)</span><strong>$150</strong></div><div class="card"><span>Own or partly own home</span><strong>50.0%</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>11.0%</strong></div><div class="card"><span>Born overseas</span><strong>4.5%</strong></div></div>
-<h2>Suburbs in Chatham Islands</h2>
+<p class="where">Islands · 1 suburbs and localities</p>
+<div class="hero wide">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">612</span><span class="chip">-7.7% since 2018</span></div>
+    <div class="trend"><div><b>600</b><i style="height:63%"></i><span>2013</span></div><div><b>663</b><i style="height:70%"></i><span>2018</span></div><div><b>612</b><i style="height:65%"></i><span>2023</span></div></div>
+    <p class="lead">Chatham Islands is home to 0.0% of New Zealand's population. It shrank 7.7% between the 2018 and 2023 censuses.</p>
+    <a class="cta" href="/#chatham-islands">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 706 880" role="img" fill-rule="evenodd"><a href="/chatham-islands/chatham-islands/"><path class="c5" d="M678 848 676 850 674 854 672 859 673 863 671 865 674 867 677 868 680 870 683 873 687 874 690 873 691 868 690 864 685 862 687 860 688 855 685 853 682 850 679 848ZM549 769 543 771 544 774 547 773 550 772 549 769ZM569 752 566 751 562 754 562 758 563 761 561 765 559 768 554 770 558 772 561 770 562 766 566 764 573 762 573 757 573 752 569 752ZM636 700 633 707 631 710 630 713 628 715 626 717 623 718 622 722 618 722 613 721 609 722 605 722 601 724 597 726 593 725 591 723 588 722 585 721 586 724 588 726 590 729 596 730 599 729 600 733 603 732 606 736 607 741 609 743 610 746 614 746 619 750 620 754 621 757 619 762 617 766 614 767 610 768 605 770 600 773 600 777 595 779 591 782 594 783 598 780 599 783 602 784 604 786 605 790 600 798 599 801 601 803 600 806 602 810 606 811 607 814 604 818 604 822 603 826 601 829 599 831 595 831 593 834 595 836 600 836 604 835 610 836 613 839 612 846 610 850 605 852 604 855 604 860 608 861 612 862 613 866 617 868 620 867 623 865 621 862 624 861 625 857 630 855 633 853 631 851 630 847 632 845 635 843 639 842 640 845 644 844 646 840 648 838 650 835 652 837 655 833 656 825 654 822 657 820 661 817 660 813 658 811 657 807 658 802 660 799 664 795 665 791 668 787 670 785 674 781 678 777 683 773 686 771 691 768 695 765 698 764 695 761 696 758 695 755 698 752 699 749 696 750 694 752 691 753 688 751 685 748 682 745 679 741 676 738 674 735 672 733 670 729 667 726 665 723 664 719 660 719 658 721 660 723 657 724 658 721 660 718 663 716 661 714 659 710 652 705 649 703 646 701 642 701 638 702 636 700ZM253 0 250 1 249 6 250 9 246 13 242 13 241 17 244 21 240 28 242 30 243 34 246 36 249 34 252 32 256 31 254 34 251 36 248 38 247 43 245 47 242 52 240 56 238 58 234 62 230 66 226 69 224 73 219 74 215 74 213 76 209 77 202 78 198 79 194 80 191 82 188 84 183 84 179 85 175 86 171 87 167 88 164 92 159 93 147 95 141 96 133 96 130 95 120 94 115 93 110 92 104 90 99 88 94 85 91 83 88 81 85 77 84 74 85 71 83 69 77 70 73 71 74 75 71 76 69 78 70 81 67 84 73 88 75 91 78 98 80 105 80 109 79 117 78 120 74 121 71 123 67 123 60 125 56 125 53 126 49 126 45 126 40 126 36 126 32 127 29 128 26 129 24 131 21 134 19 136 17 138 15 140 19 143 16 146 19 148 18 151 14 152 14 156 16 158 18 161 17 164 12 166 8 165 5 166 2 169 0 171 2 173 5 175 9 176 12 177 14 179 18 181 16 185 13 186 12 189 11 192 14 194 17 192 20 191 24 189 28 190 32 192 34 196 37 198 41 197 42 194 40 190 43 188 46 189 48 191 53 193 56 194 60 194 64 194 67 196 72 196 79 194 82 193 87 192 92 191 98 190 97 187 101 188 99 185 97 183 96 179 94 177 92 175 91 172 94 169 97 170 100 171 103 172 108 174 112 175 116 175 119 177 123 178 127 178 128 182 131 185 134 180 140 180 141 177 146 177 150 178 154 179 157 181 162 181 167 180 171 178 175 174 178 175 180 173 181 170 180 165 178 163 175 162 175 158 174 154 177 151 179 153 181 155 186 157 186 161 190 163 195 158 194 155 196 151 195 146 194 141 196 139 200 140 201 145 205 148 209 151 213 148 214 144 215 139 217 137 220 142 222 146 222 150 225 152 229 152 231 149 233 146 236 148 239 151 239 155 245 152 250 152 253 153 255 156 260 156 264 154 267 156 270 154 269 157 272 160 275 165 278 167 281 172 285 176 288 181 292 186 296 191 300 197 302 202 305 204 307 208 310 214 313 220 315 222 316 226 319 231 322 236 323 239 326 246 329 251 330 256 331 259 331 263 332 268 331 271 332 275 333 278 334 281 338 283 339 286 340 292 341 297 341 303 341 307 341 313 341 319 340 323 338 328 336 331 334 334 330 338 325 342 318 343 316 340 313 337 315 334 312 330 308 328 304 327 304 331 305 335 301 338 302 341 301 345 301 349 298 350 297 355 295 357 291 358 289 360 285 360 281 361 277 364 276 367 272 367 270 369 268 371 264 373 262 375 259 378 258 381 254 381 248 384 246 386 244 388 241 392 238 393 235 395 233 397 230 401 228 403 224 404 220 405 217 407 213 409 209 410 207 412 203 413 200 416 199 420 201 423 203 425 203 429 202 432 204 435 207 437 205 440 208 441 210 443 211 447 213 451 215 453 216 456 218 458 221 459 225 460 223 463 222 467 223 471 224 474 223 477 224 480 224 485 225 488 227 490 224 491 220 495 221 498 224 499 229 503 232 504 234 508 235 513 236 518 238 520 236 522 234 527 235 530 236 533 235 538 234 541 237 542 240 543 243 545 244 549 247 552 246 557 244 560 243 565 245 567 248 564 251 562 254 563 257 564 260 566 262 569 265 570 271 570 277 569 282 571 284 573 286 575 288 572 293 573 296 576 299 577 303 575 306 574 312 572 317 570 320 571 324 568 326 566 330 565 334 561 335 554 338 549 339 545 342 542 345 541 348 537 353 534 356 533 359 535 361 532 365 531 367 528 369 525 371 521 376 520 379 521 380 524 381 520 384 519 387 512 391 508 394 505 396 503 402 502 406 500 408 498 411 496 416 493 421 491 425 490 431 490 435 489 441 486 444 485 448 485 453 485 459 482 462 480 467 478 471 477 475 476 481 478 486 480 488 482 492 480 497 481 501 482 505 481 508 480 511 479 514 477 517 475 520 471 522 473 525 471 529 472 531 475 534 474 535 471 538 470 537 467 536 460 535 454 537 452 537 448 535 450 531 450 528 448 522 449 518 447 516 444 514 441 512 438 508 436 505 435 502 438 498 438 493 438 489 436 487 433 482 430 480 428 477 425 472 417 470 412 467 404 464 397 463 394 461 390 459 382 458 377 457 374 456 369 455 362 454 355 453 349 452 336 452 331 452 326 451 321 449 319 447 315 446 311 445 315 443 320 441 322 440 325 438 327 438 332 438 336 438 340 439 347 439 351 439 356 437 359 433 362 431 360 433 357 430 358 425 361 419 360 416 359 412 357 408 354 406 352 401 350 398 348 397 345 395 347 389 343 387 338 388 335 386 333 389 331 387 328 390 327 393 326 397 317 398 313 402 310 398 308 396 304 394 301 396 299 397 296 394 293 393 289 391 287 388 285 385 284 383 281 381 279 378 274 376 271 372 270 369 266 366 263 364 261 361 258 360 255 360 251 358 248 356 245 354 238 351 234 350 229 350 224 351 220 350 215 350 209 352 205 354 202 357 199 360 196 365 194 368 193 371 192 368 191 367 188 369 184 371 182 375 180 378 181 379 178 377 175 379 171 382 170 386 170 392 172 394 174 396 176 395 172 398 170 400 167 403 165 404 162 410 159 415 159 417 156 419 154 423 154 423 150 424 147 420 145 416 145 410 144 407 143 399 145 395 145 391 146 387 145 383 144 380 141 376 139 372 138 367 138 364 139 361 140 357 140 351 140 346 139 342 137 340 135 336 134 333 132 331 129 329 126 329 122 329 118 325 117 320 115 316 112 315 108 314 103 315 99 314 94 315 89 317 86 319 84 320 79 323 80 325 78 324 74 324 70 322 67 323 64 325 61 329 59 334 60 339 61 342 63 346 63 350 63 354 64 357 66 359 69 363 72 365 74 367 77 369 79 369 83 368 88 373 94 375 91 377 89 380 86 383 85 385 82 387 78 390 75 393 73 399 72 405 74 409 76 413 77 420 76 426 75 431 76 436 78 439 79 445 82 453 87 459 90 463 93 468 95 471 97 474 100 476 102 479 105 480 109 482 111 485 119 487 122 471 163 466 170 465 173 464 179 464 184 461 189 460 194 457 196 451 199 447 204 443 205 442 201 442 205 443 209 444 213 446 220 448 227 449 230 450 233 450 238 451 246 451 254 451 258 451 263 450 269 449 273 446 279 443 282 441 288 440 292 440 296 443 295 446 296 449 298 450 305 449 308 452 303 453 296 454 282 455 277 456 273 457 268 458 264 459 259 460 256 462 245 465 236 468 229 469 226 471 222 473 216 477 209 478 205 482 197 485 191 487 188 490 182 492 178 495 172 498 168 501 163 503 160 505 158 507 156 508 153 510 150 514 144 517 140 523 133 526 128 532 122 538 116 542 113 550 107 555 104 557 102 561 99 564 98 568 96 571 95 574 93 579 92 585 92 589 91 593 90 597 90 604 93 607 94 610 96 613 102 616 104 619 103 620 100 618 97 617 94 615 89 616 83 617 80 619 77 622 75 625 73 627 71 630 69 634 64 636 62 639 66 642 64 644 61 647 62 652 63 654 60 659 57 658 54 654 53 653 50 652 47 648 49 645 53 642 52 639 51 636 53 634 56 631 55 628 53 626 50 620 49 614 51 613 47 609 47 606 48 607 51 606 56 601 57 597 56 594 54 592 52 591 49 588 50 590 53 589 57 586 62 584 65 581 67 576 67 573 66 570 70 565 72 562 73 553 72 549 72 543 72 540 70 538 66 536 64 532 61 528 58 524 60 519 58 516 54 514 56 512 58 512 62 509 64 505 66 501 68 497 69 492 69 484 68 480 67 476 66 470 66 467 67 461 70 457 70 448 72 445 73 438 73 433 73 425 71 420 70 410 69 404 67 400 65 394 64 390 62 381 56 379 54 376 50 375 47 375 41 377 38 372 39 368 40 361 41 353 41 348 40 343 39 336 38 333 37 330 36 328 32 324 30 320 29 317 27 313 26 310 25 307 23 305 21 302 20 299 18 295 17 290 17 285 17 279 16 275 15 270 13 267 12 265 7 262 6 257 5 255 2 253 0Z"><title>Chatham Islands: 612 people</title></path></a></svg><div class="scale">Fewer people <i style="background:#cde2fb"></i><i style="background:#9ec5f4"></i><i style="background:#6da7ec"></i><i style="background:#3987e5"></i><i style="background:#256abf"></i><i style="background:#184f95"></i> More people</div><figcaption>Suburbs of Chatham Islands by population. Select one for its profile.</figcaption></figure>
+</div>
+<h2>Key figures</h2>
+<p class="note">2023 Census. Regional medians are estimates built from the suburb medians.</p>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$46,600</strong><em>NZ $42,000</em></div><div class="card"><span>Median household income</span><strong>$93,100</strong><em>NZ $96,700</em></div><div class="card"><span>Median age</span><strong>44.0</strong><em>NZ 38.4</em></div><div class="card"><span>Median weekly rent</span><strong>$150</strong><em>NZ $450</em></div><div class="card"><span>Own or partly own home</span><strong>50.0%</strong><em>NZ 51.3%</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>11.0%</strong><em>NZ 27.1%</em></div><div class="card"><span>Unemployment rate</span><strong>3.6%</strong><em>NZ 4.4%</em></div><div class="card"><span>Born overseas</span><strong>4.5%</strong><em>NZ 28.8%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:29.4%"></i><u style="left:34.1%" title="New Zealand: 18.7%"></u></div><b>16.1%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:28.5%"></i><u style="left:35.4%" title="New Zealand: 19.4%"></u></div><b>15.6%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:82.6%" title="New Zealand: 45.3%"></u></div><b>52.2%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:29.4%"></i><u style="left:30.3%" title="New Zealand: 16.6%"></u></div><b>16.1%</b></div><div class="key"><u></u>New Zealand average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:89.1%" title="New Zealand: 67.8%"></u></div><b>72.5%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:90.1%"></i><u style="left:23.4%" title="New Zealand: 17.8%"></u></div><b>68.6%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:5.1%"></i><u style="left:11.7%" title="New Zealand: 8.9%"></u></div><b>3.9%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:2.6%"></i><u style="left:22.7%" title="New Zealand: 17.3%"></u></div><b>2.0%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.0%"></i><u style="left:1.4%" title="New Zealand: 1.1%"></u></div><b>1.5%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:1.3%"></i><u style="left:2.5%" title="New Zealand: 1.9%"></u></div><b>1.0%</b></div><div class="key"><u></u>New Zealand average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:39.5%"></i><u style="left:25.5%" title="New Zealand: 17.7%"></u></div><b>27.4%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:85.4%"></i><u style="left:95.2%" title="New Zealand: 66.1%"></u></div><b>59.3%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:6.3%"></i><u style="left:5.2%" title="New Zealand: 3.6%"></u></div><b>4.4%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:7.5%" title="New Zealand: 5.2%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:1.0%"></i><u style="left:2.7%" title="New Zealand: 1.9%"></u></div><b>0.7%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:8.5%"></i><u style="left:6.1%" title="New Zealand: 4.2%"></u></div><b>5.9%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.2%"></i><u style="left:2.0%" title="New Zealand: 1.4%"></u></div><b>1.5%</b></div><div class="key"><u></u>New Zealand average</div></div>
+<h2>All suburbs in Chatham Islands</h2>
 <div class="scroll"><table>
-<tr><th>Suburb</th><th>Population 2023</th><th>Change since 2018</th><th>Median age</th><th>Median income</th></tr>
-<tr><td><a href="/chatham-islands/chatham-islands/">Chatham Islands</a></td><td>612</td><td>-7.7%</td><td>44.0</td><td>$46,600</td></tr>
+<tr><th>Suburb</th><th class="t">District</th><th>Population</th><th>Since 2018</th><th>Median age</th><th>Median income</th><th>Weekly rent</th></tr>
+<tr><td><a href="/chatham-islands/chatham-islands/">Chatham Islands</a></td><td class="t">Chatham Islands Territory</td><td>612</td><td>-7.7%</td><td>44.0</td><td>$46,600</td><td>$150</td></tr>
 </table></div>
 
 <footer>Figures are from the Stats NZ 2023 Census (licensed CC BY 4.0) and other public

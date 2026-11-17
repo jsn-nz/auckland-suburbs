@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Wellington", "item": "https://population.co.nz/wellington/"}, {"@type": "ListItem", "position": 3, "name": "Trentham North", "item": "https://population.co.nz/wellington/trentham-north/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#wellington/trentham-north" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Trentham North</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Trentham North</nav>
 <h1>Trentham North population and demographics</h1>
-<p>Trentham North is a statistical area in Upper Hutt City, Wellington. At the 2023 Census it had <strong>2,988</strong>
-usually resident people (-3.1% since 2018). It is part of the wider Trentham area.</p>
-<a class="cta" href="/#wellington/trentham-north">Open Trentham North on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>2,988</strong></div><div class="card"><span>Population 2018</span><strong>3,084</strong></div><div class="card"><span>Population 2013</span><strong>2,940</strong></div><div class="card"><span>Median age</span><strong>41.6</strong></div><div class="card"><span>Median personal income</span><strong>$38,500</strong></div><div class="card"><span>Median household income</span><strong>$74,600</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>19.9%</strong></div><div class="card"><span>Unemployment rate</span><strong>3.8%</strong></div><div class="card"><span>Born overseas</span><strong>23.5%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>7</strong></div></div>
+<p class="where">Upper Hutt City · Wellington · part of the wider Trentham area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">2,988</span><span class="chip">-3.1% since 2018</span></div>
+    <div class="trend"><div><b>2,940</b><i style="height:67%"></i><span>2013</span></div><div><b>3,084</b><i style="height:70%"></i><span>2018</span></div><div><b>2,988</b><i style="height:68%"></i><span>2023</span></div></div>
+    <p class="lead">Trentham North is in Upper Hutt City, Wellington. Its population fell 3.1% between the 2018 and 2023 censuses. The median age is 41.6, compared with 38.1 across Wellington.</p>
+    <a class="cta" href="/#wellington/trentham-north">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 344" role="img" fill-rule="evenodd"><path class="a" d="M278 26 273 27 269 27 264 28 262 27 259 25 254 28 251 29 247 29 244 27 242 24 240 22 237 20 234 22 232 23 228 24 228 27 225 35 223 37 219 37 217 33 216 30 212 26 210 25 207 27 205 29 200 28 198 26 195 20 192 20 189 20 190 22 187 22 185 24 181 23 179 21 176 22 173 22 172 19 162 19 157 0 140 4 142 6 143 9 122 15 128 36 129 40 107 40 104 37 101 32 99 29 96 28 94 26 96 21 92 16 87 20 84 23 83 25 82 27 80 30 79 33 77 36 74 43 71 46 68 49 67 51 65 54 62 57 60 58 57 60 54 60 50 61 45 61 41 61 34 71 19 78 0 75 0 78 0 81 2 85 3 87 5 90 7 92 15 108 11 125 8 136 10 137 13 135 14 154 17 155 22 155 23 153 26 154 28 153 32 152 32 163 33 166 23 173 27 180 31 184 33 188 29 192 31 194 29 195 27 199 26 201 29 202 28 205 27 207 29 210 28 212 26 213 25 216 22 217 24 218 23 220 21 222 19 226 17 229 18 231 20 234 24 237 35 239 40 236 44 233 46 231 50 228 53 227 55 225 58 221 60 220 64 218 69 214 72 212 69 209 68 206 67 203 66 201 65 195 65 190 65 187 70 187 71 189 75 191 76 193 77 196 80 199 82 198 83 200 86 202 90 203 97 203 100 203 104 203 108 203 107 201 104 199 107 195 114 190 121 186 121 183 122 180 122 175 124 176 125 174 127 170 127 166 129 165 131 166 133 164 131 161 131 158 134 158 136 156 138 155 139 153 138 148 137 145 141 144 158 149 156 155 168 158 170 157 169 155 168 153 180 156 180 165 176 168 181 168 186 164 189 163 192 164 197 164 200 161 206 158 209 158 219 158 223 159 226 160 227 162 229 170 229 174 228 178 227 181 228 184 230 185 230 188 232 189 232 192 233 194 234 196 239 198 238 200 239 202 242 201 246 203 248 202 250 204 252 203 251 199 250 197 249 190 260 178 264 173 268 171 267 168 267 165 266 162 265 159 263 158 261 151 260 148 261 143 263 138 264 136 266 134 268 131 270 130 273 127 274 123 275 121 275 118 276 114 276 110 278 108 279 105 279 101 281 98 282 95 285 93 288 92 291 90 293 86 295 84 297 81 299 78 302 77 304 73 307 71 308 69 309 67 310 64 314 60 316 56 318 53 320 49 319 47 313 43 311 42 309 43 303 44 300 45 297 45 295 46 288 45 287 43 285 40 283 38 281 34 281 30 280 28 278 26Z"/><path class="a" d="M88 216 83 209 84 204 86 202 82 204 79 206 76 208 74 210 72 212 73 214 79 222 86 217 88 216Z"/><path class="a" d="M125 199 123 192 122 189 121 186 114 190 107 195 102 199 106 201 108 203 112 202 115 202 121 200 125 199Z"/><path class="a" d="M252 203 250 204 248 202 246 203 243 202 240 201 238 200 239 198 236 196 233 194 232 192 233 190 231 188 230 185 228 184 227 182 228 179 229 174 229 170 227 162 226 160 223 159 219 158 209 158 206 158 201 160 198 163 194 164 192 168 189 172 174 177 175 181 175 184 173 185 172 182 167 183 163 183 160 182 157 183 155 185 155 188 152 189 145 194 129 204 128 206 128 210 126 211 123 213 120 215 118 219 117 221 113 220 110 221 109 225 100 226 98 227 95 227 92 225 98 234 91 241 82 252 81 259 80 257 71 266 67 262 67 270 69 273 75 274 74 280 72 279 68 278 67 282 54 280 52 293 41 293 39 298 39 302 38 304 36 306 31 308 29 311 30 313 30 316 32 317 33 319 35 320 37 325 41 325 43 326 45 325 47 324 51 323 56 329 58 328 61 328 64 328 66 330 69 330 72 330 74 333 76 334 78 332 82 327 85 326 88 328 91 328 93 329 98 330 100 328 101 326 103 325 105 324 107 322 110 324 111 326 113 329 111 332 112 336 113 339 114 335 117 331 119 329 122 326 124 324 126 322 128 321 131 321 134 321 137 323 140 323 144 320 147 321 150 321 153 320 153 323 155 326 158 325 162 321 166 319 168 316 169 314 172 313 174 311 177 311 178 309 178 305 180 302 181 292 183 286 186 282 187 280 189 281 191 279 192 274 193 271 198 269 201 265 202 263 203 260 205 257 207 252 209 249 210 247 212 245 216 246 218 245 221 245 223 247 227 246 228 243 228 240 228 237 228 234 231 229 237 223 239 220 240 218 242 217 242 213 243 211 245 207 250 208 252 206 252 203Z"/><path class="a" d="M67 271 67 262 71 266 80 257 81 259 82 252 91 241 98 234 92 225 90 222 86 224 83 226 78 229 76 230 70 233 60 237 61 239 63 243 53 250 60 261 67 270Z"/><path class="a" d="M108 203 104 203 100 203 97 205 98 213 99 211 101 212 104 210 106 211 108 212 111 211 111 208 110 205 108 203Z"/><path class="a" d="M95 227 96 224 99 222 99 219 98 216 88 216 90 222 92 225 94 226Z"/><path class="a" d="M53 250 45 256 43 253 38 256 42 262 37 266 45 279 54 280 67 282 68 278 70 279 73 279 75 274 69 273 67 271 60 261 53 250Z"/><path class="a" d="M86 202 85 200 82 198 80 199 78 196 77 194 75 191 72 190 70 187 65 187 65 190 65 195 65 201 67 203 69 205 70 208 71 211 74 210 76 208 78 206 82 204 85 202Z"/><path class="a" d="M35 241 47 242 51 241 60 237 70 232 68 229 70 228 67 222 64 218 60 220 58 221 56 224 53 227 50 228 47 230 44 233 40 236 37 239 35 241Z"/><path class="a" d="M98 203 92 203 86 202 84 204 83 209 88 216 97 215 98 213 97 205 98 203Z"/><path class="a" d="M170 157 168 158 156 155 158 149 141 144 138 144 138 147 139 153 138 155 136 156 134 158 131 158 131 161 131 164 129 165 127 166 127 170 125 174 124 176 122 175 121 179 121 183 121 186 122 189 123 192 125 198 127 199 128 189 130 187 134 185 138 182 141 181 144 179 147 179 150 178 152 177 153 175 151 172 152 170 156 172 159 170 158 168 162 164 166 163 168 161 170 160 170 157Z"/><path class="a" d="M79 222 73 214 72 212 69 214 64 218 67 222 70 228 79 222Z"/><path class="a" d="M53 250 63 243 61 241 60 237 51 241 49 242 35 241 32 243 30 244 31 246 32 248 38 256 43 253 45 256 52 251Z"/><path class="a" d="M152 190 150 186 151 184 153 183 155 182 154 180 151 179 147 179 144 179 141 181 138 182 135 185 130 187 128 189 127 198 125 200 126 202 125 204 123 209 121 211 122 213 124 211 128 210 128 206 130 205 145 194 152 190Z"/><path class="a" d="M192 164 189 163 186 164 182 168 176 168 180 165 180 156 168 151 169 155 170 157 170 160 168 161 167 163 163 163 159 167 159 170 157 172 153 170 151 171 153 175 152 177 150 178 153 180 155 182 153 183 151 184 150 186 152 190 155 188 154 186 157 184 159 183 163 183 166 182 172 182 173 185 175 186 174 182 174 177 187 172 192 168 194 164Z"/><path class="a" d="M125 199 123 200 116 201 112 202 110 203 110 208 111 211 114 211 117 212 120 212 123 209 124 205 126 203 125 200Z"/><path class="a" d="M111 211 109 212 106 212 104 211 101 212 99 211 98 213 97 215 99 219 99 222 96 224 95 227 97 228 100 226 109 225 110 222 112 221 117 221 118 219 120 217 122 214 126 212 124 211 122 213 121 211 118 212 114 211 111 211Z"/><path class="on" d="M70 232 76 230 78 229 83 226 86 224 90 222 87 217 79 222 71 227 68 229 70 232Z"/></svg><figcaption>Trentham North within Upper Hutt City</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$38,500</strong><em>Wellington $48,400</em></div><div class="card"><span>Median household income</span><strong>$74,600</strong><em>Wellington $113,700</em></div><div class="card"><span>Median age</span><strong>41.6</strong><em>Wellington 38.1</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>19.9%</strong><em>Wellington 35.6%</em></div><div class="card"><span>Unemployment rate</span><strong>3.8%</strong><em>Wellington 4.1%</em></div><div class="card"><span>Born overseas</span><strong>23.5%</strong><em>Wellington 28.3%</em></div><div class="card"><span>NZDep2023 decile</span><strong>7 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>48.8%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$450</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$520</strong></div><div class="card"><span>Stand-alone houses</span><strong>51.7%</strong></div><div class="card"><span>Crowded households</span><strong>4.7%</strong></div><div class="card"><span>Damp homes</span><strong>19.6%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>73.7%</strong></div><div class="card"><span>Māori</span><strong>18.5%</strong></div><div class="card"><span>Asian</span><strong>13.9%</strong></div><div class="card"><span>Pacific</span><strong>8.4%</strong></div><div class="card"><span>MELAA</span><strong>1.5%</strong></div><div class="card"><span>Other</span><strong>1.3%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>48.8%</strong><em>Wellington 52.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$450</strong><em>Wellington $510</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$520</strong><em>Wellington $610</em></div><div class="card"><span>Stand-alone houses</span><strong>51.7%</strong><em>Wellington 72.7%</em></div><div class="card"><span>Crowded households</span><strong>4.7%</strong><em>Wellington 5.4%</em></div><div class="card"><span>Damp homes</span><strong>19.6%</strong><em>Wellington 19.9%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:31.3%"></i><u style="left:35.0%" title="Wellington: 17.2%"></u></div><b>15.4%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:35.0%"></i><u style="left:42.5%" title="Wellington: 20.9%"></u></div><b>17.2%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:94.2%" title="Wellington: 46.3%"></u></div><b>46.8%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:41.7%"></i><u style="left:31.5%" title="Wellington: 15.5%"></u></div><b>20.5%</b></div><div class="key"><u></u>Wellington average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:93.8%" title="Wellington: 72.6%"></u></div><b>73.7%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:23.9%"></i><u style="left:20.0%" title="Wellington: 15.5%"></u></div><b>18.5%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:18.0%"></i><u style="left:19.6%" title="Wellington: 15.2%"></u></div><b>13.9%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:10.9%"></i><u style="left:11.8%" title="Wellington: 9.1%"></u></div><b>8.4%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:1.9%"></i><u style="left:3.0%" title="Wellington: 2.3%"></u></div><b>1.5%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.7%"></i><u style="left:1.4%" title="Wellington: 1.1%"></u></div><b>1.3%</b></div><div class="key"><u></u>Wellington average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:24.0%"></i><u style="left:31.0%" title="Wellington: 19.0%"></u></div><b>14.7%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:80.9%" title="Wellington: 49.5%"></u></div><b>58.3%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:5.7%"></i><u style="left:6.0%" title="Wellington: 3.7%"></u></div><b>3.5%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:30.1%"></i><u style="left:25.3%" title="Wellington: 15.5%"></u></div><b>18.4%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:2.0%"></i><u style="left:3.9%" title="Wellington: 2.4%"></u></div><b>1.2%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:4.7%"></i><u style="left:13.6%" title="Wellington: 8.3%"></u></div><b>2.9%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.3%"></i><u style="left:2.6%" title="Wellington: 1.6%"></u></div><b>0.8%</b></div><div class="key"><u></u>Wellington average</div></div>
 <h2>Nearby in Upper Hutt City</h2>
 <ul class="links"><li><a href="/wellington/akatarawa/">Akatarawa</a></li><li><a href="/wellington/birchville-brown-owl/">Birchville-Brown Owl</a></li><li><a href="/wellington/brentwood-upper-hutt-city/">Brentwood (Upper Hutt City)</a></li><li><a href="/wellington/clouston-park/">Clouston Park</a></li><li><a href="/wellington/ebdentown/">Ebdentown</a></li><li><a href="/wellington/elderslea/">Elderslea</a></li><li><a href="/wellington/heretaunga/">Heretaunga</a></li><li><a href="/wellington/mangaroa/">Mangaroa</a></li><li><a href="/wellington/maoribank/">Maoribank</a></li><li><a href="/wellington/pinehaven/">Pinehaven</a></li><li><a href="/wellington/poets-block/">Poets Block</a></li><li><a href="/wellington/riverstone-terraces/">Riverstone Terraces</a></li><li><a href="/wellington/silverstream-upper-hutt-city/">Silverstream (Upper Hutt City)</a></li><li><a href="/wellington/te-marua/">Te Marua</a></li><li><a href="/wellington/totara-park/">Totara Park</a></li><li><a href="/wellington/trentham-south/">Trentham South</a></li><li><a href="/wellington/upper-hutt-central/">Upper Hutt Central</a></li><li><a href="/wellington/wallaceville/">Wallaceville</a></li></ul>
 

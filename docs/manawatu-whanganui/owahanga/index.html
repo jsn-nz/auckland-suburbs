@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Manawatū-Whanganui", "item": "https://population.co.nz/manawatu-whanganui/"}, {"@type": "ListItem", "position": 3, "name": "Owahanga", "item": "https://population.co.nz/manawatu-whanganui/owahanga/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#manawatu-whanganui/owahanga" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/manawatu-whanganui/">Manawatū-Whanganui</a> › Owahanga</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/manawatu-whanganui/">Manawatū-Whanganui</a> › Owahanga</nav>
 <h1>Owahanga population and demographics</h1>
-<p>Owahanga is a statistical area in Tararua District, Manawatū-Whanganui. At the 2023 Census it had <strong>720</strong>
-usually resident people (-4.0% since 2018). It is part of the wider Tararua District Other area.</p>
-<a class="cta" href="/#manawatu-whanganui/owahanga">Open Owahanga on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>720</strong></div><div class="card"><span>Population 2018</span><strong>750</strong></div><div class="card"><span>Population 2013</span><strong>717</strong></div><div class="card"><span>Median age</span><strong>42.8</strong></div><div class="card"><span>Median personal income</span><strong>$34,000</strong></div><div class="card"><span>Median household income</span><strong>$64,400</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>14.2%</strong></div><div class="card"><span>Unemployment rate</span><strong>3.0%</strong></div><div class="card"><span>Born overseas</span><strong>7.1%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>6</strong></div></div>
+<p class="where">Tararua District · Manawatū-Whanganui · part of the wider Tararua District Other area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">720</span><span class="chip">-4.0% since 2018</span></div>
+    <div class="trend"><div><b>717</b><i style="height:67%"></i><span>2013</span></div><div><b>750</b><i style="height:70%"></i><span>2018</span></div><div><b>720</b><i style="height:67%"></i><span>2023</span></div></div>
+    <p class="lead">Owahanga is in Tararua District, Manawatū-Whanganui. Its population fell 4.0% between the 2018 and 2023 censuses. The median age is 42.8, compared with 40.9 across Manawatū-Whanganui.</p>
+    <a class="cta" href="/#manawatu-whanganui/owahanga">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 290" role="img" fill-rule="evenodd"><path class="a" d="M191 146 183 146 176 145 174 144 175 142 177 140 177 137 178 135 178 132 180 131 174 128 175 126 168 125 165 124 161 123 163 122 167 120 165 119 163 117 161 118 158 118 154 116 152 118 150 117 148 118 146 120 145 122 143 121 142 123 141 125 138 127 135 128 136 130 135 132 134 134 133 136 131 137 129 136 129 139 126 141 124 140 122 142 120 145 118 144 118 141 116 142 116 145 116 152 114 153 114 156 113 158 112 160 110 161 109 163 108 165 107 168 105 170 103 172 103 176 101 177 101 180 99 182 97 189 98 191 94 197 90 203 89 205 87 208 88 210 99 216 102 216 103 218 105 220 105 223 109 224 112 224 111 226 110 228 110 231 112 232 115 232 114 230 114 225 138 215 147 212 149 211 151 210 153 208 154 206 156 205 159 205 162 205 164 204 165 202 164 200 162 199 162 196 164 194 166 192 167 190 168 188 170 185 171 183 172 180 173 178 174 176 175 173 176 171 178 169 180 165 182 161 183 158 185 155 187 152 190 150 191 148Z"/><path class="a" d="M87 208 83 211 81 208 80 206 78 203 68 198 59 195 43 187 35 198 32 202 17 226 9 239 2 250 0 253 19 263 24 266 25 268 28 268 31 268 33 269 35 270 37 271 42 274 44 273 43 271 50 271 51 265 56 266 57 264 58 262 61 261 61 257 60 254 66 254 72 254 77 254 78 256 81 256 85 258 84 260 83 262 84 264 87 264 86 267 85 269 84 271 83 273 81 275 81 278 80 280 86 281 89 282 91 283 93 284 95 281 97 278 99 279 101 280 104 278 107 281 109 280 110 283 114 282 120 274 127 279 130 270 132 271 134 269 137 269 139 268 139 265 140 263 142 265 144 264 148 260 150 257 152 258 157 261 161 261 163 260 166 260 168 261 167 258 169 253 170 250 171 248 172 246 174 245 175 247 177 244 174 244 175 241 176 238 177 236 179 237 181 236 182 230 178 228 175 222 174 218 171 218 169 219 167 217 165 215 163 213 161 212 159 210 158 208 155 207 153 208 151 210 149 211 147 212 138 215 114 225 114 228 115 230 113 232 110 232 111 229 110 227 112 226 111 224 105 224 105 220 103 218 102 216 99 216 88 210 87 208Z"/><path class="a" d="M233 38 234 36 234 33 232 32 230 30 228 29 227 26 224 26 221 26 219 25 218 22 217 20 218 18 215 18 214 16 211 16 211 12 205 12 204 8 202 9 195 8 192 8 188 6 183 12 182 10 180 9 171 0 170 3 168 5 166 7 167 9 167 12 166 15 168 19 165 24 163 25 161 26 158 28 155 30 154 32 152 36 151 38 150 40 148 42 146 43 142 48 143 50 144 53 146 55 147 58 149 59 151 60 157 65 160 67 162 68 163 66 165 67 167 68 170 68 173 69 175 70 177 69 176 71 179 72 178 74 176 75 177 77 179 76 181 75 183 76 184 78 185 80 186 83 189 84 192 84 192 87 195 87 197 88 198 86 196 85 198 86 199 83 200 85 201 87 202 84 203 86 204 84 206 83 205 80 207 79 206 77 204 76 202 74 203 72 201 73 200 71 202 72 203 70 202 68 204 67 204 64 204 61 207 60 208 58 207 56 210 55 212 54 214 53 215 51 217 50 216 48 219 48 222 47 223 45 224 43 226 42 228 43 230 44 231 46 231 43 233 41 233 38Z"/><path class="a" d="M174 69 172 68 169 68 167 67 163 66 162 68 160 67 157 65 151 60 149 59 147 58 146 55 144 53 143 51 142 49 140 53 137 56 134 58 128 58 126 65 123 64 117 69 116 73 112 78 110 80 110 83 110 86 108 88 107 90 109 91 107 93 106 95 114 98 118 100 120 98 123 97 124 95 123 93 125 92 127 93 130 95 133 96 134 98 136 99 138 101 141 103 144 103 146 105 148 106 150 109 152 111 150 113 148 114 150 115 149 117 146 118 149 118 152 118 154 116 155 114 156 112 155 110 155 107 157 106 159 105 158 103 156 104 154 103 155 101 157 100 158 98 159 96 162 96 164 97 166 96 168 95 170 96 169 93 172 93 173 91 171 90 173 89 175 88 177 89 180 89 182 87 182 90 184 89 185 87 186 85 188 86 189 84 187 83 186 81 184 79 183 77 182 75 179 75 178 77 176 78 175 80 172 81 173 83 171 84 169 81 167 82 169 80 170 78 171 76 172 74 173 72 174 70Z"/><path class="a" d="M146 119 147 117 151 116 149 115 150 113 152 111 150 109 149 106 146 106 144 104 141 103 138 101 136 99 134 98 133 96 130 95 127 92 124 92 123 94 123 97 120 98 118 100 114 98 106 95 102 91 100 93 98 97 98 91 94 91 94 100 92 99 88 104 85 108 82 112 83 114 86 115 86 122 84 123 85 125 83 124 84 126 83 129 82 131 80 132 79 134 81 136 79 137 77 138 76 140 75 142 73 143 72 145 71 147 69 148 70 150 70 153 69 155 67 156 66 158 64 159 67 160 60 170 58 171 53 176 42 186 59 195 68 198 78 203 80 206 81 208 83 211 86 207 89 205 90 203 93 198 97 192 97 189 97 182 100 181 101 179 102 176 103 174 105 171 106 169 108 167 108 164 110 162 111 160 113 159 114 157 113 154 116 152 116 147 116 144 115 142 117 141 118 143 119 145 121 143 124 140 126 141 128 140 129 138 130 136 132 137 133 135 134 133 136 130 134 129 136 127 140 126 141 124 142 122 144 121 146 119ZM104 121 113 122 112 127 108 126 104 124 104 121ZM100 163 105 165 104 167 102 169 100 170 96 168 95 166 97 167 98 165 100 164Z"/><path class="a" d="M176 71 177 69 175 70 173 71 172 73 171 76 170 78 173 76 176 71Z"/><path class="a" d="M232 47 230 46 230 43 227 42 225 41 224 43 222 44 222 47 219 47 217 49 216 51 215 53 212 53 211 55 209 56 207 57 207 60 205 61 204 63 203 66 202 68 203 70 202 72 200 71 201 73 203 72 202 74 203 77 204 75 205 77 207 79 205 80 207 83 204 83 203 86 202 84 202 87 200 86 199 84 198 86 196 85 197 87 195 88 193 87 192 85 190 84 188 85 185 85 186 87 184 88 183 90 184 87 181 88 179 89 177 88 174 88 172 90 173 92 171 93 170 95 168 96 165 96 162 97 160 96 158 98 157 100 155 101 154 103 156 104 158 103 159 105 157 106 155 107 155 110 156 112 155 114 154 116 157 118 160 117 163 118 165 119 167 120 163 122 161 123 163 124 166 125 175 126 174 128 180 130 178 132 178 135 177 137 177 140 176 142 174 143 175 145 183 146 189 146 194 146 195 143 196 141 199 139 201 137 203 138 210 135 213 134 219 132 224 130 229 129 242 131 242 116 244 117 247 116 249 114 252 114 255 105 254 103 251 102 250 100 251 98 250 96 250 93 250 88 248 87 247 79 245 80 245 75 245 72 246 70 246 67 246 64 247 62 249 61 250 59 248 58 246 56 242 55 240 54 239 52 238 50 238 47 236 46 234 45 232 47Z"/><path class="a" d="M104 121 104 124 106 126 110 127 112 128 113 122 105 120Z"/><path class="a" d="M100 163 99 165 97 167 95 166 96 168 99 170 101 169 103 167 105 168 105 165 100 162Z"/><path class="a" d="M176 77 177 75 178 73 176 71 174 75 171 78 169 79 167 82 169 81 170 83 172 84 174 83 172 81 174 80 176 79 177 77Z"/><path class="on" d="M253 115 251 114 247 115 246 117 243 116 242 130 230 128 224 130 219 132 213 134 210 135 203 137 200 138 197 141 195 142 194 144 191 146 190 150 187 151 185 155 184 157 182 161 180 165 179 169 176 171 175 173 174 176 173 178 172 180 171 182 170 184 169 187 168 189 166 190 164 194 163 196 161 198 163 199 165 201 163 203 162 205 159 205 156 205 154 206 157 208 159 209 160 211 162 212 164 214 166 216 169 219 171 218 173 219 176 222 178 228 182 230 182 236 180 237 178 236 176 237 175 239 174 242 176 244 176 247 178 248 180 249 182 250 184 249 186 248 188 247 190 248 191 246 193 245 195 244 196 242 201 245 204 240 205 242 208 245 211 248 213 247 215 246 217 247 220 248 222 249 223 251 224 253 226 254 229 254 231 253 234 253 237 254 239 253 240 251 242 250 243 247 246 247 247 245 249 244 250 242 250 239 252 237 252 234 254 233 255 231 256 229 258 228 260 227 260 224 262 221 264 218 266 217 268 216 270 215 271 213 272 211 274 210 275 208 275 205 276 203 277 201 278 199 279 197 281 194 283 193 285 191 287 190 289 189 291 187 294 185 296 183 299 182 301 181 304 180 307 180 311 180 314 181 317 180 318 178 318 175 319 173 319 170 319 167 320 165 318 164 317 162 317 159 308 155 307 158 306 155 305 153 300 149 297 154 293 152 290 151 287 149 281 147 281 151 279 150 276 150 273 150 270 150 268 149 266 148 265 145 266 143 263 143 261 144 258 139 256 138 253 138 252 136 253 134 248 132 257 122 255 121 253 120 253 117Z"/></svg><figcaption>Owahanga within Tararua District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$34,000</strong><em>Manawatū-Whanganui $36,700</em></div><div class="card"><span>Median household income</span><strong>$64,400</strong><em>Manawatū-Whanganui $79,400</em></div><div class="card"><span>Median age</span><strong>42.8</strong><em>Manawatū-Whanganui 40.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>14.2%</strong><em>Manawatū-Whanganui 19.0%</em></div><div class="card"><span>Unemployment rate</span><strong>3.0%</strong><em>Manawatū-Whanganui 4.7%</em></div><div class="card"><span>Born overseas</span><strong>7.1%</strong><em>Manawatū-Whanganui 16.0%</em></div><div class="card"><span>NZDep2023 decile</span><strong>6 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>64.4%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$150</strong></div><div class="card"><span>Stand-alone houses</span><strong>96.0%</strong></div><div class="card"><span>Crowded households</span><strong>3.5%</strong></div><div class="card"><span>Damp homes</span><strong>22.8%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>91.2%</strong></div><div class="card"><span>Māori</span><strong>23.3%</strong></div><div class="card"><span>Other</span><strong>2.5%</strong></div><div class="card"><span>Pacific</span><strong>2.1%</strong></div><div class="card"><span>Asian</span><strong>0.8%</strong></div><div class="card"><span>MELAA</span><strong>0.0%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>64.4%</strong><em>Manawatū-Whanganui 55.3%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$150</strong><em>Manawatū-Whanganui $350</em></div><div class="card"><span>Stand-alone houses</span><strong>96.0%</strong><em>Manawatū-Whanganui 85.9%</em></div><div class="card"><span>Crowded households</span><strong>3.5%</strong><em>Manawatū-Whanganui 4.7%</em></div><div class="card"><span>Damp homes</span><strong>22.8%</strong><em>Manawatū-Whanganui 18.5%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:48.5%"></i><u style="left:40.1%" title="Manawatū-Whanganui: 19.3%"></u></div><b>23.3%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:27.7%"></i><u style="left:38.1%" title="Manawatū-Whanganui: 18.3%"></u></div><b>13.3%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:89.0%" title="Manawatū-Whanganui: 42.8%"></u></div><b>45.8%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:36.4%"></i><u style="left:40.5%" title="Manawatū-Whanganui: 19.5%"></u></div><b>17.5%</b></div><div class="key"><u></u>Manawatū-Whanganui average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:81.6%" title="Manawatū-Whanganui: 78.1%"></u></div><b>91.2%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:24.3%"></i><u style="left:26.2%" title="Manawatū-Whanganui: 25.1%"></u></div><b>23.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.6%"></i><u style="left:1.4%" title="Manawatū-Whanganui: 1.3%"></u></div><b>2.5%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:2.2%"></i><u style="left:5.2%" title="Manawatū-Whanganui: 5.0%"></u></div><b>2.1%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:0.8%"></i><u style="left:8.0%" title="Manawatū-Whanganui: 7.7%"></u></div><b>0.8%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.0%"></i><u style="left:1.0%" title="Manawatū-Whanganui: 1.0%"></u></div><b>0.0%</b></div><div class="key"><u></u>Manawatū-Whanganui average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:72.0%"></i><u style="left:21.8%" title="Manawatū-Whanganui: 16.4%"></u></div><b>54.3%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:53.5%"></i><u style="left:95.2%" title="Manawatū-Whanganui: 71.8%"></u></div><b>40.3%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:3.1%"></i><u style="left:4.9%" title="Manawatū-Whanganui: 3.7%"></u></div><b>2.3%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:1.1%" title="Manawatū-Whanganui: 0.8%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:0.0%"></i><u style="left:2.3%" title="Manawatū-Whanganui: 1.7%"></u></div><b>0.0%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:3.1%"></i><u style="left:5.7%" title="Manawatū-Whanganui: 4.3%"></u></div><b>2.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.1%"></i><u style="left:1.7%" title="Manawatū-Whanganui: 1.3%"></u></div><b>1.6%</b></div><div class="key"><u></u>Manawatū-Whanganui average</div></div>
 <h2>Nearby in Tararua District</h2>
 <ul class="links"><li><a href="/manawatu-whanganui/dannevirke-east/">Dannevirke East</a></li><li><a href="/manawatu-whanganui/dannevirke-west/">Dannevirke West</a></li><li><a href="/manawatu-whanganui/kaitawa/">Kaitawa</a></li><li><a href="/manawatu-whanganui/mangatainoka/">Mangatainoka</a></li><li><a href="/manawatu-whanganui/nireaha-eketahuna/">Nireaha-Eketāhuna</a></li><li><a href="/manawatu-whanganui/norsewood/">Norsewood</a></li><li><a href="/manawatu-whanganui/pahiatua/">Pahiatua</a></li><li><a href="/manawatu-whanganui/papatawa/">Papatawa</a></li><li><a href="/manawatu-whanganui/waitahora/">Waitahora</a></li><li><a href="/manawatu-whanganui/woodville/">Woodville</a></li></ul>
 

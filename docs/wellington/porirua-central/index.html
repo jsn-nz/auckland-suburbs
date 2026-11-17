@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Wellington", "item": "https://population.co.nz/wellington/"}, {"@type": "ListItem", "position": 3, "name": "Porirua Central", "item": "https://population.co.nz/wellington/porirua-central/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#wellington/porirua-central" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Porirua Central</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Porirua Central</nav>
 <h1>Porirua Central population and demographics</h1>
-<p>Porirua Central is a statistical area in Porirua City, Wellington. At the 2023 Census it had <strong>1,002</strong>
-usually resident people (+283.9% since 2018). It is part of the wider Porirua Centre area.</p>
-<a class="cta" href="/#wellington/porirua-central">Open Porirua Central on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,002</strong></div><div class="card"><span>Population 2018</span><strong>261</strong></div><div class="card"><span>Population 2013</span><strong>435</strong></div><div class="card"><span>Median age</span><strong>38.7</strong></div><div class="card"><span>Median personal income</span><strong>$37,700</strong></div><div class="card"><span>Median household income</span><strong>$108,600</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>36.4%</strong></div><div class="card"><span>Unemployment rate</span><strong>3.8%</strong></div><div class="card"><span>Born overseas</span><strong>41.0%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>5</strong></div></div>
+<p class="where">Porirua City · Wellington · part of the wider Porirua Centre area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,002</span><span class="chip">+283.9% since 2018</span></div>
+    <div class="trend"><div><b>435</b><i style="height:30%"></i><span>2013</span></div><div><b>261</b><i style="height:18%"></i><span>2018</span></div><div><b>1,002</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Porirua Central is in Porirua City, Wellington. Its population grew 283.9% between the 2018 and 2023 censuses. The median age is 38.7, compared with 38.1 across Wellington.</p>
+    <a class="cta" href="/#wellington/porirua-central">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 318" role="img" fill-rule="evenodd"><path class="a" d="M227 0 221 2 219 4 218 6 216 9 214 10 213 13 209 17 207 20 203 23 202 26 198 30 193 34 189 36 186 40 182 41 180 46 178 48 179 50 176 53 176 57 173 60 174 82 154 80 148 85 146 88 146 91 146 96 145 103 144 109 139 109 142 118 142 122 142 127 140 132 139 136 135 139 137 141 142 141 135 153 133 157 138 156 137 158 140 154 145 158 146 161 150 163 152 165 154 166 159 166 164 162 168 162 170 163 172 164 173 167 176 169 179 171 177 172 175 176 177 178 181 177 183 176 188 176 192 182 193 184 198 185 199 187 198 189 198 192 194 193 190 197 195 196 199 200 201 201 204 199 206 193 206 190 207 188 208 184 205 180 204 176 204 172 205 170 205 167 208 163 213 151 216 150 220 146 221 144 226 140 228 137 232 135 234 133 235 130 237 129 238 126 237 122 236 117 235 114 232 108 229 102 228 100 227 97 228 92 231 88 230 85 229 82 233 80 235 78 237 77 240 72 236 70 235 66 233 65 231 61 229 60 231 55 234 50 233 48 237 41 236 38 233 34 230 32 229 29 227 25 227 20 227 15 229 11 229 8 230 5 232 4 234 2 227 0Z"/><path class="a" d="M294 258 297 256 297 253 300 251 299 249 300 247 304 244 305 241 302 240 306 238 306 235 309 233 312 231 313 228 310 226 311 224 312 221 312 216 309 214 309 211 314 204 316 203 313 199 320 194 316 187 312 181 309 181 304 169 319 157 319 153 318 136 311 138 306 137 304 138 302 141 294 141 289 140 289 110 287 109 283 112 281 111 279 110 284 93 291 66 278 39 275 37 272 33 269 29 268 25 267 22 267 18 267 13 232 4 230 5 229 8 229 11 227 15 227 20 227 23 229 27 230 32 232 33 236 38 237 41 234 47 234 50 231 55 229 60 231 61 233 65 235 66 236 68 240 72 237 77 235 78 233 80 229 82 230 85 231 88 228 92 227 97 228 100 229 102 231 107 235 114 236 117 237 120 238 126 237 129 235 130 234 133 232 135 228 137 226 140 221 144 220 146 216 150 213 151 208 163 205 167 205 170 204 172 204 176 205 180 208 184 207 188 206 190 206 193 204 197 202 201 200 202 198 204 199 206 200 208 202 210 203 214 201 219 199 222 193 227 192 229 190 233 184 239 183 242 181 244 176 243 175 245 173 243 167 243 161 240 157 239 155 234 153 238 154 243 159 249 158 255 156 258 151 259 151 263 149 265 147 266 146 268 141 278 144 284 150 288 155 280 173 291 178 281 191 284 196 266 202 267 201 273 203 276 203 279 220 284 219 287 222 288 225 288 228 286 230 290 233 290 237 287 251 291 254 280 255 275 274 280 277 278 288 268 286 263 287 261 286 259 287 257 290 253 291 255 293 257Z"/><path class="a" d="M138 210 127 202 125 204 122 208 120 215 119 218 110 228 112 229 114 232 120 230 123 230 128 231 131 229 133 227 132 224 137 216 137 211Z"/><path class="a" d="M155 234 148 222 147 225 146 235 145 237 141 245 143 246 150 244 154 243 153 238 155 236Z"/><path class="a" d="M161 240 163 238 161 233 164 233 162 231 162 228 162 221 159 219 159 214 161 211 161 202 159 201 163 199 164 196 160 198 156 199 152 199 151 201 151 206 149 208 147 206 145 209 141 206 140 211 144 214 148 222 155 234 157 239 161 240Z"/><path class="a" d="M138 210 137 216 132 224 133 227 131 229 132 232 136 236 137 239 139 242 140 244 145 237 146 235 147 225 148 222 144 214 140 211 138 210Z"/><path class="a" d="M178 48 174 49 171 50 167 50 165 48 160 47 158 49 153 51 150 51 144 50 141 50 138 52 136 54 136 59 134 62 130 69 127 72 126 75 121 77 115 83 107 86 104 85 100 90 99 94 96 101 133 108 139 109 144 109 145 103 146 98 146 91 146 88 148 85 154 80 174 82 175 60 176 57 176 53 179 50 178 48Z"/><path class="a" d="M125 251 122 250 119 249 118 253 116 255 111 254 115 258 115 262 116 264 119 267 121 266 124 269 122 270 122 276 130 279 130 282 133 281 136 276 132 271 130 267 129 263 129 259 127 255 123 254 125 251Z"/><path class="a" d="M139 109 135 108 96 101 93 106 92 109 90 113 90 118 91 120 94 121 98 122 103 121 107 121 109 123 111 126 111 130 113 133 114 136 119 138 121 142 124 144 125 147 126 152 125 154 128 155 130 158 131 162 130 165 132 166 134 165 137 161 137 158 138 156 133 157 135 153 142 141 137 141 135 139 139 136 140 132 142 127 142 122 142 118 139 109Z"/><path class="a" d="M154 243 150 244 143 246 144 252 146 256 147 263 146 267 149 265 151 263 151 259 156 258 158 255 159 249 154 243Z"/><path class="a" d="M112 175 111 171 111 168 108 168 105 166 104 169 102 170 99 171 98 173 96 172 93 175 89 177 88 182 85 183 84 186 80 189 83 193 85 195 85 198 84 200 86 201 89 199 93 206 96 204 97 198 98 195 99 192 102 193 112 175Z"/><path class="a" d="M119 289 108 283 112 277 110 271 105 270 103 271 102 266 102 262 98 262 98 271 96 278 95 280 93 283 92 286 91 294 100 298 111 306 116 309 124 296 125 293 122 291 121 294 119 295 118 291 119 289Z"/><path class="a" d="M84 200 82 203 78 203 75 199 70 198 67 198 64 202 59 202 57 203 56 205 53 206 51 209 47 209 46 211 43 212 39 210 38 212 65 223 63 232 73 232 75 225 78 226 79 228 80 223 85 225 90 227 92 221 97 215 95 210 93 206 89 199 86 201 84 200Z"/><path class="a" d="M143 246 141 245 137 246 133 249 126 251 123 254 127 255 129 259 129 263 130 267 132 271 136 276 141 278 146 268 147 263 145 257 144 252 143 246Z"/><path class="a" d="M90 227 85 225 80 223 79 228 78 226 76 224 74 231 63 232 65 223 38 214 38 217 38 222 40 225 37 228 37 232 34 234 31 234 28 234 24 236 24 239 21 242 18 245 15 245 16 248 15 251 14 257 13 259 11 261 6 267 2 270 0 273 14 281 18 273 39 284 46 269 55 274 73 266 71 263 70 261 72 259 76 256 77 253 75 248 77 247 80 247 81 245 85 245 87 236 88 232 90 227Z"/><path class="a" d="M136 276 133 281 130 282 130 279 122 276 122 270 124 269 121 266 119 267 118 269 119 277 119 281 120 286 119 289 118 291 119 295 121 294 122 291 125 293 124 296 129 298 132 298 131 296 132 294 134 293 135 295 136 297 144 284 141 278 136 275Z"/><path class="a" d="M97 215 101 214 105 215 109 213 112 209 113 207 111 202 114 203 118 200 119 197 121 195 125 194 124 192 125 186 123 184 124 180 123 177 118 175 115 175 112 175 103 194 99 192 98 195 97 198 97 203 93 206 95 210 97 213Z"/><path class="a" d="M154 166 152 165 150 163 146 161 145 158 140 154 137 158 136 160 134 165 132 166 131 169 133 172 138 173 141 172 142 175 145 174 151 171 153 167Z"/><path class="a" d="M142 175 141 172 138 173 133 172 131 169 131 166 130 168 131 174 129 179 128 184 132 188 133 193 133 196 131 199 127 202 138 210 140 211 141 208 145 209 146 207 149 208 151 206 150 202 151 198 149 195 153 189 156 187 155 185 151 187 144 190 142 196 138 195 135 195 136 191 136 182 140 179 142 175Z"/><path class="a" d="M110 228 99 241 96 246 96 251 98 252 98 258 103 260 103 257 106 256 108 253 111 254 116 255 118 253 119 249 122 250 125 251 132 250 137 246 140 244 139 242 138 238 136 236 132 232 131 229 128 231 125 230 120 230 116 232 112 229 110 228Z"/><path class="a" d="M171 197 168 199 164 199 164 196 163 199 159 201 161 202 161 211 160 214 159 219 162 221 162 228 162 231 164 233 161 233 163 238 161 240 167 243 173 243 175 245 176 243 174 241 173 238 174 236 173 234 172 231 173 225 170 223 172 218 170 217 174 214 175 212 176 210 174 205 172 202 175 200 177 198 174 198 171 197Z"/><path class="a" d="M111 254 108 253 107 255 103 257 103 260 98 258 98 262 102 262 102 266 103 271 105 270 110 271 112 277 108 283 119 289 120 286 119 281 119 277 118 269 119 267 116 264 115 262 115 258 111 254Z"/><path class="a" d="M182 199 180 198 175 197 171 197 174 197 177 198 175 200 172 200 174 205 177 210 175 212 174 214 171 216 172 218 170 223 171 225 172 229 173 234 174 236 173 238 174 241 176 243 179 244 183 242 184 239 184 235 184 232 185 229 183 225 182 223 182 217 181 214 182 212 183 208 183 205 181 203 182 199Z"/><path class="a" d="M201 201 199 200 195 196 190 197 186 198 182 199 181 203 183 205 183 208 182 212 181 214 182 217 182 223 183 225 185 229 184 232 184 235 184 239 189 234 192 229 193 227 199 222 200 219 203 214 202 210 200 208 199 206 198 204 200 202Z"/><path class="on" d="M96 251 95 247 92 243 92 237 88 236 85 243 81 245 80 247 77 247 75 248 77 253 76 256 73 259 70 261 71 263 73 266 55 274 46 269 39 284 41 285 41 288 39 289 38 292 38 297 40 298 45 299 51 301 48 303 48 306 47 308 47 312 49 313 53 313 56 310 58 306 67 299 69 297 72 294 75 295 77 291 78 287 80 284 79 289 83 290 84 288 86 286 92 284 95 280 96 278 96 271 98 262 98 258 98 252 96 251Z"/></svg><figcaption>Porirua Central within Porirua City</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$37,700</strong><em>Wellington $48,400</em></div><div class="card"><span>Median household income</span><strong>$108,600</strong><em>Wellington $113,700</em></div><div class="card"><span>Median age</span><strong>38.7</strong><em>Wellington 38.1</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>36.4%</strong><em>Wellington 35.6%</em></div><div class="card"><span>Unemployment rate</span><strong>3.8%</strong><em>Wellington 4.1%</em></div><div class="card"><span>Born overseas</span><strong>41.0%</strong><em>Wellington 28.3%</em></div><div class="card"><span>NZDep2023 decile</span><strong>5 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>47.4%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$720</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$750</strong></div><div class="card"><span>Stand-alone houses</span><strong>38.5%</strong></div><div class="card"><span>Crowded households</span><strong>2.9%</strong></div><div class="card"><span>Damp homes</span><strong>2.9%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>57.2%</strong></div><div class="card"><span>Asian</span><strong>28.1%</strong></div><div class="card"><span>Māori</span><strong>14.7%</strong></div><div class="card"><span>Pacific</span><strong>9.6%</strong></div><div class="card"><span>MELAA</span><strong>1.8%</strong></div><div class="card"><span>Other</span><strong>0.9%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>47.4%</strong><em>Wellington 52.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$720</strong><em>Wellington $510</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$750</strong><em>Wellington $610</em></div><div class="card"><span>Stand-alone houses</span><strong>38.5%</strong><em>Wellington 72.7%</em></div><div class="card"><span>Crowded households</span><strong>2.9%</strong><em>Wellington 5.4%</em></div><div class="card"><span>Damp homes</span><strong>2.9%</strong><em>Wellington 19.9%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:25.3%"></i><u style="left:35.4%" title="Wellington: 17.2%"></u></div><b>12.3%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:42.0%"></i><u style="left:43.0%" title="Wellington: 20.9%"></u></div><b>20.4%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:84.3%"></i><u style="left:95.2%" title="Wellington: 46.3%"></u></div><b>41.0%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:54.1%"></i><u style="left:31.9%" title="Wellington: 15.5%"></u></div><b>26.3%</b></div><div class="key"><u></u>Wellington average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:75.0%"></i><u style="left:95.2%" title="Wellington: 72.6%"></u></div><b>57.2%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:36.9%"></i><u style="left:19.9%" title="Wellington: 15.2%"></u></div><b>28.1%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:19.3%"></i><u style="left:20.3%" title="Wellington: 15.5%"></u></div><b>14.7%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:12.6%"></i><u style="left:11.9%" title="Wellington: 9.1%"></u></div><b>9.6%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:2.4%"></i><u style="left:3.0%" title="Wellington: 2.3%"></u></div><b>1.8%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.2%"></i><u style="left:1.4%" title="Wellington: 1.1%"></u></div><b>0.9%</b></div><div class="key"><u></u>Wellington average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:51.2%"></i><u style="left:36.6%" title="Wellington: 19.0%"></u></div><b>26.6%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:83.7%"></i><u style="left:95.2%" title="Wellington: 49.5%"></u></div><b>43.5%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:3.7%"></i><u style="left:7.1%" title="Wellington: 3.7%"></u></div><b>1.9%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:38.7%"></i><u style="left:29.8%" title="Wellington: 15.5%"></u></div><b>20.1%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:0.0%"></i><u style="left:4.6%" title="Wellington: 2.4%"></u></div><b>0.0%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:15.0%"></i><u style="left:16.0%" title="Wellington: 8.3%"></u></div><b>7.8%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.2%"></i><u style="left:3.1%" title="Wellington: 1.6%"></u></div><b>0.6%</b></div><div class="key"><u></u>Wellington average</div></div>
 <h2>Nearby in Porirua City</h2>
 <ul class="links"><li><a href="/wellington/aotea/">Aotea</a></li><li><a href="/wellington/ascot-park/">Ascot Park</a></li><li><a href="/wellington/camborne/">Camborne</a></li><li><a href="/wellington/cannons-creek-east/">Cannons Creek East</a></li><li><a href="/wellington/cannons-creek-north/">Cannons Creek North</a></li><li><a href="/wellington/cannons-creek-south/">Cannons Creek South</a></li><li><a href="/wellington/elsdon-takapuwahia/">Elsdon-Takapuwahia</a></li><li><a href="/wellington/endeavour-east/">Endeavour East</a></li><li><a href="/wellington/endeavour-west/">Endeavour West</a></li><li><a href="/wellington/onepoto/">Onepoto</a></li><li><a href="/wellington/paekakariki-hill/">Paekākāriki Hill</a></li><li><a href="/wellington/papakowhai/">Papakōwhai</a></li><li><a href="/wellington/paremata/">Paremata</a></li><li><a href="/wellington/plimmerton/">Plimmerton</a></li><li><a href="/wellington/porirua-east/">Porirua East</a></li><li><a href="/wellington/postgate/">Postgate</a></li><li><a href="/wellington/pukerua-bay/">Pukerua Bay</a></li><li><a href="/wellington/pauatahanui/">Pāuatahanui</a></li><li><a href="/wellington/ranui-heights/">Rānui Heights</a></li><li><a href="/wellington/titahi-bay-north/">Titahi Bay North</a></li><li><a href="/wellington/titahi-bay-south/">Titahi Bay South</a></li><li><a href="/wellington/waitangirua-corinna/">Waitangirua Corinna</a></li><li><a href="/wellington/waitangirua-tairangi/">Waitangirua Tairangi</a></li><li><a href="/wellington/whitby/">Whitby</a></li></ul>
 

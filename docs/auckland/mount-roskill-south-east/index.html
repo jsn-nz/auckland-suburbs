@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Auckland", "item": "https://population.co.nz/auckland/"}, {"@type": "ListItem", "position": 3, "name": "Mount Roskill South East", "item": "https://population.co.nz/auckland/mount-roskill-south-east/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#auckland/mount-roskill-south-east" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Mount Roskill South East</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Mount Roskill South East</nav>
 <h1>Mount Roskill South East population and demographics</h1>
-<p>Mount Roskill South East is a statistical area in Puketāpapa Local Board, Auckland. At the 2023 Census it had <strong>3,234</strong>
-usually resident people (-4.9% since 2018). It is part of the wider Mount Roskill area.</p>
-<a class="cta" href="/#auckland/mount-roskill-south-east">Open Mount Roskill South East on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>3,234</strong></div><div class="card"><span>Population 2018</span><strong>3,402</strong></div><div class="card"><span>Population 2013</span><strong>3,210</strong></div><div class="card"><span>Median age</span><strong>32.8</strong></div><div class="card"><span>Median personal income</span><strong>$33,700</strong></div><div class="card"><span>Median household income</span><strong>$98,300</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>30.2%</strong></div><div class="card"><span>Unemployment rate</span><strong>7.5%</strong></div><div class="card"><span>Born overseas</span><strong>54.7%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>9</strong></div></div>
+<p class="where">Puketāpapa Local Board · Auckland · part of the wider Mount Roskill area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">3,234</span><span class="chip">-4.9% since 2018</span></div>
+    <div class="trend"><div><b>3,210</b><i style="height:66%"></i><span>2013</span></div><div><b>3,402</b><i style="height:70%"></i><span>2018</span></div><div><b>3,234</b><i style="height:67%"></i><span>2023</span></div></div>
+    <p class="lead">Mount Roskill South East is in Puketāpapa Local Board, Auckland. Its population fell 4.9% between the 2018 and 2023 censuses. The median age is 32.8, compared with 35.9 across Auckland.</p>
+    <a class="cta" href="/#auckland/mount-roskill-south-east">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 277" role="img" fill-rule="evenodd"><path class="a" d="M124 83 145 53 135 44 119 29 113 14 104 28 100 38 87 58 124 83Z"/><path class="a" d="M116 147 105 136 96 123 85 109 62 131 49 148 52 149 67 162 81 153 87 154 91 151 109 153 116 147Z"/><path class="a" d="M103 113 87 92 81 97 74 87 76 85 72 78 66 82 68 86 53 95 50 94 40 102 62 131 85 109 96 123 103 113Z"/><path class="a" d="M113 14 92 0 83 14 77 9 44 17 40 21 36 26 46 33 47 31 68 45 70 42 77 44 83 51 87 58 100 38 104 28 113 14Z"/><path class="a" d="M180 115 182 114 200 85 194 78 183 71 160 65 145 53 124 83 118 91 127 97 143 100 143 103 159 107 162 106 165 112 173 115 180 115Z"/><path class="a" d="M62 131 40 102 36 107 31 106 28 116 23 134 13 166 14 184 1 187 0 200 6 201 8 195 21 191 27 187 35 186 43 176 46 170 50 174 67 162 52 149 49 148 62 131Z"/><path class="a" d="M183 71 198 16 167 8 146 1 135 44 145 53 160 65 183 71Z"/><path class="a" d="M80 202 60 182 50 174 46 170 43 176 40 181 42 186 36 192 30 201 26 223 29 231 33 233 51 235 58 233 60 227 70 226 74 224 80 202Z"/><path class="a" d="M217 90 219 79 216 74 212 72 208 66 220 60 229 24 198 16 183 71 194 78 200 85 217 90Z"/><path class="a" d="M180 115 173 115 165 112 162 106 159 107 143 103 143 100 127 97 118 91 103 113 96 123 105 136 116 147 127 158 137 169 150 174 156 162 155 152 163 150 163 142 177 122 180 115Z"/><path class="a" d="M80 202 74 224 70 226 60 227 58 233 51 235 33 233 29 231 26 223 30 201 36 192 42 186 40 181 43 176 35 186 27 187 21 191 8 195 6 201 7 205 5 211 6 216 6 224 9 232 16 241 22 246 32 246 41 252 46 259 57 261 60 256 72 254 76 244 75 236 79 221 82 224 99 222 98 216 80 202Z"/><path class="a" d="M246 88 259 37 260 32 229 24 220 60 208 66 212 72 216 74 219 79 217 90 237 88 246 88Z"/><path class="a" d="M127 158 116 147 109 153 91 151 87 154 81 153 67 162 50 174 60 182 80 202 98 216 101 220 111 225 124 219 122 214 126 209 127 193 121 189 117 173 127 158Z"/><path class="a" d="M256 88 261 90 265 74 295 82 302 55 303 49 259 37 246 88 250 88 256 88Z"/><path class="a" d="M319 82 316 68 314 59 302 55 295 82 265 74 261 90 256 88 251 96 261 99 262 106 270 109 270 114 274 115 276 120 284 120 283 126 286 127 301 131 302 122 312 88 320 88 319 82Z"/><path class="a" d="M217 90 200 85 182 114 180 115 177 122 182 119 194 120 210 129 211 127 223 136 235 141 244 115 234 110 234 104 242 99 250 88 246 88 237 88 217 90Z"/><path class="a" d="M286 127 283 126 284 120 276 120 274 115 270 114 270 109 262 106 261 99 251 96 256 88 250 88 242 99 234 104 234 110 244 115 235 141 248 145 259 151 268 159 280 165 284 147 286 127Z"/><path class="a" d="M210 129 194 120 182 119 177 122 163 142 163 150 155 152 156 162 150 174 183 188 195 193 199 162 197 156 200 151 210 129Z"/><path class="a" d="M214 219 201 209 199 206 197 194 195 193 183 188 184 195 181 202 173 197 170 204 163 201 163 211 156 211 156 206 145 206 145 218 134 221 124 219 111 225 101 220 98 216 99 222 82 224 79 221 75 236 78 244 79 249 85 254 85 261 89 264 93 272 102 269 109 261 111 251 114 247 125 247 134 245 136 240 141 239 146 232 157 236 163 240 178 232 189 235 199 229 212 224 214 219Z"/><path class="a" d="M235 141 223 136 211 127 210 129 200 151 197 156 199 162 195 193 197 194 202 188 214 170 221 164 234 181 251 157 257 161 259 151 248 145 235 141Z"/><path class="a" d="M280 165 268 159 259 151 257 161 251 157 234 181 221 164 214 170 202 188 197 194 199 206 201 209 214 219 222 222 229 220 246 225 247 216 242 210 244 202 249 195 260 190 273 189 289 193 294 190 299 184 300 176 280 165Z"/><path class="on" d="M124 219 134 221 145 218 145 206 156 206 156 211 163 211 163 201 170 204 173 197 181 202 184 195 183 188 150 174 137 169 127 158 117 173 121 189 127 193 126 209 122 214 124 219Z"/></svg><figcaption>Mount Roskill South East within Puketāpapa Local Board</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$33,700</strong><em>Auckland $44,800</em></div><div class="card"><span>Median household income</span><strong>$98,300</strong><em>Auckland $118,200</em></div><div class="card"><span>Median age</span><strong>32.8</strong><em>Auckland 35.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>30.2%</strong><em>Auckland 32.9%</em></div><div class="card"><span>Unemployment rate</span><strong>7.5%</strong><em>Auckland 4.8%</em></div><div class="card"><span>Born overseas</span><strong>54.7%</strong><em>Auckland 42.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>9 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>26.5%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$345</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$663</strong></div><div class="card"><span>Stand-alone houses</span><strong>77.0%</strong></div><div class="card"><span>Crowded households</span><strong>21.2%</strong></div><div class="card"><span>Damp homes</span><strong>32.4%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>Asian</span><strong>48.1%</strong></div><div class="card"><span>Pacific</span><strong>29.3%</strong></div><div class="card"><span>European</span><strong>18.2%</strong></div><div class="card"><span>Māori</span><strong>9.0%</strong></div><div class="card"><span>MELAA</span><strong>5.3%</strong></div><div class="card"><span>Other</span><strong>0.6%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>26.5%</strong><em>Auckland 44.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$345</strong><em>Auckland $540</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$663</strong><em>Auckland $655</em></div><div class="card"><span>Stand-alone houses</span><strong>77.0%</strong><em>Auckland 71.5%</em></div><div class="card"><span>Crowded households</span><strong>21.2%</strong><em>Auckland 8.8%</em></div><div class="card"><span>Damp homes</span><strong>32.4%</strong><em>Auckland 20.1%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:42.8%"></i><u style="left:39.3%" title="Auckland: 19.2%"></u></div><b>20.9%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:47.1%"></i><u style="left:42.8%" title="Auckland: 20.9%"></u></div><b>23.0%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:93.4%"></i><u style="left:95.2%" title="Auckland: 46.5%"></u></div><b>45.6%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:21.5%"></i><u style="left:27.2%" title="Auckland: 13.3%"></u></div><b>10.5%</b></div><div class="key"><u></u>Auckland average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>Asian</span><div class="track"><i style="width:92.0%"></i><u style="left:59.9%" title="Auckland: 31.3%"></u></div><b>48.1%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:56.0%"></i><u style="left:31.7%" title="Auckland: 16.6%"></u></div><b>29.3%</b></div><div class="bar"><span>European</span><div class="track"><i style="width:34.8%"></i><u style="left:95.2%" title="Auckland: 49.8%"></u></div><b>18.2%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:17.2%"></i><u style="left:23.5%" title="Auckland: 12.3%"></u></div><b>9.0%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:10.1%"></i><u style="left:5.2%" title="Auckland: 2.7%"></u></div><b>5.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.1%"></i><u style="left:1.7%" title="Auckland: 0.9%"></u></div><b>0.6%</b></div><div class="key"><u></u>Auckland average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:22.2%"></i><u style="left:25.5%" title="Auckland: 18.1%"></u></div><b>15.8%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:91.3%" title="Auckland: 64.9%"></u></div><b>67.7%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:7.2%"></i><u style="left:5.2%" title="Auckland: 3.7%"></u></div><b>5.1%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:12.5%"></i><u style="left:11.0%" title="Auckland: 7.8%"></u></div><b>8.9%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:1.1%"></i><u style="left:1.3%" title="Auckland: 0.9%"></u></div><b>0.8%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:1.1%"></i><u style="left:4.6%" title="Auckland: 3.3%"></u></div><b>0.8%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.4%"></i><u style="left:1.7%" title="Auckland: 1.2%"></u></div><b>1.0%</b></div><div class="key"><u></u>Auckland average</div></div>
 <h2>Nearby in Puketāpapa Local Board</h2>
 <ul class="links"><li><a href="/auckland/epsom-south/">Epsom South</a></li><li><a href="/auckland/hillsborough-central-auckland/">Hillsborough Central (Auckland)</a></li><li><a href="/auckland/hillsborough-north-auckland/">Hillsborough North (Auckland)</a></li><li><a href="/auckland/hillsborough-south-auckland/">Hillsborough South (Auckland)</a></li><li><a href="/auckland/lynfield-central/">Lynfield Central</a></li><li><a href="/auckland/lynfield-harbour-view/">Lynfield Harbour View</a></li><li><a href="/auckland/mount-roskill-central-east/">Mount Roskill Central East</a></li><li><a href="/auckland/mount-roskill-central-north/">Mount Roskill Central North</a></li><li><a href="/auckland/mount-roskill-central-south/">Mount Roskill Central South</a></li><li><a href="/auckland/mount-roskill-nirvana/">Mount Roskill Nirvana</a></li><li><a href="/auckland/mount-roskill-north/">Mount Roskill North</a></li><li><a href="/auckland/mount-roskill-north-east/">Mount Roskill North East</a></li><li><a href="/auckland/mount-roskill-south/">Mount Roskill South</a></li><li><a href="/auckland/mount-roskill-west/">Mount Roskill West</a></li><li><a href="/auckland/mount-roskill-white-swan/">Mount Roskill White Swan</a></li><li><a href="/auckland/royal-oak-west-auckland/">Royal Oak West (Auckland)</a></li><li><a href="/auckland/three-kings-north/">Three Kings North</a></li><li><a href="/auckland/three-kings-south/">Three Kings South</a></li><li><a href="/auckland/waikowhai-bay/">Waikowhai Bay</a></li><li><a href="/auckland/wesley-east/">Wesley East</a></li><li><a href="/auckland/wesley-west/">Wesley West</a></li></ul>
 

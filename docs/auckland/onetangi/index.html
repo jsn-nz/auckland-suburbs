@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Auckland", "item": "https://population.co.nz/auckland/"}, {"@type": "ListItem", "position": 3, "name": "Onetangi", "item": "https://population.co.nz/auckland/onetangi/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#auckland/onetangi" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Onetangi</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Onetangi</nav>
 <h1>Onetangi population and demographics</h1>
-<p>Onetangi is a statistical area in Waiheke Local Board, Auckland. At the 2023 Census it had <strong>1,368</strong>
-usually resident people (+5.1% since 2018). It is part of the wider Waiheke Island area.</p>
-<a class="cta" href="/#auckland/onetangi">Open Onetangi on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,368</strong></div><div class="card"><span>Population 2018</span><strong>1,302</strong></div><div class="card"><span>Population 2013</span><strong>1,134</strong></div><div class="card"><span>Median age</span><strong>48.4</strong></div><div class="card"><span>Median personal income</span><strong>$41,100</strong></div><div class="card"><span>Median household income</span><strong>$86,200</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>35.7%</strong></div><div class="card"><span>Unemployment rate</span><strong>2.7%</strong></div><div class="card"><span>Born overseas</span><strong>33.3%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>5</strong></div></div>
+<p class="where">Waiheke Local Board · Auckland · part of the wider Waiheke Island area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,368</span><span class="chip">+5.1% since 2018</span></div>
+    <div class="trend"><div><b>1,134</b><i style="height:58%"></i><span>2013</span></div><div><b>1,302</b><i style="height:67%"></i><span>2018</span></div><div><b>1,368</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Onetangi is in Waiheke Local Board, Auckland. Its population grew 5.1% between the 2018 and 2023 censuses. The median age is 48.4, compared with 35.9 across Auckland.</p>
+    <a class="cta" href="/#auckland/onetangi">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 295 406" role="img" fill-rule="evenodd"><path class="a" d="M140 363 139 365 141 363ZM90 326 87 326 86 328 87 330 87 333 89 332 90 330 92 329 91 327ZM115 308 114 305 113 307 112 309 114 308 116 310 118 313 118 317 116 319 116 322 119 322 122 318 124 316 127 316 128 314 124 313 123 311 120 311 117 309 115 308ZM73 278 69 278 67 279 65 280 61 279 59 280 56 281 54 283 53 287 51 289 50 291 50 294 49 297 50 299 52 301 54 302 55 305 56 307 57 309 58 311 61 312 63 310 64 312 66 313 69 312 70 310 72 311 74 310 76 311 78 310 81 309 84 307 87 306 89 305 89 302 90 300 90 297 88 296 87 294 88 292 89 290 90 288 89 286 87 285 86 283 83 282 81 283 79 282 77 280 75 279 73 278ZM103 255 101 256 102 258 102 262 102 266 99 269 97 270 95 271 92 271 90 273 89 275 90 277 89 279 88 281 90 285 91 288 93 291 94 296 96 300 98 301 99 303 100 301 100 298 102 297 106 296 109 294 109 291 110 289 111 286 110 283 111 280 113 281 114 279 114 275 114 272 112 271 111 269 110 266 111 264 113 263 112 261 110 260 108 261 106 259 105 257 103 255ZM120 237 119 240 119 243 116 244 118 245 119 247 118 249 118 252 121 251 123 250 125 248 123 246 124 243 125 241 124 239 121 238ZM137 226 136 228 138 229 139 227 137 226ZM82 150 80 151 81 153 80 155 82 157 85 158 86 160 87 162 89 163 92 163 92 160 91 158 90 156 88 154 87 152 85 151 83 150ZM1 92 1 88 0 90 1 92ZM33 82 32 80 30 82 27 83 25 85 24 88 23 90 25 89 27 88 29 86 30 84 33 83ZM31 60 30 62 28 63 30 64 32 63 33 61 31 60ZM37 57 36 59 35 61 38 60 39 57ZM30 26 28 25 30 26ZM56 0 56 3 55 5 52 5 50 7 49 9 48 11 49 13 50 11 51 8 52 11 54 10 55 8 54 10 53 13 52 15 48 16 46 15 44 16 44 19 46 20 48 18 50 20 52 21 54 22 56 23 58 22 60 23 61 21 62 19 65 19 63 21 64 23 65 25 63 26 60 26 58 27 56 26 54 27 52 26 50 25 49 27 47 26 45 25 46 27 44 28 42 27 43 29 44 31 45 33 48 33 51 35 52 37 54 36 57 36 55 38 53 39 51 40 52 43 54 44 55 41 58 41 61 41 63 40 65 41 66 39 66 36 69 38 70 36 71 38 73 40 74 42 76 43 79 43 77 40 78 37 80 35 79 33 79 30 78 27 79 23 78 21 78 18 77 16 76 14 75 12 71 12 70 10 68 9 67 7 65 6 63 5 64 3 62 4 60 3 58 2 56 0Z"/><path class="a" d="M163 294 161 293 158 291 158 288 161 286 161 283 159 285 158 283 157 285 156 283 152 282 149 283 150 285 151 287 149 286 146 285 144 286 144 291 146 289 148 291 146 293 144 294 142 293 142 296 143 298 144 300 147 301 146 304 145 306 146 308 145 310 145 314 148 313 150 314 151 311 150 309 152 308 155 308 156 305 156 301 157 299 160 298 163 299 164 302 165 300 166 297 164 295Z"/><path class="a" d="M190 292 190 289 188 288 189 286 190 284 190 281 188 280 189 283 187 284 186 287 183 287 181 288 180 290 178 291 176 290 175 287 173 288 170 288 170 291 168 292 166 291 164 293 165 296 169 296 170 294 172 295 173 297 176 296 178 294 180 295 183 293 186 293 188 292Z"/><path class="a" d="M177 296 174 297 172 296 170 294 169 296 166 297 165 300 167 302 169 303 168 305 167 307 167 310 166 312 164 313 163 315 166 315 167 312 169 311 170 309 171 307 174 306 175 308 176 306 174 305 175 303 177 301 175 300 176 298 177 296Z"/><path class="a" d="M190 292 187 292 185 293 181 295 178 294 177 296 176 298 175 300 177 301 175 302 178 301 181 299 180 301 178 303 176 304 178 305 177 307 178 310 180 308 181 305 184 306 184 303 185 305 186 307 188 308 190 307 191 303 193 301 192 299 189 297 189 294 190 292Z"/><path class="a" d="M247 400 248 398 246 399ZM252 383 250 384 248 386 246 388 245 390 243 391 244 393 245 395 247 392 248 389 251 389 253 388 255 387 254 385 252 383ZM265 331 266 329 264 331 262 332 260 334 257 333 256 335 259 336 258 338 256 341 258 342 260 344 259 347 257 348 259 350 258 352 255 351 253 350 251 351 249 352 246 352 248 353 250 355 248 357 251 358 252 360 251 363 253 362 255 364 256 366 255 368 256 370 257 372 258 376 260 378 262 377 265 377 266 379 267 382 270 381 271 378 273 379 273 375 272 373 273 370 274 368 275 366 277 365 276 363 274 361 272 359 271 357 270 354 269 351 271 349 269 348 271 346 272 344 272 340 273 338 274 336 276 334 277 336 280 336 279 334 281 332 279 331 276 330 273 332 270 332 268 331 269 333 268 336 267 334 265 333ZM274 314 273 311 272 313 270 314 269 316 269 319 271 318 272 321 271 323 272 325 274 323 273 320 274 317 274 314ZM272 303 269 301 266 301 268 303 269 305 271 304ZM289 297 287 299 289 300 289 297ZM194 309 191 308 189 309 187 310 184 310 181 310 179 312 177 313 176 315 174 316 173 319 175 320 178 320 182 321 184 320 187 321 189 320 191 321 192 319 195 321 196 324 195 326 192 326 191 328 192 330 194 332 196 333 198 332 201 331 203 332 204 334 207 334 210 336 209 334 210 332 210 328 211 326 213 327 215 324 216 322 216 319 214 317 217 318 217 322 217 325 218 327 220 328 221 330 220 333 221 336 220 338 220 341 222 340 225 341 227 340 228 342 229 340 227 337 226 334 228 332 229 330 230 328 230 325 231 323 233 324 237 324 235 325 235 328 233 330 232 332 234 333 236 334 235 336 235 339 235 342 237 340 240 341 241 339 242 337 245 336 244 334 241 334 241 331 243 330 246 330 248 329 250 327 251 324 250 321 251 318 250 316 251 314 252 312 253 310 251 309 249 307 247 305 247 302 248 300 246 299 245 297 246 295 248 293 250 294 251 291 252 289 255 289 257 288 259 286 262 287 266 287 267 289 269 290 270 288 271 286 272 284 273 282 275 280 273 278 272 276 271 274 271 271 269 270 267 271 264 271 261 271 259 270 257 269 255 268 254 265 255 262 257 263 258 261 256 259 254 261 253 263 251 262 249 264 247 267 245 268 243 269 242 272 242 275 242 278 239 280 236 279 234 280 232 281 230 282 227 282 226 279 224 277 223 279 221 280 217 279 216 281 215 283 216 285 217 287 216 290 217 292 215 294 213 295 211 298 209 300 208 303 207 306 208 310 205 309 203 310 201 311 199 313 197 312 194 309Z"/><path class="on" d="M211 295 209 294 208 296 205 296 200 296 196 296 192 295 191 293 189 294 189 297 190 299 193 301 191 302 190 305 191 307 194 308 195 312 197 311 199 313 201 311 203 310 205 309 208 310 209 306 207 304 209 302 211 298 211 295Z"/></svg><figcaption>Onetangi within Waiheke Local Board</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$41,100</strong><em>Auckland $44,800</em></div><div class="card"><span>Median household income</span><strong>$86,200</strong><em>Auckland $118,200</em></div><div class="card"><span>Median age</span><strong>48.4</strong><em>Auckland 35.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>35.7%</strong><em>Auckland 32.9%</em></div><div class="card"><span>Unemployment rate</span><strong>2.7%</strong><em>Auckland 4.8%</em></div><div class="card"><span>Born overseas</span><strong>33.3%</strong><em>Auckland 42.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>5 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>59.9%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$550</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$200</strong></div><div class="card"><span>Stand-alone houses</span><strong>90.5%</strong></div><div class="card"><span>Crowded households</span><strong>3.4%</strong></div><div class="card"><span>Damp homes</span><strong>19.9%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>89.5%</strong></div><div class="card"><span>Māori</span><strong>13.4%</strong></div><div class="card"><span>Pacific</span><strong>4.4%</strong></div><div class="card"><span>Asian</span><strong>3.9%</strong></div><div class="card"><span>MELAA</span><strong>3.3%</strong></div><div class="card"><span>Other</span><strong>1.1%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>59.9%</strong><em>Auckland 44.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$550</strong><em>Auckland $540</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$200</strong><em>Auckland $655</em></div><div class="card"><span>Stand-alone houses</span><strong>90.5%</strong><em>Auckland 71.5%</em></div><div class="card"><span>Crowded households</span><strong>3.4%</strong><em>Auckland 8.8%</em></div><div class="card"><span>Damp homes</span><strong>19.9%</strong><em>Auckland 20.1%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:26.0%"></i><u style="left:36.7%" title="Auckland: 19.2%"></u></div><b>13.6%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:27.7%"></i><u style="left:40.0%" title="Auckland: 20.9%"></u></div><b>14.5%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:88.9%" title="Auckland: 46.5%"></u></div><b>49.8%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:42.8%"></i><u style="left:25.4%" title="Auckland: 13.3%"></u></div><b>22.4%</b></div><div class="key"><u></u>Auckland average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:53.0%" title="Auckland: 49.8%"></u></div><b>89.5%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:14.3%"></i><u style="left:13.1%" title="Auckland: 12.3%"></u></div><b>13.4%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:4.7%"></i><u style="left:17.7%" title="Auckland: 16.6%"></u></div><b>4.4%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:4.2%"></i><u style="left:33.3%" title="Auckland: 31.3%"></u></div><b>3.9%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:3.5%"></i><u style="left:2.9%" title="Auckland: 2.7%"></u></div><b>3.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.2%"></i><u style="left:1.0%" title="Auckland: 0.9%"></u></div><b>1.1%</b></div><div class="key"><u></u>Auckland average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:37.4%"></i><u style="left:26.6%" title="Auckland: 18.1%"></u></div><b>25.5%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:73.7%"></i><u style="left:95.2%" title="Auckland: 64.9%"></u></div><b>50.2%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:4.1%"></i><u style="left:5.4%" title="Auckland: 3.7%"></u></div><b>2.8%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:20.4%"></i><u style="left:11.4%" title="Auckland: 7.8%"></u></div><b>13.9%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:2.3%"></i><u style="left:1.3%" title="Auckland: 0.9%"></u></div><b>1.6%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:7.6%"></i><u style="left:4.8%" title="Auckland: 3.3%"></u></div><b>5.2%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.9%"></i><u style="left:1.8%" title="Auckland: 1.2%"></u></div><b>2.0%</b></div><div class="key"><u></u>Auckland average</div></div>
 <h2>Nearby in Waiheke Local Board</h2>
 <ul class="links"><li><a href="/auckland/gulf-islands/">Gulf Islands</a></li><li><a href="/auckland/oneroa-east-palm-beach/">Oneroa East-Palm Beach</a></li><li><a href="/auckland/oneroa-west/">Oneroa West</a></li><li><a href="/auckland/ostend/">Ostend</a></li><li><a href="/auckland/surfdale/">Surfdale</a></li><li><a href="/auckland/waiheke-east/">Waiheke East</a></li></ul>
 

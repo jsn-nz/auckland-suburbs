@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Canterbury", "item": "https://population.co.nz/canterbury/"}, {"@type": "ListItem", "position": 3, "name": "Danseys Pass", "item": "https://population.co.nz/canterbury/danseys-pass/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#canterbury/danseys-pass" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/canterbury/">Canterbury</a> › Danseys Pass</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/canterbury/">Canterbury</a> › Danseys Pass</nav>
 <h1>Danseys Pass population and demographics</h1>
-<p>Danseys Pass is a statistical area in Waitaki District, Canterbury. At the 2023 Census it had <strong>993</strong>
-usually resident people (+0.6% since 2018). It is part of the wider Waitaki District West area.</p>
-<a class="cta" href="/#canterbury/danseys-pass">Open Danseys Pass on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>993</strong></div><div class="card"><span>Population 2018</span><strong>987</strong></div><div class="card"><span>Population 2013</span><strong>915</strong></div><div class="card"><span>Median age</span><strong>46.1</strong></div><div class="card"><span>Median personal income</span><strong>$38,600</strong></div><div class="card"><span>Median household income</span><strong>$71,900</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>15.6%</strong></div><div class="card"><span>Unemployment rate</span><strong>1.5%</strong></div><div class="card"><span>Born overseas</span><strong>18.7%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>6</strong></div></div>
+<p class="where">Waitaki District · Canterbury · part of the wider Waitaki District West area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">993</span><span class="chip">+0.6% since 2018</span></div>
+    <div class="trend"><div><b>915</b><i style="height:65%"></i><span>2013</span></div><div><b>987</b><i style="height:70%"></i><span>2018</span></div><div><b>993</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Danseys Pass is in Waitaki District, Canterbury. Its population grew 0.6% between the 2018 and 2023 censuses. The median age is 46.1, compared with 39.3 across Canterbury.</p>
+    <a class="cta" href="/#canterbury/danseys-pass">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 296 406" role="img" fill-rule="evenodd"><path class="a" d="M93 1 91 0 88 1 87 3 85 4 83 5 81 7 79 8 78 10 78 13 76 15 74 14 72 13 70 15 69 17 67 18 66 20 66 23 64 25 62 26 59 26 58 28 56 30 55 32 53 33 51 34 50 36 49 38 48 40 48 43 47 45 45 44 44 46 43 48 41 49 40 51 39 53 36 54 35 56 35 59 36 62 37 64 36 66 36 69 37 71 38 74 39 76 37 78 35 79 33 78 31 80 31 83 30 85 31 87 28 86 26 88 25 90 27 92 26 94 24 95 22 96 21 99 21 102 19 103 17 105 17 108 16 110 13 111 14 113 13 115 11 116 9 117 8 119 6 120 5 123 4 125 4 128 2 129 0 130 0 133 1 135 2 137 4 138 6 139 7 141 8 143 8 146 7 149 7 152 7 155 6 157 7 159 7 162 6 164 6 167 7 169 8 171 7 173 6 175 6 178 5 180 4 182 3 184 4 186 5 188 5 191 3 192 1 196 2 198 3 200 2 202 0 204 2 206 4 207 6 208 9 208 11 207 12 209 15 208 18 208 20 209 22 210 22 213 23 215 22 217 21 219 20 221 21 223 22 225 24 227 23 229 24 231 26 232 25 234 24 236 23 238 22 240 22 243 22 246 22 249 24 250 26 249 28 250 31 250 32 252 35 251 38 251 38 248 39 246 39 243 41 241 43 242 45 247 46 249 45 251 47 253 47 257 47 261 49 264 54 267 56 269 58 270 62 271 65 272 77 265 79 266 89 268 93 285 95 296 97 299 97 303 98 305 100 308 100 311 101 314 101 317 100 319 101 321 102 323 103 325 104 327 105 329 106 331 107 333 108 335 110 336 112 337 115 338 116 341 116 344 118 346 119 348 117 349 116 351 118 352 120 353 121 355 124 357 126 358 128 359 129 357 132 357 136 357 139 358 141 357 143 356 147 355 150 354 155 353 156 351 158 350 161 351 163 350 165 349 167 350 168 347 172 345 175 345 175 329 175 319 178 319 181 319 182 317 183 315 184 313 185 311 186 309 187 307 188 304 189 302 191 300 192 298 193 296 195 294 196 291 196 288 197 286 198 284 199 282 197 281 196 279 194 277 192 276 190 274 187 273 185 271 183 270 182 272 180 271 180 268 178 266 176 265 175 263 173 262 171 261 169 260 166 258 163 256 160 255 157 255 155 256 153 255 151 254 149 252 148 250 145 248 143 247 142 245 143 242 145 241 146 239 147 237 146 235 144 234 145 232 147 231 145 230 146 228 145 226 146 223 145 221 146 217 148 216 147 214 150 210 149 207 149 203 150 201 151 199 150 197 150 194 149 192 148 189 146 185 147 182 147 179 146 177 146 174 144 173 143 171 141 169 140 167 138 165 136 164 134 162 132 160 130 159 128 158 126 157 125 155 122 155 120 153 117 153 115 152 113 151 111 150 109 149 107 148 105 149 103 148 101 149 102 147 99 147 97 148 96 150 94 151 92 152 91 154 89 153 87 154 85 155 83 156 81 155 79 156 77 157 76 155 75 153 73 154 70 154 68 153 69 151 68 149 66 146 64 145 62 143 61 141 62 139 61 137 60 135 61 132 61 129 61 126 62 124 62 121 62 118 65 118 66 120 69 120 71 121 70 117 69 115 67 114 66 112 67 110 68 108 70 107 71 105 72 103 73 100 73 97 72 95 71 93 69 91 67 90 66 88 65 86 64 84 63 82 62 80 61 77 61 74 60 72 61 69 62 67 62 64 62 61 63 59 63 56 63 53 64 51 65 49 66 46 67 43 68 41 70 39 70 36 71 34 73 33 75 31 77 29 78 27 79 25 80 23 80 20 82 18 82 15 83 13 84 11 85 9 87 8 89 6 90 4 91 2 93 1Z"/><path class="on" d="M266 331 264 330 262 329 260 328 258 327 254 326 251 325 249 324 246 323 243 323 241 322 238 321 236 320 234 319 232 318 230 317 228 316 227 314 225 313 223 311 221 310 220 308 219 306 218 304 216 302 214 300 212 297 210 296 208 294 206 292 205 289 203 288 202 285 201 283 200 281 198 282 198 285 197 287 196 289 195 292 194 295 192 298 191 300 189 302 188 304 187 306 187 309 185 310 184 312 183 314 182 316 181 319 178 319 175 319 175 329 175 345 177 346 179 347 179 350 179 353 179 356 182 356 183 359 183 362 183 365 182 367 179 370 178 372 179 377 178 382 180 383 181 386 182 390 183 392 185 394 186 397 187 399 189 400 191 399 194 398 196 397 199 396 201 394 201 391 203 390 206 390 209 387 213 383 214 381 215 379 216 377 218 375 219 373 220 371 222 370 224 369 226 368 229 368 229 365 233 364 235 363 237 365 238 363 240 361 242 360 241 358 240 356 241 354 242 351 244 349 247 347 249 348 250 350 251 348 252 346 256 346 258 344 271 344 277 344 280 344 282 345 284 344 287 345 287 341 289 342 290 340 288 339 285 339 282 338 280 337 277 336 275 335 273 334 271 333 269 332 266 331Z"/></svg><figcaption>Danseys Pass within Waitaki District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$38,600</strong><em>Canterbury $41,500</em></div><div class="card"><span>Median household income</span><strong>$71,900</strong><em>Canterbury $89,000</em></div><div class="card"><span>Median age</span><strong>46.1</strong><em>Canterbury 39.3</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>15.6%</strong><em>Canterbury 25.3%</em></div><div class="card"><span>Unemployment rate</span><strong>1.5%</strong><em>Canterbury 3.4%</em></div><div class="card"><span>Born overseas</span><strong>18.7%</strong><em>Canterbury 24.7%</em></div><div class="card"><span>NZDep2023 decile</span><strong>6 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>59.8%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$200</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$400</strong></div><div class="card"><span>Stand-alone houses</span><strong>90.1%</strong></div><div class="card"><span>Crowded households</span><strong>3.8%</strong></div><div class="card"><span>Damp homes</span><strong>12.8%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>87.9%</strong></div><div class="card"><span>Māori</span><strong>10.0%</strong></div><div class="card"><span>Asian</span><strong>7.9%</strong></div><div class="card"><span>MELAA</span><strong>0.9%</strong></div><div class="card"><span>Other</span><strong>0.9%</strong></div><div class="card"><span>Pacific</span><strong>0.6%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>59.8%</strong><em>Canterbury 56.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$200</strong><em>Canterbury $400</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$400</strong><em>Canterbury $550</em></div><div class="card"><span>Stand-alone houses</span><strong>90.1%</strong><em>Canterbury 79.9%</em></div><div class="card"><span>Crowded households</span><strong>3.8%</strong><em>Canterbury 3.8%</em></div><div class="card"><span>Damp homes</span><strong>12.8%</strong><em>Canterbury 13.7%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:36.4%"></i><u style="left:36.4%" title="Canterbury: 17.5%"></u></div><b>17.5%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:30.8%"></i><u style="left:40.1%" title="Canterbury: 19.3%"></u></div><b>14.8%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:94.2%"></i><u style="left:95.2%" title="Canterbury: 45.8%"></u></div><b>45.3%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:46.0%"></i><u style="left:36.2%" title="Canterbury: 17.4%"></u></div><b>22.1%</b></div><div class="key"><u></u>Canterbury average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:87.0%" title="Canterbury: 80.3%"></u></div><b>87.9%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:10.8%"></i><u style="left:11.5%" title="Canterbury: 10.6%"></u></div><b>10.0%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:8.6%"></i><u style="left:14.4%" title="Canterbury: 13.3%"></u></div><b>7.9%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:1.0%"></i><u style="left:1.7%" title="Canterbury: 1.6%"></u></div><b>0.9%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.0%"></i><u style="left:1.4%" title="Canterbury: 1.3%"></u></div><b>0.9%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:0.7%"></i><u style="left:4.0%" title="Canterbury: 3.7%"></u></div><b>0.6%</b></div><div class="key"><u></u>Canterbury average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:50.8%"></i><u style="left:21.3%" title="Canterbury: 15.6%"></u></div><b>37.1%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:67.7%"></i><u style="left:95.2%" title="Canterbury: 69.6%"></u></div><b>49.5%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:2.9%"></i><u style="left:3.8%" title="Canterbury: 2.8%"></u></div><b>2.1%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:3.8%" title="Canterbury: 2.8%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:2.1%"></i><u style="left:5.6%" title="Canterbury: 4.1%"></u></div><b>1.5%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:6.3%"></i><u style="left:4.7%" title="Canterbury: 3.4%"></u></div><b>4.6%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:7.1%"></i><u style="left:2.2%" title="Canterbury: 1.6%"></u></div><b>5.2%</b></div><div class="key"><u></u>Canterbury average</div></div>
 <h2>Nearby in Waitaki District</h2>
 <ul class="links"><li><a href="/canterbury/aviemore/">Aviemore</a></li></ul>
 

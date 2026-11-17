@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Wellington", "item": "https://population.co.nz/wellington/"}, {"@type": "ListItem", "position": 3, "name": "Carterton North", "item": "https://population.co.nz/wellington/carterton-north/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#wellington/carterton-north" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Carterton North</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Carterton North</nav>
 <h1>Carterton North population and demographics</h1>
-<p>Carterton North is a statistical area in Carterton District, Wellington. At the 2023 Census it had <strong>2,688</strong>
-usually resident people (+6.4% since 2018). It is part of the wider Carterton  area.</p>
-<a class="cta" href="/#wellington/carterton-north">Open Carterton North on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>2,688</strong></div><div class="card"><span>Population 2018</span><strong>2,526</strong></div><div class="card"><span>Population 2013</span><strong>2,241</strong></div><div class="card"><span>Median age</span><strong>52.4</strong></div><div class="card"><span>Median personal income</span><strong>$32,800</strong></div><div class="card"><span>Median household income</span><strong>$61,800</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>21.1%</strong></div><div class="card"><span>Unemployment rate</span><strong>3.5%</strong></div><div class="card"><span>Born overseas</span><strong>17.7%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>6</strong></div></div>
+<p class="where">Carterton District · Wellington · part of the wider Carterton  area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">2,688</span><span class="chip">+6.4% since 2018</span></div>
+    <div class="trend"><div><b>2,241</b><i style="height:58%"></i><span>2013</span></div><div><b>2,526</b><i style="height:66%"></i><span>2018</span></div><div><b>2,688</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Carterton North is in Carterton District, Wellington. Its population grew 6.4% between the 2018 and 2023 censuses. The median age is 52.4, compared with 38.1 across Wellington.</p>
+    <a class="cta" href="/#wellington/carterton-north">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 368" role="img" fill-rule="evenodd"><path class="a" d="M73 1 71 0 68 1 66 3 63 3 60 4 57 6 56 8 55 10 54 12 53 14 52 16 51 18 49 20 48 23 48 26 47 29 47 32 47 35 47 38 44 38 42 39 39 40 38 42 38 45 37 48 38 50 39 52 38 55 38 58 38 61 39 63 39 66 40 68 39 70 40 74 40 77 39 79 38 82 38 85 36 88 34 90 32 91 30 92 29 94 28 96 28 99 26 100 24 101 21 101 20 103 19 105 17 106 13 106 11 108 8 110 5 111 3 112 0 113 1 115 0 117 3 118 4 120 6 118 8 116 11 115 12 113 14 112 16 111 19 111 22 112 25 112 27 113 30 112 33 111 36 110 40 109 42 108 43 106 45 105 47 104 49 105 53 105 55 106 57 108 59 110 57 114 56 116 54 118 54 121 51 122 52 124 51 126 50 129 50 132 50 135 52 138 53 140 54 142 53 145 52 147 54 148 53 150 55 152 54 154 55 156 57 158 58 160 58 163 56 164 55 166 56 168 55 170 56 172 55 174 58 174 57 176 56 178 56 181 57 183 60 185 62 186 64 187 66 186 68 185 71 186 73 185 76 185 80 185 85 186 89 186 91 187 94 187 97 185 99 184 101 181 104 177 105 175 103 173 109 163 110 160 111 158 112 156 115 155 117 158 125 154 127 153 127 150 133 144 140 138 145 134 149 130 150 128 148 127 147 125 145 123 144 121 143 118 141 117 140 115 138 114 137 112 134 109 132 106 129 106 128 103 127 101 126 99 125 97 124 94 123 91 121 90 118 89 116 88 114 85 112 83 110 82 108 81 106 82 104 81 102 82 100 81 99 79 99 75 98 73 98 70 96 68 95 66 93 65 91 63 90 61 91 58 91 55 92 53 93 51 93 48 94 46 94 43 95 40 96 38 97 36 98 33 97 31 98 29 97 27 98 25 98 22 98 19 96 17 93 17 92 15 90 16 88 13 85 12 82 11 81 9 79 8 78 5 77 3 76 1 73 1Z"/><path class="a" d="M160 191 161 189 160 187 159 185 158 183 160 182 162 180 164 178 167 179 169 178 171 176 172 174 172 171 171 168 172 166 173 164 174 162 174 158 175 156 174 152 172 150 169 149 167 148 165 146 163 144 161 141 159 140 158 138 157 136 156 134 153 132 151 130 145 134 140 138 133 144 127 149 127 153 125 154 118 158 117 160 119 161 115 167 107 177 105 176 101 180 100 183 101 187 101 190 104 191 105 193 105 196 104 198 103 200 104 202 106 204 108 206 107 208 105 210 103 213 106 210 108 209 113 208 116 208 119 209 122 209 124 210 126 208 127 206 130 207 132 208 133 205 135 203 137 202 138 200 137 198 136 196 137 194 140 191 142 190 145 190 147 192 149 193 151 194 154 194 156 195 158 194 159 192Z"/><path class="a" d="M105 176 107 177 115 167 113 166 109 163 102 173 105 175Z"/><path class="a" d="M320 265 317 264 315 265 313 264 311 263 309 264 307 263 305 262 303 261 301 260 299 259 296 259 296 256 296 253 295 251 293 249 295 246 293 245 292 242 292 239 290 238 287 237 285 238 283 236 281 235 280 237 279 241 275 239 273 238 271 237 270 235 269 233 267 234 264 235 262 234 252 244 250 243 249 241 248 239 246 240 244 239 242 237 241 234 242 232 240 231 239 228 237 226 235 227 233 226 234 224 232 223 231 221 230 218 228 217 227 215 225 214 223 215 221 212 223 210 220 207 218 206 217 204 218 202 217 200 215 201 212 201 210 199 208 198 210 195 212 192 214 189 214 186 214 181 225 174 223 172 223 169 221 167 219 166 217 164 216 162 214 161 215 158 216 156 216 153 214 151 212 152 210 154 209 152 207 153 208 155 207 157 208 159 206 160 205 158 204 160 202 161 200 160 199 162 195 162 192 163 189 163 190 165 188 163 186 164 185 167 187 168 188 170 187 172 189 173 186 173 185 175 184 173 182 174 179 175 179 178 178 180 176 181 177 184 176 187 174 186 172 185 171 187 172 189 170 190 168 191 167 189 164 189 160 191 158 194 156 195 154 194 151 194 149 193 147 192 146 190 143 190 140 191 138 193 136 195 137 198 138 200 137 202 135 203 133 205 132 207 130 208 128 206 126 207 125 210 122 209 119 209 117 208 114 208 110 209 107 209 104 212 102 213 100 214 99 216 98 219 96 220 93 219 92 221 95 223 96 225 97 227 95 229 92 229 91 233 93 235 96 236 97 238 98 236 102 236 104 237 108 237 110 236 112 238 115 241 130 245 136 244 136 247 135 249 137 250 139 251 141 252 142 254 141 257 139 258 140 260 139 262 138 264 139 266 141 268 143 269 144 271 148 269 149 271 152 271 156 272 160 273 162 274 166 273 167 275 180 278 181 280 182 282 184 281 185 283 183 284 185 285 187 284 189 285 189 289 190 287 191 289 192 286 194 287 195 285 197 284 200 285 202 274 204 269 208 269 211 269 214 271 215 273 211 288 208 287 210 288 209 290 208 292 206 293 205 295 204 297 202 299 204 301 206 302 207 300 206 298 208 297 211 297 212 300 214 302 213 312 226 315 236 318 233 327 223 325 220 336 239 341 228 351 234 355 235 357 236 359 235 361 237 362 240 361 241 359 242 357 243 355 245 354 247 353 248 351 249 349 251 348 252 346 253 344 255 343 256 341 259 339 261 337 263 336 263 333 264 331 264 328 264 325 264 322 265 319 266 317 268 316 270 313 271 311 273 310 275 309 276 307 278 305 281 303 286 300 289 299 291 298 293 297 295 296 299 295 302 295 304 294 307 294 308 291 309 289 310 287 311 283 312 281 314 280 316 278 317 274 317 271 319 270 320 268 320 265Z"/><path class="on" d="M117 160 115 155 113 157 111 158 110 160 109 163 113 166 115 167 119 161 117 160Z"/></svg><figcaption>Carterton North within Carterton District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$32,800</strong><em>Wellington $48,400</em></div><div class="card"><span>Median household income</span><strong>$61,800</strong><em>Wellington $113,700</em></div><div class="card"><span>Median age</span><strong>52.4</strong><em>Wellington 38.1</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>21.1%</strong><em>Wellington 35.6%</em></div><div class="card"><span>Unemployment rate</span><strong>3.5%</strong><em>Wellington 4.1%</em></div><div class="card"><span>Born overseas</span><strong>17.7%</strong><em>Wellington 28.3%</em></div><div class="card"><span>NZDep2023 decile</span><strong>6 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>68.1%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$400</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$500</strong></div><div class="card"><span>Stand-alone houses</span><strong>85.1%</strong></div><div class="card"><span>Crowded households</span><strong>2.6%</strong></div><div class="card"><span>Damp homes</span><strong>12.2%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>90.7%</strong></div><div class="card"><span>Māori</span><strong>16.4%</strong></div><div class="card"><span>Asian</span><strong>3.3%</strong></div><div class="card"><span>Pacific</span><strong>2.9%</strong></div><div class="card"><span>Other</span><strong>1.0%</strong></div><div class="card"><span>MELAA</span><strong>0.3%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>68.1%</strong><em>Wellington 52.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$400</strong><em>Wellington $510</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$500</strong><em>Wellington $610</em></div><div class="card"><span>Stand-alone houses</span><strong>85.1%</strong><em>Wellington 72.7%</em></div><div class="card"><span>Crowded households</span><strong>2.6%</strong><em>Wellington 5.4%</em></div><div class="card"><span>Damp homes</span><strong>12.2%</strong><em>Wellington 19.9%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:31.5%"></i><u style="left:35.4%" title="Wellington: 17.2%"></u></div><b>15.3%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:26.1%"></i><u style="left:43.0%" title="Wellington: 20.9%"></u></div><b>12.7%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:81.7%"></i><u style="left:95.2%" title="Wellington: 46.3%"></u></div><b>39.7%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:66.6%"></i><u style="left:31.9%" title="Wellington: 15.5%"></u></div><b>32.4%</b></div><div class="key"><u></u>Wellington average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:76.2%" title="Wellington: 72.6%"></u></div><b>90.7%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:17.2%"></i><u style="left:16.3%" title="Wellington: 15.5%"></u></div><b>16.4%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:3.5%"></i><u style="left:16.0%" title="Wellington: 15.2%"></u></div><b>3.3%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:3.0%"></i><u style="left:9.6%" title="Wellington: 9.1%"></u></div><b>2.9%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.1%"></i><u style="left:1.2%" title="Wellington: 1.1%"></u></div><b>1.0%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.3%"></i><u style="left:2.4%" title="Wellington: 2.3%"></u></div><b>0.3%</b></div><div class="key"><u></u>Wellington average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:28.7%"></i><u style="left:28.4%" title="Wellington: 19.0%"></u></div><b>19.2%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:74.0%" title="Wellington: 49.5%"></u></div><b>63.7%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:5.4%"></i><u style="left:5.5%" title="Wellington: 3.7%"></u></div><b>3.6%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:10.5%"></i><u style="left:23.2%" title="Wellington: 15.5%"></u></div><b>7.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:2.1%"></i><u style="left:3.6%" title="Wellington: 2.4%"></u></div><b>1.4%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:6.9%"></i><u style="left:12.4%" title="Wellington: 8.3%"></u></div><b>4.6%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.7%"></i><u style="left:2.4%" title="Wellington: 1.6%"></u></div><b>0.5%</b></div><div class="key"><u></u>Wellington average</div></div>
 <h2>Nearby in Carterton District</h2>
 <ul class="links"><li><a href="/wellington/carterton-south/">Carterton South</a></li><li><a href="/wellington/gladstone-carterton-district/">Gladstone (Carterton District)</a></li><li><a href="/wellington/kokotau/">Kokotau</a></li><li><a href="/wellington/mount-holdsworth/">Mount Holdsworth</a></li></ul>
 

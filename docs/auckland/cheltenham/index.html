@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Auckland", "item": "https://population.co.nz/auckland/"}, {"@type": "ListItem", "position": 3, "name": "Cheltenham", "item": "https://population.co.nz/auckland/cheltenham/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#auckland/cheltenham" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Cheltenham</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Cheltenham</nav>
 <h1>Cheltenham population and demographics</h1>
-<p>Cheltenham is a statistical area in Devonport-Takapuna Local Board, Auckland. At the 2023 Census it had <strong>1,899</strong>
-usually resident people (-5.7% since 2018). It is part of the wider Devonport area.</p>
-<a class="cta" href="/#auckland/cheltenham">Open Cheltenham on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,899</strong></div><div class="card"><span>Population 2018</span><strong>2,013</strong></div><div class="card"><span>Population 2013</span><strong>2,073</strong></div><div class="card"><span>Median age</span><strong>49.8</strong></div><div class="card"><span>Median personal income</span><strong>$55,000</strong></div><div class="card"><span>Median household income</span><strong>$142,200</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>53.7%</strong></div><div class="card"><span>Unemployment rate</span><strong>2.9%</strong></div><div class="card"><span>Born overseas</span><strong>36.0%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>1</strong></div></div>
+<p class="where">Devonport-Takapuna Local Board · Auckland · part of the wider Devonport area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,899</span><span class="chip">-5.7% since 2018</span></div>
+    <div class="trend"><div><b>2,073</b><i style="height:70%"></i><span>2013</span></div><div><b>2,013</b><i style="height:68%"></i><span>2018</span></div><div><b>1,899</b><i style="height:64%"></i><span>2023</span></div></div>
+    <p class="lead">Cheltenham is in Devonport-Takapuna Local Board, Auckland. Its population fell 5.7% between the 2018 and 2023 censuses. The median age is 49.8, compared with 35.9 across Auckland.</p>
+    <a class="cta" href="/#auckland/cheltenham">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 315 406" role="img" fill-rule="evenodd"><path class="a" d="M29 20 22 21 21 24 10 30 11 34 3 35 0 40 25 67 33 78 43 70 48 57 32 42 36 39 38 31 33 27 29 20Z"/><path class="a" d="M72 80 76 67 79 62 81 53 83 44 81 39 68 28 55 44 55 50 48 57 43 70 48 72 51 77 59 81 65 73 72 80Z"/><path class="a" d="M87 118 101 103 98 98 102 75 98 63 94 61 81 53 79 62 76 67 72 80 71 87 70 101 79 126 87 118Z"/><path class="a" d="M64 17 62 12 56 10 49 11 45 10 41 7 38 0 32 4 29 20 33 27 38 31 36 39 32 42 48 57 55 50 55 44 68 28 64 17Z"/><path class="a" d="M72 80 65 73 59 81 51 77 48 72 43 70 33 78 39 91 43 103 55 131 69 159 77 160 78 157 77 146 73 138 79 126 70 101 71 87 72 80Z"/><path class="a" d="M129 36 124 35 114 40 94 61 98 63 102 75 106 72 114 71 128 83 134 78 141 81 142 74 146 67 151 69 147 60 145 58 131 41 129 36Z"/><path class="a" d="M141 81 134 78 128 83 114 71 106 72 102 75 98 98 101 103 106 107 108 105 114 104 120 101 122 98 128 96 131 98 134 88 141 86 141 81Z"/><path class="a" d="M131 98 128 96 122 98 120 101 114 104 108 105 106 107 101 103 87 118 100 129 101 135 113 146 126 140 132 139 128 126 125 124 131 119 137 111 136 108 131 101 131 98Z"/><path class="a" d="M113 146 101 135 100 129 87 118 79 126 73 138 77 146 78 157 77 160 88 172 90 168 104 152 106 150 113 156 111 151 113 146Z"/><path class="a" d="M165 125 158 115 152 111 146 103 139 91 136 89 134 96 138 105 136 108 137 111 131 119 125 124 128 126 132 139 139 142 148 149 152 142 156 141 159 142 165 125Z"/><path class="a" d="M142 211 147 209 148 204 139 191 137 187 132 187 127 185 117 177 115 168 111 165 113 156 106 150 104 152 90 168 88 172 77 160 69 159 88 197 95 211 100 220 116 241 119 248 125 247 119 244 131 237 133 232 138 232 140 229 136 215 138 211 142 211Z"/><path class="a" d="M176 205 170 196 168 185 169 180 172 181 176 173 175 165 179 158 177 153 174 152 173 140 171 135 172 130 165 125 159 142 156 141 152 142 148 149 139 142 132 139 126 140 113 146 111 151 113 156 111 165 115 168 117 177 127 185 132 187 137 187 139 191 148 204 147 209 142 211 140 215 148 223 148 227 158 222 167 215 166 212 176 205Z"/><path class="a" d="M221 247 216 242 210 239 209 235 206 234 201 229 198 223 191 222 176 205 166 212 167 215 158 222 148 227 148 231 142 232 143 238 148 238 150 233 154 232 161 237 175 228 182 238 185 239 201 242 207 245 210 253 221 249Z"/><path class="a" d="M210 253 207 245 201 242 185 239 182 238 175 228 161 237 154 237 150 243 150 251 146 250 145 253 148 258 153 260 153 266 158 270 161 276 167 282 170 281 173 276 182 269 193 259 203 264 210 253Z"/><path class="a" d="M247 282 244 275 240 272 238 265 233 258 232 253 222 247 221 249 210 253 203 264 193 259 188 271 182 281 181 286 189 289 201 285 202 287 206 289 210 296 223 288 227 297 236 295 246 286 247 282Z"/><path class="a" d="M202 287 200 286 196 291 189 294 184 295 185 301 179 306 173 306 161 312 154 310 151 312 146 318 143 320 143 324 144 331 138 335 137 343 135 346 137 350 141 346 142 340 151 333 157 330 171 326 174 327 179 323 184 322 187 320 197 317 201 318 204 316 212 315 228 302 227 297 223 288 210 296 206 289 202 287Z"/><path class="a" d="M282 341 284 330 288 324 286 318 272 311 268 310 260 305 256 298 258 296 254 293 250 285 247 282 246 286 236 295 227 297 228 302 212 315 210 323 207 325 199 334 204 337 208 336 217 334 223 334 232 330 234 327 238 328 240 332 234 336 230 341 237 349 234 350 240 351 257 347 260 352 265 351 264 348 267 345 271 345 273 341 277 339 282 341Z"/><path class="a" d="M226 359 224 357 220 356 215 352 212 358 205 359 207 353 202 348 187 358 188 364 173 363 166 365 164 374 158 377 161 384 177 379 178 374 181 372 187 372 192 373 195 378 204 387 202 389 209 393 213 390 227 390 228 387 227 382 227 368 231 366 226 359Z"/><path class="a" d="M265 351 260 352 257 347 240 351 234 350 229 353 226 359 231 366 227 368 227 382 228 387 227 390 233 392 245 400 252 398 256 395 263 395 269 392 274 388 269 380 260 360 267 356 265 351Z"/><path class="on" d="M282 341 277 339 273 341 271 345 267 345 264 348 265 351 267 356 260 360 269 380 274 388 283 381 287 379 295 386 305 385 309 381 310 374 308 368 299 365 290 354 282 341Z"/></svg><figcaption>Cheltenham within Devonport-Takapuna Local Board</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$55,000</strong><em>Auckland $44,800</em></div><div class="card"><span>Median household income</span><strong>$142,200</strong><em>Auckland $118,200</em></div><div class="card"><span>Median age</span><strong>49.8</strong><em>Auckland 35.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>53.7%</strong><em>Auckland 32.9%</em></div><div class="card"><span>Unemployment rate</span><strong>2.9%</strong><em>Auckland 4.8%</em></div><div class="card"><span>Born overseas</span><strong>36.0%</strong><em>Auckland 42.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>1 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>64.2%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$616</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$670</strong></div><div class="card"><span>Stand-alone houses</span><strong>72.7%</strong></div><div class="card"><span>Crowded households</span><strong>2.8%</strong></div><div class="card"><span>Damp homes</span><strong>14.2%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>93.2%</strong></div><div class="card"><span>Māori</span><strong>6.6%</strong></div><div class="card"><span>Asian</span><strong>4.7%</strong></div><div class="card"><span>Pacific</span><strong>2.5%</strong></div><div class="card"><span>MELAA</span><strong>2.2%</strong></div><div class="card"><span>Other</span><strong>1.3%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>64.2%</strong><em>Auckland 44.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$616</strong><em>Auckland $540</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$670</strong><em>Auckland $655</em></div><div class="card"><span>Stand-alone houses</span><strong>72.7%</strong><em>Auckland 71.5%</em></div><div class="card"><span>Crowded households</span><strong>2.8%</strong><em>Auckland 8.8%</em></div><div class="card"><span>Damp homes</span><strong>14.2%</strong><em>Auckland 20.1%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:34.0%"></i><u style="left:39.3%" title="Auckland: 19.2%"></u></div><b>16.6%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:28.5%"></i><u style="left:42.8%" title="Auckland: 20.9%"></u></div><b>13.9%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:90.9%"></i><u style="left:95.2%" title="Auckland: 46.5%"></u></div><b>44.4%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:51.4%"></i><u style="left:27.2%" title="Auckland: 13.3%"></u></div><b>25.1%</b></div><div class="key"><u></u>Auckland average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:50.9%" title="Auckland: 49.8%"></u></div><b>93.2%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:6.7%"></i><u style="left:12.6%" title="Auckland: 12.3%"></u></div><b>6.6%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:4.8%"></i><u style="left:32.0%" title="Auckland: 31.3%"></u></div><b>4.7%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:2.6%"></i><u style="left:17.0%" title="Auckland: 16.6%"></u></div><b>2.5%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:2.2%"></i><u style="left:2.8%" title="Auckland: 2.7%"></u></div><b>2.2%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.3%"></i><u style="left:0.9%" title="Auckland: 0.9%"></u></div><b>1.3%</b></div><div class="key"><u></u>Auckland average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:40.5%"></i><u style="left:26.6%" title="Auckland: 18.1%"></u></div><b>27.6%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:59.0%"></i><u style="left:95.2%" title="Auckland: 64.9%"></u></div><b>40.2%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:1.8%"></i><u style="left:5.4%" title="Auckland: 3.7%"></u></div><b>1.2%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:31.7%"></i><u style="left:11.4%" title="Auckland: 7.8%"></u></div><b>21.6%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:4.0%"></i><u style="left:1.3%" title="Auckland: 0.9%"></u></div><b>2.7%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:7.9%"></i><u style="left:4.8%" title="Auckland: 3.3%"></u></div><b>5.4%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.8%"></i><u style="left:1.8%" title="Auckland: 1.2%"></u></div><b>1.2%</b></div><div class="key"><u></u>Auckland average</div></div>
 <h2>Nearby in Devonport-Takapuna Local Board</h2>
 <ul class="links"><li><a href="/auckland/bayswater/">Bayswater</a></li><li><a href="/auckland/belmont-auckland/">Belmont (Auckland)</a></li><li><a href="/auckland/castor-bay-north/">Castor Bay North</a></li><li><a href="/auckland/castor-bay-south/">Castor Bay South</a></li><li><a href="/auckland/devonport/">Devonport</a></li><li><a href="/auckland/forrest-hill-east/">Forrest Hill East</a></li><li><a href="/auckland/forrest-hill-north/">Forrest Hill North</a></li><li><a href="/auckland/forrest-hill-west/">Forrest Hill West</a></li><li><a href="/auckland/hauraki/">Hauraki</a></li><li><a href="/auckland/milford-central/">Milford Central</a></li><li><a href="/auckland/milford-west/">Milford West</a></li><li><a href="/auckland/narrow-neck/">Narrow Neck</a></li><li><a href="/auckland/stanley-point/">Stanley Point</a></li><li><a href="/auckland/sunnynook-north/">Sunnynook North</a></li><li><a href="/auckland/sunnynook-south/">Sunnynook South</a></li><li><a href="/auckland/takapuna-central/">Takapuna Central</a></li><li><a href="/auckland/takapuna-south/">Takapuna South</a></li><li><a href="/auckland/takapuna-west/">Takapuna West</a></li><li><a href="/auckland/westlake/">Westlake</a></li></ul>
 

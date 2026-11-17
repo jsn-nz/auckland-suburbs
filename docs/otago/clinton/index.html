@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Otago", "item": "https://population.co.nz/otago/"}, {"@type": "ListItem", "position": 3, "name": "Clinton", "item": "https://population.co.nz/otago/clinton/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#otago/clinton" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/otago/">Otago</a> › Clinton</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/otago/">Otago</a> › Clinton</nav>
 <h1>Clinton population and demographics</h1>
-<p>Clinton is a statistical area in Clutha District, Otago. At the 2023 Census it had <strong>1,200</strong>
-usually resident people (-2.4% since 2018). It is part of the wider Clutha area.</p>
-<a class="cta" href="/#otago/clinton">Open Clinton on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,200</strong></div><div class="card"><span>Population 2018</span><strong>1,230</strong></div><div class="card"><span>Population 2013</span><strong>1,200</strong></div><div class="card"><span>Median age</span><strong>36.6</strong></div><div class="card"><span>Median personal income</span><strong>$40,400</strong></div><div class="card"><span>Median household income</span><strong>$79,000</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>13.7%</strong></div><div class="card"><span>Unemployment rate</span><strong>2.2%</strong></div><div class="card"><span>Born overseas</span><strong>12.6%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>6</strong></div></div>
+<p class="where">Clutha District · Otago · part of the wider Clutha area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,200</span><span class="chip">-2.4% since 2018</span></div>
+    <div class="trend"><div><b>1,200</b><i style="height:68%"></i><span>2013</span></div><div><b>1,230</b><i style="height:70%"></i><span>2018</span></div><div><b>1,200</b><i style="height:68%"></i><span>2023</span></div></div>
+    <p class="lead">Clinton is in Clutha District, Otago. Its population fell 2.4% between the 2018 and 2023 censuses. The median age is 36.6, compared with 41.3 across Otago.</p>
+    <a class="cta" href="/#otago/clinton">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 289 406" role="img" fill-rule="evenodd"><path class="a" d="M41 0 38 0 37 2 36 4 35 6 34 8 34 11 34 14 33 16 32 21 32 25 31 27 30 30 28 34 27 37 26 40 25 43 25 46 24 48 23 50 21 51 20 53 19 55 18 57 17 60 17 63 16 65 15 67 13 69 12 71 9 72 7 73 7 76 6 78 6 81 6 84 3 86 3 89 2 93 2 96 0 99 2 100 2 103 2 119 4 120 5 122 8 123 7 128 6 130 4 132 4 135 3 137 3 140 13 142 14 139 15 137 17 138 19 139 19 142 20 144 22 147 24 148 23 151 22 154 21 156 21 159 19 160 21 164 22 166 24 167 25 169 24 172 23 174 21 175 19 177 18 179 17 181 18 183 18 186 20 187 23 187 25 186 27 185 29 187 31 188 20 188 21 191 22 193 23 196 25 197 26 199 29 199 31 201 32 203 37 203 38 208 37 212 34 213 33 216 36 216 38 218 39 220 38 222 39 224 39 227 38 229 36 228 34 229 33 231 32 233 32 236 34 235 36 234 38 233 40 231 41 229 40 227 42 226 44 225 46 224 48 223 49 225 49 230 54 230 58 229 61 229 63 230 63 234 64 236 64 227 79 227 77 226 76 223 75 221 76 219 75 217 73 216 72 214 74 213 73 210 71 208 73 207 75 206 77 205 80 204 81 202 83 200 81 198 80 196 79 193 80 191 81 189 82 187 81 185 80 183 81 181 83 180 84 178 85 176 86 173 88 171 89 158 93 148 97 143 99 141 101 140 101 137 101 134 103 133 105 132 107 133 108 135 110 134 112 133 112 126 112 118 110 116 107 117 105 112 103 111 102 107 100 103 99 101 98 99 97 101 94 102 93 100 94 98 95 95 94 93 95 91 94 89 94 86 95 84 92 84 89 84 86 83 83 83 81 84 78 84 75 84 71 83 68 84 68 87 66 88 65 86 64 84 61 84 59 85 56 84 54 81 53 78 50 77 48 75 46 74 44 73 42 71 42 68 43 65 42 63 44 62 43 60 43 57 42 53 42 50 44 48 46 47 47 45 46 42 44 41 43 39 42 37 40 36 42 35 41 33 41 30 42 28 43 26 44 24 43 22 43 19 42 17 40 16 39 14 39 11 37 10 38 8 40 7 41 5 42 3 41 0Z"/><path class="a" d="M173 94 171 93 168 92 167 90 164 90 162 91 160 89 158 86 156 87 155 89 156 91 155 93 155 96 154 99 153 101 152 103 152 106 151 108 150 110 148 111 146 110 144 111 142 112 140 113 138 114 137 116 136 118 135 120 133 121 131 122 129 123 126 123 124 124 122 123 120 122 119 120 115 119 113 118 112 116 112 126 112 131 110 134 108 135 107 133 105 132 103 133 101 134 101 137 102 139 101 141 98 142 93 148 89 158 89 170 87 172 86 175 85 177 84 179 82 180 81 182 79 183 81 184 82 186 81 188 80 190 79 192 80 194 79 196 81 197 82 199 85 199 87 198 89 197 89 194 91 193 92 191 94 189 96 188 98 186 99 184 100 182 102 181 103 179 104 177 103 175 102 173 101 171 103 170 106 171 107 173 109 174 112 174 112 177 113 179 113 182 115 184 118 185 119 187 119 190 120 192 122 191 124 190 126 191 127 193 128 191 131 191 132 189 133 187 135 186 136 184 138 185 139 182 139 179 141 180 141 183 144 183 149 187 155 192 160 196 164 199 179 212 179 209 180 207 181 205 182 203 184 202 186 200 188 199 188 196 187 194 189 195 190 193 192 192 193 190 196 189 197 187 197 184 199 182 198 180 200 179 202 181 205 180 206 178 205 175 206 173 207 171 209 170 211 169 213 168 213 165 213 162 212 160 214 158 216 159 218 160 219 162 222 162 224 163 225 165 227 166 230 166 232 165 235 166 237 165 239 166 242 164 240 163 238 162 239 160 238 140 245 139 245 130 245 122 245 113 243 114 241 112 238 112 236 110 235 108 233 106 232 104 230 105 228 106 227 104 225 103 223 102 223 99 222 97 221 95 220 93 218 92 216 93 213 93 212 95 211 97 212 99 211 101 210 103 208 106 206 107 204 108 203 106 201 105 197 107 195 108 193 110 191 111 188 113 185 112 183 110 180 109 178 108 178 105 178 102 177 100 174 98 173 95Z"/><path class="a" d="M179 212 164 199 160 196 155 192 149 187 145 184 143 183 141 182 141 179 139 180 138 183 136 184 135 186 133 187 132 189 131 191 128 191 127 193 126 191 124 190 122 191 120 192 119 190 119 187 118 185 116 184 114 183 113 180 112 178 112 175 110 174 108 173 106 172 103 170 101 171 102 173 103 175 104 177 103 179 102 181 100 182 99 184 98 186 97 188 94 188 93 190 91 192 90 194 89 196 90 198 92 199 94 200 94 203 95 205 94 208 96 209 98 208 99 210 97 211 98 213 99 215 100 217 99 220 101 222 102 224 104 225 105 227 107 228 109 229 111 228 113 230 116 230 117 232 120 232 123 233 121 235 119 236 118 239 117 241 118 243 116 244 116 247 116 251 116 254 118 255 121 257 124 258 124 261 126 262 129 263 132 263 136 267 137 269 138 271 139 273 142 273 144 274 146 277 145 279 144 281 145 284 146 286 148 287 149 290 152 291 155 293 157 292 159 293 159 296 161 297 163 298 164 300 166 301 168 303 170 304 167 305 166 307 165 309 163 310 161 311 162 314 164 316 167 315 169 314 172 314 174 313 177 312 180 312 181 310 183 311 184 309 185 307 186 305 188 304 190 302 189 300 187 299 187 296 188 294 187 292 185 291 183 288 182 286 180 284 178 283 176 282 175 279 174 277 174 274 173 272 171 270 170 272 168 271 167 269 167 266 169 265 171 266 173 265 172 263 173 261 175 262 177 263 179 264 180 262 180 259 179 256 180 254 183 253 184 251 186 249 185 246 185 243 182 243 181 241 180 239 178 238 177 236 176 234 175 232 176 230 174 228 174 225 175 223 174 220 172 219 173 216 174 214 176 213 178 212Z"/><path class="a" d="M242 164 240 166 237 165 235 166 233 165 230 165 228 166 226 165 224 164 223 162 220 162 218 160 216 159 214 158 212 159 212 162 213 164 213 167 212 169 209 170 207 171 206 173 205 175 206 177 205 179 203 181 201 179 198 180 199 182 197 184 196 186 197 188 195 190 193 191 191 193 189 194 187 195 188 197 187 199 185 201 183 203 181 204 180 207 179 209 179 212 177 213 174 213 173 216 172 219 174 220 175 222 174 224 174 227 175 229 176 231 175 233 176 235 177 237 178 239 180 240 181 242 183 243 185 245 186 247 188 249 187 252 190 252 191 250 193 251 193 255 193 258 196 257 197 259 199 261 200 263 202 262 204 261 206 262 207 265 209 266 210 268 211 270 212 272 215 272 217 273 219 272 221 270 222 268 221 265 220 263 219 261 221 259 224 260 227 260 229 262 232 263 234 264 237 264 240 264 242 262 244 261 246 259 248 257 251 255 253 254 256 252 258 251 260 250 262 249 263 247 265 246 266 244 268 242 269 240 271 239 273 238 274 236 275 234 276 232 276 229 276 226 278 224 279 222 279 219 280 217 279 215 280 213 279 211 279 208 279 205 279 201 275 195 274 193 273 191 272 189 271 186 269 185 267 184 265 185 262 185 260 183 258 182 257 180 260 180 262 178 263 175 262 173 261 171 259 170 257 171 256 169 254 168 256 166 255 164 253 163 250 163 248 164 246 163 244 164ZM227 222 228 224 227 227 228 229 229 231 227 233 225 232 224 230 222 228 224 226 225 223 227 222Z"/><path class="a" d="M183 312 181 311 179 312 176 313 174 312 173 314 170 314 168 315 166 316 163 315 161 313 162 311 164 310 165 308 167 306 168 304 170 303 167 302 165 301 164 299 161 297 159 296 160 294 158 292 156 293 154 295 152 296 150 297 148 298 147 300 145 299 142 298 140 299 138 298 136 299 137 296 135 295 133 294 130 294 128 295 126 296 125 298 123 297 121 298 119 299 116 298 114 299 113 305 108 303 105 303 101 302 98 300 96 298 96 303 85 298 83 297 81 298 80 300 79 302 80 304 83 305 84 307 83 309 82 311 79 311 77 312 72 312 70 310 71 307 69 309 69 312 59 308 56 310 54 312 51 312 48 313 47 316 45 317 43 318 45 319 46 321 47 323 48 325 47 328 45 329 46 331 47 333 45 335 44 337 42 338 40 339 39 342 40 344 42 346 43 348 42 350 44 351 46 352 49 352 51 354 53 356 55 358 58 357 60 358 59 360 58 362 57 365 56 367 55 369 54 371 52 372 47 372 46 374 55 378 57 379 59 380 62 382 63 385 62 387 65 391 63 392 65 394 68 395 71 395 73 397 74 399 75 397 77 398 79 399 82 399 84 400 86 399 85 396 84 394 85 392 88 391 90 390 93 390 94 392 96 390 98 389 100 390 102 391 104 390 105 388 103 387 102 385 103 383 104 381 106 380 109 380 111 379 112 377 112 374 115 374 117 373 120 373 123 373 125 374 127 375 129 374 132 374 133 376 135 375 136 377 135 379 137 380 138 378 137 376 139 375 141 374 143 373 144 370 144 367 147 367 150 367 153 367 154 365 156 363 158 362 161 362 163 361 162 359 163 357 165 356 166 354 167 351 169 350 167 349 166 347 165 345 164 347 163 349 160 349 159 347 158 345 155 344 154 346 152 347 149 349 147 351 145 350 144 348 146 346 149 346 150 343 152 344 154 343 156 344 159 344 160 346 162 347 164 345 167 345 168 347 171 346 174 346 175 348 177 347 176 345 177 343 179 344 181 343 183 342 182 340 183 338 185 337 187 336 189 337 191 336 189 335 187 334 186 332 185 330 186 327 187 325 185 323 184 321 182 320 183 318 183 315 183 312Z"/><path class="a" d="M227 222 225 223 224 225 223 227 224 229 225 232 227 233 229 231 227 230 226 227 228 225 228 222Z"/><path class="a" d="M173 265 171 266 169 265 167 266 166 269 168 271 170 272 171 270 172 268 174 269 176 270 176 267 173 265Z"/><path class="a" d="M179 264 177 263 175 262 173 261 172 263 173 265 175 266 176 268 179 267 179 264Z"/><path class="a" d="M176 268 178 270 177 273 179 274 181 273 183 272 185 270 185 267 186 264 186 261 180 259 180 262 179 264 179 267 177 268Z"/><path class="a" d="M238 264 235 264 232 263 230 262 228 261 226 260 223 259 219 259 220 261 220 264 222 266 222 269 220 271 218 273 216 272 213 272 211 271 210 269 209 267 207 266 207 263 205 262 202 262 200 263 199 261 197 259 196 257 193 258 193 255 193 252 191 250 190 252 187 252 188 249 185 250 184 252 181 253 180 255 180 258 186 260 186 263 185 266 185 270 183 271 181 272 179 274 177 273 178 271 177 269 175 270 173 269 171 270 173 272 174 274 174 277 175 279 176 282 178 283 180 284 181 286 183 287 184 290 186 292 188 293 187 296 187 299 189 300 190 302 193 300 195 298 197 297 199 296 201 295 203 294 205 293 207 292 209 291 211 290 213 288 215 287 216 284 217 282 220 281 222 279 225 278 227 277 229 275 231 273 233 271 234 269 235 267 237 265Z"/><path class="on" d="M89 198 86 198 84 199 82 201 81 203 79 205 77 206 74 206 72 207 72 210 74 211 73 213 72 215 74 216 75 218 76 220 76 223 77 225 79 226 66 227 64 236 63 234 63 231 62 229 58 229 55 229 50 231 49 226 48 223 46 224 43 224 42 226 40 227 41 229 40 231 38 233 36 234 34 235 32 236 33 238 35 237 36 239 38 238 39 240 41 241 40 243 39 246 40 248 41 250 44 250 45 252 47 253 47 258 46 260 45 262 45 265 47 266 46 268 45 271 45 274 45 280 43 282 44 284 45 286 47 289 45 292 44 294 46 296 44 297 42 299 40 301 39 303 37 304 35 305 35 308 33 309 33 312 34 314 36 315 38 314 40 315 42 316 44 317 47 316 47 313 50 312 53 312 55 311 57 308 69 312 69 309 70 306 71 309 72 312 77 312 79 311 82 311 83 309 85 307 83 306 82 304 79 303 80 300 81 298 83 297 85 298 96 303 96 298 98 299 101 301 105 303 108 303 112 305 113 300 115 299 118 299 120 298 123 297 125 298 126 296 128 295 129 293 131 294 134 295 136 296 136 299 138 298 140 299 142 298 144 299 146 300 148 299 149 297 151 296 153 295 155 294 152 292 151 290 148 288 146 286 145 284 144 281 145 279 146 277 145 275 143 274 140 274 138 273 137 270 136 268 133 263 130 263 126 262 124 261 125 259 123 257 119 256 118 254 116 253 116 249 116 246 118 244 118 241 119 238 120 236 122 234 121 231 119 232 117 231 115 230 112 229 109 229 107 228 105 227 104 225 102 224 101 222 99 221 100 219 100 216 99 214 97 212 98 210 97 208 94 210 95 207 94 204 94 201 92 199 90 198Z"/></svg><figcaption>Clinton within Clutha District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$40,400</strong><em>Otago $41,300</em></div><div class="card"><span>Median household income</span><strong>$79,000</strong><em>Otago $85,200</em></div><div class="card"><span>Median age</span><strong>36.6</strong><em>Otago 41.3</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>13.7%</strong><em>Otago 27.0%</em></div><div class="card"><span>Unemployment rate</span><strong>2.2%</strong><em>Otago 3.5%</em></div><div class="card"><span>Born overseas</span><strong>12.6%</strong><em>Otago 23.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>6 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>49.3%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$172</strong></div><div class="card"><span>Stand-alone houses</span><strong>94.9%</strong></div><div class="card"><span>Crowded households</span><strong>2.7%</strong></div><div class="card"><span>Damp homes</span><strong>16.9%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>89.5%</strong></div><div class="card"><span>Māori</span><strong>11.2%</strong></div><div class="card"><span>Asian</span><strong>5.5%</strong></div><div class="card"><span>Other</span><strong>1.8%</strong></div><div class="card"><span>Pacific</span><strong>1.0%</strong></div><div class="card"><span>MELAA</span><strong>0.5%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>49.3%</strong><em>Otago 54.2%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$172</strong><em>Otago $400</em></div><div class="card"><span>Stand-alone houses</span><strong>94.9%</strong><em>Otago 81.9%</em></div><div class="card"><span>Crowded households</span><strong>2.7%</strong><em>Otago 3.5%</em></div><div class="card"><span>Damp homes</span><strong>16.9%</strong><em>Otago 14.4%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:44.8%"></i><u style="left:31.7%" title="Otago: 15.7%"></u></div><b>22.2%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:38.3%"></i><u style="left:44.8%" title="Otago: 22.2%"></u></div><b>19.0%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:89.6%" title="Otago: 44.4%"></u></div><b>47.2%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:22.6%"></i><u style="left:35.7%" title="Otago: 17.7%"></u></div><b>11.2%</b></div><div class="key"><u></u>Otago average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:90.7%" title="Otago: 85.2%"></u></div><b>89.5%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:11.9%"></i><u style="left:10.5%" title="Otago: 9.9%"></u></div><b>11.2%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:5.9%"></i><u style="left:9.0%" title="Otago: 8.5%"></u></div><b>5.5%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.9%"></i><u style="left:1.4%" title="Otago: 1.3%"></u></div><b>1.8%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:1.1%"></i><u style="left:3.6%" title="Otago: 3.4%"></u></div><b>1.0%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.5%"></i><u style="left:2.3%" title="Otago: 2.2%"></u></div><b>0.5%</b></div><div class="key"><u></u>Otago average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:61.7%"></i><u style="left:24.4%" title="Otago: 16.7%"></u></div><b>42.2%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:70.2%"></i><u style="left:95.2%" title="Otago: 65.1%"></u></div><b>48.0%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:1.3%"></i><u style="left:5.7%" title="Otago: 3.9%"></u></div><b>0.9%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:4.5%" title="Otago: 3.1%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:0.6%"></i><u style="left:3.8%" title="Otago: 2.6%"></u></div><b>0.4%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:4.5%"></i><u style="left:11.0%" title="Otago: 7.5%"></u></div><b>3.1%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:8.5%"></i><u style="left:1.8%" title="Otago: 1.2%"></u></div><b>5.8%</b></div><div class="key"><u></u>Otago average</div></div>
 <h2>Nearby in Clutha District</h2>
 <ul class="links"><li><a href="/otago/balclutha-north/">Balclutha North</a></li><li><a href="/otago/balclutha-south/">Balclutha South</a></li><li><a href="/otago/benhar-stirling/">Benhar-Stirling</a></li><li><a href="/otago/bruce/">Bruce</a></li><li><a href="/otago/catlins/">Catlins</a></li><li><a href="/otago/clutha-valley/">Clutha Valley</a></li><li><a href="/otago/kaitangata-matau/">Kaitangata-Matau</a></li><li><a href="/otago/milton/">Milton</a></li><li><a href="/otago/tuapeka/">Tuapeka</a></li><li><a href="/otago/west-otago/">West Otago</a></li></ul>
 

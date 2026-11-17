@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Taranaki", "item": "https://population.co.nz/taranaki/"}, {"@type": "ListItem", "position": 3, "name": "Douglas", "item": "https://population.co.nz/taranaki/douglas/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#taranaki/douglas" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/taranaki/">Taranaki</a> › Douglas</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/taranaki/">Taranaki</a> › Douglas</nav>
 <h1>Douglas population and demographics</h1>
-<p>Douglas is a statistical area in Stratford District, Taranaki. At the 2023 Census it had <strong>663</strong>
-usually resident people (-1.3% since 2018). It is part of the wider Stratford District Rural area.</p>
-<a class="cta" href="/#taranaki/douglas">Open Douglas on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>663</strong></div><div class="card"><span>Population 2018</span><strong>672</strong></div><div class="card"><span>Population 2013</span><strong>645</strong></div><div class="card"><span>Median age</span><strong>35.9</strong></div><div class="card"><span>Median personal income</span><strong>$37,200</strong></div><div class="card"><span>Median household income</span><strong>$76,400</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>13.8%</strong></div><div class="card"><span>Unemployment rate</span><strong>1.6%</strong></div><div class="card"><span>Born overseas</span><strong>9.2%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>5</strong></div></div>
+<p class="where">Stratford District · Taranaki · part of the wider Stratford District Rural area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">663</span><span class="chip">-1.3% since 2018</span></div>
+    <div class="trend"><div><b>645</b><i style="height:67%"></i><span>2013</span></div><div><b>672</b><i style="height:70%"></i><span>2018</span></div><div><b>663</b><i style="height:69%"></i><span>2023</span></div></div>
+    <p class="lead">Douglas is in Stratford District, Taranaki. Its population fell 1.3% between the 2018 and 2023 censuses. The median age is 35.9, compared with 40.8 across Taranaki.</p>
+    <a class="cta" href="/#taranaki/douglas">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 256" role="img" fill-rule="evenodd"><path class="a" d="M136 158 131 158 125 158 123 157 114 159 113 161 113 165 111 164 108 164 109 162 103 162 99 163 96 162 92 161 90 160 88 161 86 162 86 156 83 156 80 156 79 158 77 159 75 161 74 163 74 166 72 168 73 174 74 176 75 178 75 181 77 184 79 183 81 190 79 193 80 198 83 206 89 204 91 205 93 207 93 210 91 211 91 215 92 217 91 219 88 220 89 222 90 224 91 229 91 235 91 238 92 243 92 246 102 247 105 247 108 248 110 250 112 249 115 250 119 245 124 248 127 249 129 246 130 248 132 244 134 245 142 246 146 246 146 242 151 242 151 239 153 238 152 236 151 234 150 236 149 234 147 233 148 235 146 236 144 237 142 235 144 234 144 231 146 230 144 229 143 231 141 230 140 228 138 229 137 227 135 228 136 226 138 224 137 222 136 220 134 219 135 217 137 216 137 213 139 212 140 210 138 207 137 205 134 205 133 207 133 204 132 201 133 198 132 195 132 192 132 189 133 187 134 185 135 183 134 181 133 179 131 178 129 179 128 181 127 172 130 172 130 169 131 167 133 165 133 162 135 163 137 161 137 158Z"/><path class="a" d="M93 209 91 207 90 204 83 206 81 207 81 210 79 211 78 214 81 215 84 213 83 211 85 210 88 209 91 209Z"/><path class="a" d="M83 206 81 199 79 193 81 190 79 183 77 184 75 181 75 178 74 176 73 174 72 170 70 169 68 171 66 173 64 174 63 176 61 177 59 179 56 180 54 181 52 183 49 185 47 187 44 187 0 192 12 234 12 244 13 246 18 247 41 247 42 244 42 241 46 241 54 241 60 241 59 238 62 239 65 239 68 239 71 239 74 239 77 239 80 239 79 241 80 243 81 245 83 246 92 247 92 243 91 240 91 235 91 229 90 226 89 222 88 220 84 221 83 219 80 219 79 215 79 211 81 210 81 207 83 206Z"/><path class="a" d="M93 209 88 209 86 210 83 211 84 213 82 214 85 215 89 215 91 211 94 211 93 209Z"/><path class="a" d="M82 215 80 214 79 218 83 219 84 221 88 220 91 219 92 217 91 215 86 216 82 216Z"/><path class="on" d="M278 7 275 6 274 4 273 2 272 4 269 6 266 7 265 5 263 3 261 2 259 1 258 3 256 4 255 7 253 8 251 9 250 11 250 14 251 16 253 18 254 20 251 23 249 25 250 27 251 29 252 31 253 33 255 34 258 35 260 36 260 39 260 42 259 45 258 49 257 51 255 52 256 54 257 56 256 58 254 60 254 63 252 64 250 65 248 66 245 66 243 64 241 63 239 62 237 63 235 64 234 66 235 68 236 71 234 72 233 74 231 75 230 77 229 79 228 81 228 84 227 86 226 88 228 90 229 92 229 95 230 97 230 101 227 101 226 99 224 98 222 99 221 97 219 96 217 95 215 94 213 93 212 91 210 90 208 91 206 92 205 90 204 88 202 83 200 82 199 84 199 87 197 86 197 83 196 81 194 80 195 82 192 84 191 82 190 80 189 82 190 84 191 87 190 89 189 91 187 90 188 92 190 93 191 95 188 95 184 94 183 96 184 98 186 99 185 101 183 100 182 102 183 104 182 106 180 105 178 104 177 106 178 108 180 110 179 112 177 113 179 115 181 114 183 115 185 116 182 117 179 117 179 120 181 122 180 124 179 122 178 120 177 123 179 124 178 126 176 127 179 126 182 127 180 128 178 129 180 130 182 129 181 131 178 131 176 132 177 137 174 138 175 140 173 142 171 141 169 142 167 140 165 139 163 138 161 137 160 135 158 134 156 135 154 134 152 133 151 136 150 138 148 137 147 140 146 142 144 144 146 146 148 145 147 148 145 149 142 150 141 148 140 150 142 151 141 154 139 153 139 150 138 152 137 154 139 156 140 158 138 157 136 156 136 159 138 160 137 163 135 162 133 161 133 164 132 167 130 169 130 172 128 171 127 181 129 180 130 178 132 179 135 180 135 183 134 185 133 187 132 189 132 192 132 195 133 197 133 200 133 203 132 206 134 205 137 205 138 207 139 209 138 212 137 215 136 217 134 218 135 220 136 222 137 224 136 226 134 227 137 227 138 229 140 228 139 230 142 230 144 229 146 230 144 231 145 233 143 234 144 237 146 236 148 235 147 233 149 234 150 236 151 234 153 236 154 238 152 239 151 242 153 243 153 246 155 247 158 247 157 245 158 243 159 245 161 247 164 246 168 246 171 246 173 245 172 243 173 241 175 240 175 237 176 235 177 233 179 232 181 231 183 230 185 229 186 227 188 226 189 224 191 225 194 227 197 226 199 228 199 231 203 231 208 231 215 231 218 231 224 231 231 231 233 230 236 231 238 232 239 234 239 238 240 241 239 243 238 245 248 246 264 246 292 246 314 246 312 244 312 241 310 240 312 239 314 240 316 238 317 236 316 233 318 232 319 230 320 228 319 226 320 224 319 222 318 220 315 221 313 220 312 218 310 216 308 215 305 214 304 212 301 212 298 212 296 211 293 211 293 208 292 206 291 204 290 202 291 200 290 198 288 197 287 195 285 194 283 193 280 190 278 188 276 186 272 186 273 188 271 190 270 192 269 190 268 188 267 186 266 184 265 182 266 180 265 178 265 175 267 174 268 172 266 170 267 168 265 167 264 165 266 163 267 161 266 159 265 157 263 155 261 156 259 155 258 153 257 151 254 151 252 150 249 149 247 148 246 146 248 144 249 142 249 139 248 137 249 134 248 132 246 130 246 127 246 124 245 122 247 121 247 118 245 117 243 115 241 113 239 112 237 110 241 103 242 101 244 100 247 100 249 101 250 99 252 98 255 98 256 96 256 93 255 91 256 89 258 87 259 85 262 84 265 83 266 85 267 87 272 84 273 82 275 80 277 79 279 78 281 77 282 75 281 73 280 71 282 68 279 67 275 66 277 62 276 60 277 56 276 54 273 53 274 51 272 49 271 47 272 45 274 43 275 41 273 40 271 39 273 37 276 37 279 36 284 30 281 27 279 25 277 24 278 22 279 19 281 18 281 15 280 13 279 11 278 8Z"/></svg><figcaption>Douglas within Stratford District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$37,200</strong><em>Taranaki $38,500</em></div><div class="card"><span>Median household income</span><strong>$76,400</strong><em>Taranaki $83,700</em></div><div class="card"><span>Median age</span><strong>35.9</strong><em>Taranaki 40.8</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>13.8%</strong><em>Taranaki 17.8%</em></div><div class="card"><span>Unemployment rate</span><strong>1.6%</strong><em>Taranaki 4.0%</em></div><div class="card"><span>Born overseas</span><strong>9.2%</strong><em>Taranaki 15.0%</em></div><div class="card"><span>NZDep2023 decile</span><strong>5 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>62.0%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$186</strong></div><div class="card"><span>Stand-alone houses</span><strong>93.6%</strong></div><div class="card"><span>Crowded households</span><strong>1.4%</strong></div><div class="card"><span>Damp homes</span><strong>28.8%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>92.3%</strong></div><div class="card"><span>Māori</span><strong>14.9%</strong></div><div class="card"><span>Asian</span><strong>1.8%</strong></div><div class="card"><span>Other</span><strong>1.8%</strong></div><div class="card"><span>Pacific</span><strong>0.9%</strong></div><div class="card"><span>MELAA</span><strong>0.0%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>62.0%</strong><em>Taranaki 58.4%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$186</strong><em>Taranaki $370</em></div><div class="card"><span>Stand-alone houses</span><strong>93.6%</strong><em>Taranaki 86.5%</em></div><div class="card"><span>Crowded households</span><strong>1.4%</strong><em>Taranaki 4.2%</em></div><div class="card"><span>Damp homes</span><strong>28.8%</strong><em>Taranaki 18.1%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:56.9%"></i><u style="left:41.6%" title="Taranaki: 20.2%"></u></div><b>27.6%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:29.9%"></i><u style="left:33.8%" title="Taranaki: 16.4%"></u></div><b>14.5%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:91.5%" title="Taranaki: 44.4%"></u></div><b>46.2%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:24.3%"></i><u style="left:39.4%" title="Taranaki: 19.1%"></u></div><b>11.8%</b></div><div class="key"><u></u>Taranaki average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:86.3%" title="Taranaki: 83.6%"></u></div><b>92.3%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:15.4%"></i><u style="left:22.5%" title="Taranaki: 21.8%"></u></div><b>14.9%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:1.9%"></i><u style="left:5.9%" title="Taranaki: 5.7%"></u></div><b>1.8%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.9%"></i><u style="left:1.4%" title="Taranaki: 1.4%"></u></div><b>1.8%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:0.9%"></i><u style="left:2.7%" title="Taranaki: 2.6%"></u></div><b>0.9%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.0%"></i><u style="left:0.8%" title="Taranaki: 0.8%"></u></div><b>0.0%</b></div><div class="key"><u></u>Taranaki average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:77.9%"></i><u style="left:25.4%" title="Taranaki: 18.7%"></u></div><b>57.4%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:51.1%"></i><u style="left:95.2%" title="Taranaki: 70.2%"></u></div><b>37.7%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:2.2%"></i><u style="left:4.9%" title="Taranaki: 3.6%"></u></div><b>1.6%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:0.7%" title="Taranaki: 0.5%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:0.0%"></i><u style="left:2.0%" title="Taranaki: 1.5%"></u></div><b>0.0%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:2.2%"></i><u style="left:5.2%" title="Taranaki: 3.8%"></u></div><b>1.6%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.2%"></i><u style="left:2.3%" title="Taranaki: 1.7%"></u></div><b>1.6%</b></div><div class="key"><u></u>Taranaki average</div></div>
 <h2>Nearby in Stratford District</h2>
 <ul class="links"><li><a href="/taranaki/pembroke/">Pembroke</a></li><li><a href="/taranaki/stratford-central/">Stratford Central</a></li><li><a href="/taranaki/stratford-north/">Stratford North</a></li><li><a href="/taranaki/stratford-south/">Stratford South</a></li><li><a href="/taranaki/toko/">Toko</a></li></ul>
 

@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Bay of Plenty", "item": "https://population.co.nz/bay-of-plenty/"}, {"@type": "ListItem", "position": 3, "name": "Trident", "item": "https://population.co.nz/bay-of-plenty/trident/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#bay-of-plenty/trident" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/bay-of-plenty/">Bay of Plenty</a> › Trident</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/bay-of-plenty/">Bay of Plenty</a> › Trident</nav>
 <h1>Trident population and demographics</h1>
-<p>Trident is a statistical area in Whakatane District, Bay of Plenty. At the 2023 Census it had <strong>3,417</strong>
-usually resident people (+0.4% since 2018). It is part of the wider Whakatāne West area.</p>
-<a class="cta" href="/#bay-of-plenty/trident">Open Trident on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>3,417</strong></div><div class="card"><span>Population 2018</span><strong>3,402</strong></div><div class="card"><span>Population 2013</span><strong>3,105</strong></div><div class="card"><span>Median age</span><strong>40.1</strong></div><div class="card"><span>Median personal income</span><strong>$30,300</strong></div><div class="card"><span>Median household income</span><strong>$59,400</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>15.6%</strong></div><div class="card"><span>Unemployment rate</span><strong>9.3%</strong></div><div class="card"><span>Born overseas</span><strong>15.2%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>10</strong></div></div>
+<p class="where">Whakatane District · Bay of Plenty · part of the wider Whakatāne West area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">3,417</span><span class="chip">+0.4% since 2018</span></div>
+    <div class="trend"><div><b>3,105</b><i style="height:64%"></i><span>2013</span></div><div><b>3,402</b><i style="height:70%"></i><span>2018</span></div><div><b>3,417</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Trident is in Whakatane District, Bay of Plenty. Its population grew 0.4% between the 2018 and 2023 censuses. The median age is 40.1, compared with 40.1 across Bay of Plenty.</p>
+    <a class="cta" href="/#bay-of-plenty/trident">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 239 406" role="img" fill-rule="evenodd"><path class="a" d="M156 60 156 57 157 55 158 53 157 51 155 50 155 55 155 58 156 60Z"/><path class="a" d="M111 50 109 52 107 53 106 56 107 58 106 61 109 60 110 57 109 55 108 53 110 52 111 50Z"/><path class="a" d="M124 31 122 32 121 34 119 35 118 38 116 39 114 40 113 42 111 41 112 44 111 46 111 49 110 52 108 53 109 55 110 57 109 59 108 61 106 63 105 65 112 71 115 73 117 74 127 81 142 83 147 83 146 86 146 89 148 87 151 87 150 85 152 83 157 83 157 80 155 79 157 77 159 76 158 73 158 70 158 67 156 66 154 65 155 63 156 61 155 58 153 57 151 56 149 54 147 52 144 52 143 50 139 49 141 44 142 41 142 38 143 36 141 35 139 34 136 34 134 33 131 32 127 32 125 31Z"/><path class="a" d="M82 20 80 19 76 18 74 17 71 16 69 15 67 14 64 13 61 11 59 10 56 9 53 8 51 7 48 5 46 4 44 3 42 2 40 1 39 20 39 31 39 66 39 71 39 87 41 88 42 90 40 91 41 93 43 94 46 94 48 92 48 89 51 89 53 88 56 87 59 86 61 85 62 83 64 82 66 81 68 79 75 74 78 73 80 71 81 69 80 67 82 64 83 62 82 60 81 57 80 55 81 53 83 51 85 49 87 48 88 46 89 44 87 40 86 38 86 33 87 30 87 26 85 24 83 22 82 20Z"/><path class="a" d="M124 31 122 30 119 30 117 29 114 28 112 27 109 26 106 25 103 25 101 24 97 24 95 23 92 23 90 22 86 22 82 20 83 22 85 24 86 26 87 28 86 33 85 37 87 40 89 43 88 45 87 48 85 49 83 51 81 52 80 55 81 57 82 60 95 61 98 63 98 67 104 65 106 64 107 62 107 59 106 57 106 54 108 52 110 50 111 48 112 45 111 43 113 42 114 40 116 38 118 36 121 34 122 32 124 31Z"/><path class="a" d="M81 108 83 104 85 102 85 99 86 97 88 96 88 93 89 90 90 86 92 87 91 80 94 81 94 77 96 76 98 73 93 71 94 69 98 67 98 63 95 63 82 61 83 63 81 66 81 69 80 71 78 73 75 74 68 79 67 81 65 82 63 83 61 85 59 86 57 87 55 88 52 88 50 89 48 90 47 93 45 94 42 93 40 92 39 103 39 108 42 108 44 107 46 106 48 104 51 105 54 101 69 95 73 93 75 91 77 90 80 88 82 90 78 96 75 97 73 100 72 103 70 105 69 107 68 109 77 109 81 108Z"/><path class="a" d="M161 50 160 48 159 50 158 52 160 53 162 54 164 55 163 53 162 51Z"/><path class="a" d="M198 65 195 65 196 67 195 69 197 67 199 66ZM182 60 183 62 186 63 184 61 182 60ZM166 48 167 45 166 43 164 42 163 44 164 46 161 50 163 51 163 54 161 53 159 52 157 54 156 56 156 59 155 62 154 65 156 66 158 67 159 69 157 72 159 76 157 77 155 78 157 80 157 83 156 85 155 87 155 91 156 93 159 93 161 94 163 93 165 94 167 96 169 95 171 94 171 91 171 88 170 86 170 83 172 81 177 82 180 82 186 82 189 82 190 84 192 83 195 84 194 82 193 80 191 76 192 73 193 71 195 70 194 68 192 67 189 67 189 70 190 72 188 71 187 73 186 71 187 69 188 66 185 66 182 66 181 68 182 70 180 71 179 69 178 67 177 65 179 64 180 62 179 60 181 59 178 56 175 55 170 53 168 51 166 50Z"/><path class="a" d="M117 74 115 73 112 71 105 66 106 64 104 65 98 67 94 69 93 71 98 73 96 76 94 75 93 77 94 81 92 80 92 85 91 87 90 90 88 93 88 96 86 97 85 99 85 102 83 103 81 108 89 109 94 110 104 111 105 109 104 107 103 105 105 104 105 101 106 97 106 94 108 93 109 91 109 88 112 89 116 78 117 74Z"/><path class="a" d="M152 50 149 50 146 51 148 53 150 55 152 54 152 50Z"/><path class="a" d="M181 58 183 59 185 58 187 59 190 59 193 60 195 61 197 62 200 63 203 63 205 62 204 60 201 60 198 59 195 59 192 58 187 57 184 57 182 56 180 55 177 54 175 53 171 52 169 51 167 49 166 51 169 52 171 53 175 55 177 56 181 57Z"/><path class="a" d="M66 110 64 111 61 111 59 110 57 108 51 108 50 106 48 104 46 105 45 107 43 108 39 108 39 113 33 115 33 122 32 169 32 180 32 185 32 192 32 195 32 206 31 223 31 233 14 230 9 223 7 235 5 244 4 248 3 252 2 258 0 265 7 265 8 270 11 273 17 275 16 279 18 281 20 282 20 285 21 287 23 291 30 297 32 299 40 304 42 303 42 300 43 298 52 303 48 319 43 340 45 360 49 364 53 372 56 379 68 400 69 398 70 396 69 394 69 391 70 389 69 387 67 386 67 383 66 381 68 380 69 378 68 376 70 375 70 372 70 368 71 366 72 362 71 360 72 358 71 356 72 354 73 351 74 349 76 348 78 349 80 350 82 349 81 347 82 345 83 343 86 343 88 341 89 339 88 337 89 335 91 333 93 332 96 332 99 332 101 333 103 334 105 335 107 334 108 332 110 331 112 330 113 328 115 329 117 330 120 330 122 328 123 326 125 327 128 328 128 331 130 333 132 334 134 335 137 336 138 338 140 339 143 337 145 338 148 338 149 340 151 341 153 340 155 338 157 337 158 335 161 332 162 330 164 328 165 326 166 324 167 322 167 319 168 317 169 315 170 313 171 311 173 310 174 308 177 309 179 308 181 307 182 305 184 304 185 307 187 308 189 307 190 309 191 311 191 308 192 305 192 302 194 300 195 298 196 295 198 294 200 292 202 291 204 293 206 294 208 293 210 292 211 290 212 287 214 286 215 284 209 283 189 257 182 255 157 245 151 248 132 255 103 267 106 254 109 237 116 205 116 187 118 185 117 183 115 182 114 180 113 178 111 177 114 173 115 169 118 170 120 169 120 165 123 157 124 154 125 151 127 135 122 131 126 122 131 114 120 113 119 116 115 116 105 116 104 114 106 113 105 111 94 110 89 109 81 108 77 109 67 110ZM67 248 66 245 66 242 67 238 70 237 71 239 72 241 74 242 75 244 76 246 75 248 72 248 69 246 67 249Z"/><path class="a" d="M157 46 160 46 163 45 161 44 156 42 154 41 151 39 149 38 146 37 144 36 142 38 142 41 141 44 139 47 142 49 144 50 143 52 146 52 147 50 150 50 153 49 154 47 156 46Z"/><path class="a" d="M157 83 154 83 150 83 151 85 148 87 146 89 146 86 147 83 142 83 127 81 117 74 116 78 112 89 109 88 109 91 108 93 106 94 106 97 105 99 105 103 103 104 104 106 105 108 105 111 106 113 104 114 105 116 115 116 119 116 120 113 131 114 127 121 121 130 127 135 125 151 124 154 122 157 121 165 120 167 119 169 115 169 114 173 111 175 112 177 113 179 114 181 115 183 117 184 116 187 116 203 109 237 106 254 103 267 132 255 151 248 157 245 182 255 189 257 209 283 215 283 216 281 217 279 218 276 220 274 221 272 222 269 223 266 223 263 221 261 219 260 217 259 216 257 217 255 217 251 218 249 219 246 219 243 218 241 218 238 219 236 220 234 219 232 220 230 221 228 224 225 225 223 224 221 223 219 222 217 223 215 226 214 228 215 229 213 229 210 231 209 233 208 233 205 233 202 231 201 228 201 226 200 226 197 226 194 226 191 229 190 231 188 230 186 231 184 230 182 231 180 230 178 228 176 226 175 225 173 224 171 223 169 221 170 219 169 216 169 214 168 213 170 211 169 211 166 210 164 209 162 209 159 208 157 206 156 204 155 206 154 206 151 207 149 207 146 208 144 207 142 206 140 207 138 208 136 208 131 210 130 210 127 210 124 209 122 209 118 209 113 212 113 213 111 211 109 210 107 211 105 211 102 210 100 209 98 207 97 202 95 199 94 200 92 200 89 197 89 196 87 195 85 194 83 191 84 189 83 187 82 180 82 177 82 173 81 170 81 170 84 169 86 171 87 171 90 171 93 169 94 167 96 165 95 164 93 162 94 160 93 157 93 156 91 155 89 155 86 157 84Z"/><path class="a" d="M161 50 163 47 164 45 162 46 160 47 157 46 154 47 153 49 155 50 157 51 159 50 160 48 161 50Z"/><path class="a" d="M67 248 69 247 72 248 75 248 76 246 75 244 74 242 72 241 71 239 70 237 67 238 67 241 66 243 67 246 66 248Z"/><path class="on" d="M155 58 155 55 155 50 152 50 152 53 151 55 153 57 155 58Z"/></svg><figcaption>Trident within Whakatane District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$30,300</strong><em>Bay of Plenty $39,900</em></div><div class="card"><span>Median household income</span><strong>$59,400</strong><em>Bay of Plenty $90,600</em></div><div class="card"><span>Median age</span><strong>40.1</strong><em>Bay of Plenty 40.1</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>15.6%</strong><em>Bay of Plenty 21.8%</em></div><div class="card"><span>Unemployment rate</span><strong>9.3%</strong><em>Bay of Plenty 5.3%</em></div><div class="card"><span>Born overseas</span><strong>15.2%</strong><em>Bay of Plenty 20.8%</em></div><div class="card"><span>NZDep2023 decile</span><strong>10 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>45.0%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$300</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$585</strong></div><div class="card"><span>Stand-alone houses</span><strong>74.0%</strong></div><div class="card"><span>Crowded households</span><strong>8.4%</strong></div><div class="card"><span>Damp homes</span><strong>22.0%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>60.9%</strong></div><div class="card"><span>Māori</span><strong>46.6%</strong></div><div class="card"><span>Asian</span><strong>7.6%</strong></div><div class="card"><span>Pacific</span><strong>4.5%</strong></div><div class="card"><span>Other</span><strong>1.2%</strong></div><div class="card"><span>MELAA</span><strong>1.0%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>45.0%</strong><em>Bay of Plenty 54.7%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$300</strong><em>Bay of Plenty $460</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$585</strong><em>Bay of Plenty $660</em></div><div class="card"><span>Stand-alone houses</span><strong>74.0%</strong><em>Bay of Plenty 82.7%</em></div><div class="card"><span>Crowded households</span><strong>8.4%</strong><em>Bay of Plenty 6.5%</em></div><div class="card"><span>Damp homes</span><strong>22.0%</strong><em>Bay of Plenty 17.5%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:45.3%"></i><u style="left:43.6%" title="Bay of Plenty: 19.9%"></u></div><b>20.7%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:37.7%"></i><u style="left:37.7%" title="Bay of Plenty: 17.2%"></u></div><b>17.2%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:85.8%"></i><u style="left:95.2%" title="Bay of Plenty: 43.5%"></u></div><b>39.2%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:50.1%"></i><u style="left:42.5%" title="Bay of Plenty: 19.4%"></u></div><b>22.9%</b></div><div class="key"><u></u>Bay of Plenty average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:80.7%"></i><u style="left:95.2%" title="Bay of Plenty: 71.9%"></u></div><b>60.9%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:61.7%"></i><u style="left:40.5%" title="Bay of Plenty: 30.6%"></u></div><b>46.6%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:10.1%"></i><u style="left:11.7%" title="Bay of Plenty: 8.8%"></u></div><b>7.6%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:6.0%"></i><u style="left:5.6%" title="Bay of Plenty: 4.2%"></u></div><b>4.5%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.6%"></i><u style="left:1.5%" title="Bay of Plenty: 1.1%"></u></div><b>1.2%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:1.3%"></i><u style="left:1.6%" title="Bay of Plenty: 1.2%"></u></div><b>1.0%</b></div><div class="key"><u></u>Bay of Plenty average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:12.1%"></i><u style="left:21.4%" title="Bay of Plenty: 17.3%"></u></div><b>9.8%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:89.6%" title="Bay of Plenty: 72.5%"></u></div><b>77.1%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:4.4%"></i><u style="left:4.6%" title="Bay of Plenty: 3.7%"></u></div><b>3.6%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:1.4%" title="Bay of Plenty: 1.1%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:3.7%"></i><u style="left:2.1%" title="Bay of Plenty: 1.7%"></u></div><b>3.0%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:7.9%"></i><u style="left:3.2%" title="Bay of Plenty: 2.6%"></u></div><b>6.4%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.7%"></i><u style="left:1.4%" title="Bay of Plenty: 1.1%"></u></div><b>0.6%</b></div><div class="key"><u></u>Bay of Plenty average</div></div>
 <h2>Nearby in Whakatane District</h2>
 <ul class="links"><li><a href="/bay-of-plenty/allandale/">Allandale</a></li><li><a href="/bay-of-plenty/coastlands/">Coastlands</a></li><li><a href="/bay-of-plenty/edgecumbe/">Edgecumbe</a></li><li><a href="/bay-of-plenty/galatea/">Galatea</a></li><li><a href="/bay-of-plenty/manawahe/">Manawahe</a></li><li><a href="/bay-of-plenty/matata-otakiri/">Matatā-Otakiri</a></li><li><a href="/bay-of-plenty/mokorua-bush/">Mokorua Bush</a></li><li><a href="/bay-of-plenty/murupara/">Murupara</a></li><li><a href="/bay-of-plenty/onepu-spring/">Onepu Spring</a></li><li><a href="/bay-of-plenty/te-teko-lakes/">Te Teko Lakes</a></li><li><a href="/bay-of-plenty/thornton-awakeri/">Thornton-Awakeri</a></li><li><a href="/bay-of-plenty/waingarara-waimana/">Waingarara-Waimana</a></li><li><a href="/bay-of-plenty/wainui/">Wainui</a></li><li><a href="/bay-of-plenty/whakatane-central/">Whakatāne Central</a></li><li><a href="/bay-of-plenty/whakatane-west/">Whakatāne West</a></li><li><a href="/bay-of-plenty/ohope/">Ōhope</a></li></ul>
 

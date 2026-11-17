@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "West Coast", "item": "https://population.co.nz/west-coast/"}, {"@type": "ListItem", "position": 3, "name": "Westland Glaciers-Bruce Bay", "item": "https://population.co.nz/west-coast/westland-glaciers-bruce-bay/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#west-coast/westland-glaciers-bruce-bay" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/west-coast/">West Coast</a> › Westland Glaciers-Bruce Bay</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/west-coast/">West Coast</a> › Westland Glaciers-Bruce Bay</nav>
 <h1>Westland Glaciers-Bruce Bay population and demographics</h1>
-<p>Westland Glaciers-Bruce Bay is a statistical area in Westland District, West Coast. At the 2023 Census it had <strong>816</strong>
-usually resident people (-24.0% since 2018). It is part of the wider Westland District South area.</p>
-<a class="cta" href="/#west-coast/westland-glaciers-bruce-bay">Open Westland Glaciers-Bruce Bay on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>816</strong></div><div class="card"><span>Population 2018</span><strong>1,074</strong></div><div class="card"><span>Population 2013</span><strong>876</strong></div><div class="card"><span>Median age</span><strong>38.3</strong></div><div class="card"><span>Median personal income</span><strong>$37,100</strong></div><div class="card"><span>Median household income</span><strong>$68,200</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>22.4%</strong></div><div class="card"><span>Unemployment rate</span><strong>1.0%</strong></div><div class="card"><span>Born overseas</span><strong>38.8%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>6</strong></div></div>
+<p class="where">Westland District · West Coast · part of the wider Westland District South area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">816</span><span class="chip">-24.0% since 2018</span></div>
+    <div class="trend"><div><b>876</b><i style="height:57%"></i><span>2013</span></div><div><b>1,074</b><i style="height:70%"></i><span>2018</span></div><div><b>816</b><i style="height:53%"></i><span>2023</span></div></div>
+    <p class="lead">Westland Glaciers-Bruce Bay is in Westland District, West Coast. Its population fell 24.0% between the 2018 and 2023 censuses. The median age is 38.3, compared with 49.1 across West Coast.</p>
+    <a class="cta" href="/#west-coast/westland-glaciers-bruce-bay">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 229" role="img" fill-rule="evenodd"><path class="a" d="M128 162 126 161 124 160 121 160 122 158 122 155 123 153 122 151 121 149 119 148 117 147 116 145 114 144 111 144 109 143 109 140 107 139 106 137 104 136 103 134 101 133 100 131 99 133 97 134 95 135 93 136 92 138 90 139 89 141 88 143 86 144 84 145 83 147 81 148 80 150 78 151 76 152 74 153 72 154 70 155 69 157 67 159 66 161 64 162 62 163 60 164 57 164 55 165 51 165 48 165 47 163 48 161 46 162 44 163 42 164 40 165 38 166 36 167 33 167 31 166 28 166 26 167 26 170 24 171 23 173 23 176 21 177 19 178 18 180 17 182 16 184 14 185 12 187 10 188 8 189 7 191 5 193 3 194 1 195 3 196 5 197 7 198 10 198 12 197 14 196 16 195 18 196 20 197 22 198 25 198 25 201 24 203 25 205 27 206 29 207 30 209 28 210 26 211 25 213 26 215 25 217 25 220 24 222 26 223 29 223 32 223 35 223 36 221 38 220 40 219 42 218 45 218 46 216 48 215 50 214 51 212 53 211 54 213 56 214 58 213 59 211 61 210 62 208 64 207 65 205 66 202 66 199 67 197 67 194 69 193 70 191 72 190 74 189 76 190 76 187 78 185 77 183 79 182 80 180 82 179 84 178 86 177 89 176 91 175 92 177 94 178 96 179 98 178 101 178 103 177 103 174 105 173 107 175 107 178 109 179 111 180 112 178 114 177 116 176 117 174 118 172 121 172 123 171 125 170 128 170 128 167 129 165 128 163Z"/><path class="a" d="M258 0 256 1 255 3 254 5 253 7 252 9 250 10 249 12 247 13 246 15 244 16 246 17 248 18 250 19 256 21 258 20 260 22 261 24 262 26 264 27 266 25 268 24 266 23 264 21 265 19 267 18 266 16 265 14 266 12 264 10 263 8 261 7 260 5 260 2 259 0Z"/><path class="a" d="M242 35 241 33 243 32 246 32 248 31 248 28 249 26 247 25 246 23 249 23 250 21 248 20 246 19 244 20 242 19 241 21 239 23 238 25 237 27 236 29 235 31 236 33 238 34 239 36 240 34 242 35Z"/><path class="a" d="M242 35 240 34 239 36 238 34 236 33 235 31 233 32 232 34 230 35 229 37 227 39 225 40 224 42 222 43 220 44 218 45 217 47 215 48 213 49 211 51 209 52 207 53 204 53 201 53 199 54 201 55 203 56 205 57 207 58 209 59 211 60 213 61 214 63 214 66 215 68 215 71 209 70 206 70 205 72 206 74 207 76 208 78 209 80 211 81 212 83 214 84 216 85 217 87 218 89 221 89 222 87 225 87 227 86 229 85 231 84 233 83 235 82 236 80 237 78 239 77 240 75 242 74 241 76 243 77 244 75 245 73 245 70 246 68 246 65 247 63 248 61 248 58 250 57 249 55 248 53 247 51 246 49 247 47 248 45 246 43 245 41 243 40 242 38 242 35Z"/><path class="a" d="M183 70 181 71 183 70ZM223 89 220 89 218 88 217 86 216 84 214 85 213 83 211 81 209 80 208 78 207 76 206 74 205 72 206 70 209 70 215 71 215 68 214 66 214 63 213 61 211 60 209 59 207 58 205 57 203 56 201 55 198 55 196 57 195 59 193 60 192 62 189 62 187 63 184 63 183 65 182 67 181 69 180 71 179 73 177 75 179 74 180 72 181 70 183 69 185 70 184 72 182 73 180 74 180 77 178 78 177 76 178 78 179 80 182 80 185 80 187 81 188 83 189 85 188 87 186 88 185 90 187 91 188 93 190 94 189 96 190 98 192 99 191 101 192 103 191 105 190 107 192 108 194 109 196 108 197 106 199 105 201 104 202 102 203 100 206 100 207 98 209 99 211 100 214 100 215 98 216 96 218 95 217 93 219 91 222 90ZM192 61 195 61 194 63 191 63 192 61Z"/><path class="a" d="M320 19 318 20 316 21 313 22 311 23 308 23 305 23 302 23 299 23 296 23 293 22 291 21 289 20 287 21 285 20 282 20 280 21 277 22 275 23 273 22 272 20 270 19 268 18 266 19 264 20 265 22 267 23 266 25 264 26 262 25 261 23 259 21 257 20 255 21 250 19 248 18 249 20 250 22 248 23 246 22 247 24 249 26 248 28 248 31 246 32 244 33 241 33 242 35 242 38 243 40 245 41 246 43 248 45 247 47 245 49 246 51 248 52 249 54 250 56 248 57 248 60 247 62 246 64 246 67 245 69 245 72 244 74 245 76 246 74 247 72 249 70 250 68 251 66 252 64 253 62 255 63 256 61 258 60 260 59 262 58 264 59 265 57 266 55 266 52 267 50 269 49 270 47 272 46 273 44 275 45 276 43 278 44 279 46 281 45 282 43 283 41 285 40 287 39 289 40 292 40 294 39 297 39 299 40 301 39 303 38 304 40 306 39 307 37 308 35 307 33 309 32 310 30 309 28 310 26 313 26 315 25 317 24 318 22 320 21Z"/><path class="a" d="M250 18 248 17 246 16 244 17 242 19 244 20 246 19 248 18Z"/><path class="on" d="M190 106 191 104 192 101 191 98 189 97 190 95 189 93 187 92 186 90 187 88 188 86 189 84 188 82 186 81 184 80 182 79 180 80 178 79 177 77 174 77 173 79 171 81 169 83 167 84 166 86 165 88 163 89 162 91 160 92 159 94 157 95 155 96 152 96 149 96 148 98 146 99 145 101 144 103 142 105 141 107 140 109 139 111 137 113 135 115 133 114 132 116 131 118 129 119 127 120 126 118 125 120 123 121 121 123 119 122 117 123 115 124 113 123 111 124 110 126 108 128 106 129 104 130 102 131 101 133 103 134 104 136 106 137 107 139 109 140 108 142 110 143 112 144 115 144 117 145 117 148 120 148 122 149 122 152 123 154 122 156 121 158 120 160 123 160 125 161 128 162 130 161 132 162 134 161 137 161 140 161 141 159 143 158 143 155 145 154 146 152 148 151 149 149 151 147 154 147 154 144 156 143 158 142 160 141 161 139 162 136 164 135 165 133 165 130 167 129 169 128 170 126 171 124 170 122 171 120 173 118 175 117 177 115 179 114 180 112 182 111 184 110 186 109 188 108 190 107Z"/></svg><figcaption>Westland Glaciers-Bruce Bay within Westland District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$37,100</strong><em>West Coast $32,200</em></div><div class="card"><span>Median household income</span><strong>$68,200</strong><em>West Coast $63,100</em></div><div class="card"><span>Median age</span><strong>38.3</strong><em>West Coast 49.1</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>22.4%</strong><em>West Coast 13.5%</em></div><div class="card"><span>Unemployment rate</span><strong>1.0%</strong><em>West Coast 3.9%</em></div><div class="card"><span>Born overseas</span><strong>38.8%</strong><em>West Coast 13.3%</em></div><div class="card"><span>NZDep2023 decile</span><strong>6 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>41.8%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$160</strong></div><div class="card"><span>Stand-alone houses</span><strong>69.9%</strong></div><div class="card"><span>Crowded households</span><strong>5.6%</strong></div><div class="card"><span>Damp homes</span><strong>24.4%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>72.8%</strong></div><div class="card"><span>Asian</span><strong>15.4%</strong></div><div class="card"><span>Māori</span><strong>11.8%</strong></div><div class="card"><span>Pacific</span><strong>4.4%</strong></div><div class="card"><span>MELAA</span><strong>2.6%</strong></div><div class="card"><span>Other</span><strong>2.2%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>41.8%</strong><em>West Coast 63.7%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$160</strong><em>West Coast $260</em></div><div class="card"><span>Stand-alone houses</span><strong>69.9%</strong><em>West Coast 87.0%</em></div><div class="card"><span>Crowded households</span><strong>5.6%</strong><em>West Coast 3.0%</em></div><div class="card"><span>Damp homes</span><strong>24.4%</strong><em>West Coast 20.2%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:16.9%"></i><u style="left:27.8%" title="West Coast: 16.3%"></u></div><b>9.9%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:36.3%"></i><u style="left:23.0%" title="West Coast: 13.5%"></u></div><b>21.3%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:80.9%" title="West Coast: 47.5%"></u></div><b>55.9%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:22.0%"></i><u style="left:38.5%" title="West Coast: 22.6%"></u></div><b>12.9%</b></div><div class="key"><u></u>West Coast average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:77.3%"></i><u style="left:95.2%" title="West Coast: 89.7%"></u></div><b>72.8%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:16.4%"></i><u style="left:4.2%" title="West Coast: 4.0%"></u></div><b>15.4%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:12.5%"></i><u style="left:14.3%" title="West Coast: 13.5%"></u></div><b>11.8%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:4.7%"></i><u style="left:1.7%" title="West Coast: 1.6%"></u></div><b>4.4%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:2.8%"></i><u style="left:0.5%" title="West Coast: 0.5%"></u></div><b>2.6%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.3%"></i><u style="left:2.2%" title="West Coast: 2.1%"></u></div><b>2.2%</b></div><div class="key"><u></u>West Coast average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:38.2%"></i><u style="left:27.7%" title="West Coast: 19.3%"></u></div><b>26.6%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:57.7%"></i><u style="left:95.2%" title="West Coast: 66.4%"></u></div><b>40.2%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:0.7%"></i><u style="left:6.3%" title="West Coast: 4.4%"></u></div><b>0.5%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:0.1%" title="West Coast: 0.1%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:5.0%"></i><u style="left:3.0%" title="West Coast: 2.1%"></u></div><b>3.5%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:41.0%"></i><u style="left:9.2%" title="West Coast: 6.4%"></u></div><b>28.6%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.4%"></i><u style="left:1.9%" title="West Coast: 1.3%"></u></div><b>1.0%</b></div><div class="key"><u></u>West Coast average</div></div>
 <h2>Nearby in Westland District</h2>
 <ul class="links"><li><a href="/west-coast/arahura-kumara/">Arahura-Kūmara</a></li><li><a href="/west-coast/haast/">Haast</a></li><li><a href="/west-coast/hokitika/">Hokitika</a></li><li><a href="/west-coast/hokitika-rural/">Hokitika Rural</a></li><li><a href="/west-coast/hokitika-valley-otira/">Hokitika Valley-Otira</a></li><li><a href="/west-coast/waitaha/">Waitaha</a></li><li><a href="/west-coast/whataroa-harihari/">Whataroa-Harihari</a></li></ul>
 

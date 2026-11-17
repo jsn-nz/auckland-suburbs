@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Otago", "item": "https://population.co.nz/otago/"}, {"@type": "ListItem", "position": 3, "name": "Alexandra North", "item": "https://population.co.nz/otago/alexandra-north/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#otago/alexandra-north" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/otago/">Otago</a> › Alexandra North</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/otago/">Otago</a> › Alexandra North</nav>
 <h1>Alexandra North population and demographics</h1>
-<p>Alexandra North is a statistical area in Central Otago District, Otago. At the 2023 Census it had <strong>2,910</strong>
-usually resident people (+1.9% since 2018). It is part of the wider Alexandra  area.</p>
-<a class="cta" href="/#otago/alexandra-north">Open Alexandra North on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>2,910</strong></div><div class="card"><span>Population 2018</span><strong>2,856</strong></div><div class="card"><span>Population 2013</span><strong>2,445</strong></div><div class="card"><span>Median age</span><strong>47.5</strong></div><div class="card"><span>Median personal income</span><strong>$38,300</strong></div><div class="card"><span>Median household income</span><strong>$71,200</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>17.0%</strong></div><div class="card"><span>Unemployment rate</span><strong>1.6%</strong></div><div class="card"><span>Born overseas</span><strong>15.1%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>4</strong></div></div>
+<p class="where">Central Otago District · Otago · part of the wider Alexandra  area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">2,910</span><span class="chip">+1.9% since 2018</span></div>
+    <div class="trend"><div><b>2,445</b><i style="height:59%"></i><span>2013</span></div><div><b>2,856</b><i style="height:69%"></i><span>2018</span></div><div><b>2,910</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Alexandra North is in Central Otago District, Otago. Its population grew 1.9% between the 2018 and 2023 censuses. The median age is 47.5, compared with 41.3 across Otago.</p>
+    <a class="cta" href="/#otago/alexandra-north">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 376" role="img" fill-rule="evenodd"><path class="a" d="M189 52 189 46 189 43 188 41 187 37 186 34 184 32 182 34 182 37 181 39 180 41 177 42 175 41 173 40 171 39 169 40 167 39 168 37 167 35 168 33 167 31 168 29 169 27 170 25 169 23 168 21 167 18 166 16 166 13 167 11 168 9 167 7 167 4 164 4 162 3 160 4 158 3 156 4 153 3 151 2 149 1 147 2 146 4 146 7 145 9 144 11 145 13 144 15 143 17 141 18 140 20 139 22 139 25 138 27 135 27 132 27 129 28 126 28 123 30 118 31 113 31 113 34 112 36 115 37 114 40 114 43 116 45 116 48 117 50 115 54 113 55 113 58 112 60 112 63 113 65 114 67 113 69 114 71 114 74 116 75 116 78 116 81 117 83 115 85 113 84 109 85 106 85 103 85 101 90 98 94 97 97 96 99 95 101 94 103 92 105 87 109 84 112 82 113 81 115 78 115 75 115 72 114 69 114 67 115 65 116 65 119 63 120 62 122 59 123 57 122 55 123 55 126 55 129 53 130 54 132 53 134 53 137 53 140 54 142 55 144 56 146 57 148 58 150 57 152 56 155 54 156 53 158 52 160 53 163 53 166 51 167 49 166 47 165 45 164 43 163 41 165 39 166 36 166 33 166 30 166 28 167 26 168 24 169 22 168 20 167 18 166 17 164 15 163 13 164 11 166 10 169 11 171 13 172 12 174 12 177 11 179 11 182 11 185 13 186 14 188 13 191 13 194 11 195 11 198 12 200 14 201 14 204 15 206 15 209 14 211 16 213 15 216 14 218 12 220 11 222 10 224 10 227 9 229 8 231 8 234 8 237 7 239 6 241 5 243 3 244 1 245 1 248 1 251 1 254 1 257 0 259 1 262 2 265 2 268 4 267 11 271 12 269 14 268 16 267 18 269 17 271 18 273 20 274 23 275 24 273 26 272 31 261 37 247 47 232 57 223 61 226 64 227 67 227 68 225 70 223 73 222 76 222 78 221 80 220 82 219 83 217 81 215 79 214 80 212 81 209 80 207 81 205 81 202 82 200 85 200 88 201 87 199 86 197 85 195 83 193 85 192 87 191 90 190 94 189 96 188 99 187 101 186 104 185 105 188 108 189 108 186 110 185 111 182 110 180 109 178 110 176 110 173 111 171 112 169 113 166 114 164 116 163 118 161 119 158 120 156 121 154 124 150 125 148 127 146 128 144 130 142 132 141 134 140 136 139 138 137 140 136 142 135 144 133 146 131 147 128 150 126 152 124 155 123 157 121 156 118 156 115 157 113 159 112 162 110 163 108 166 107 168 105 170 104 178 99 180 98 181 96 186 86 190 77 189 75 188 73 187 69 187 63 189 52ZM84 163 82 164 82 167 80 168 79 170 77 171 75 170 73 169 71 167 73 165 76 165 77 162 79 160 82 158 83 156 85 157 86 160 85 162Z"/><path class="a" d="M254 133 253 131 251 129 249 128 251 126 250 124 249 122 248 120 245 116 243 115 241 113 240 111 239 109 238 107 237 105 235 102 236 98 235 96 235 93 233 89 232 87 232 83 230 80 229 71 225 56 217 54 215 53 205 59 201 59 199 58 197 57 195 55 191 52 186 62 187 67 188 73 189 75 190 77 186 86 181 94 181 97 179 98 170 104 168 105 166 107 163 108 162 110 160 111 157 113 156 115 155 117 157 119 156 122 154 124 151 125 148 127 146 130 145 132 143 134 140 136 138 137 136 138 134 140 132 141 130 142 128 144 127 146 125 148 124 150 122 153 121 155 123 157 124 159 125 161 126 163 127 165 128 167 129 169 132 169 130 173 133 174 136 174 139 175 140 177 140 180 141 183 142 186 141 188 143 186 145 187 147 188 146 190 150 192 155 194 154 196 153 198 152 200 153 202 152 204 151 206 154 207 152 208 145 218 145 221 144 241 137 247 135 248 133 247 131 246 128 246 126 244 127 242 125 241 123 243 122 245 123 247 123 250 123 253 121 256 121 259 122 261 122 265 124 266 125 270 125 274 127 275 130 273 132 275 135 274 137 275 139 276 140 278 141 280 142 282 143 284 144 287 146 288 147 290 149 291 152 292 152 289 153 287 153 284 157 280 158 278 160 277 162 276 164 275 166 274 168 272 172 270 174 268 175 264 177 260 179 258 181 256 183 255 185 254 186 252 187 250 189 249 191 248 192 246 193 244 195 243 196 241 197 239 196 237 197 235 194 231 195 228 197 226 198 223 198 219 198 216 199 213 200 210 201 208 200 206 200 203 202 201 203 199 202 196 203 194 204 192 206 190 205 188 208 184 209 181 209 178 211 176 213 175 214 171 216 168 219 163 222 159 225 154 227 152 229 151 231 150 233 149 234 151 234 154 235 156 236 158 239 158 241 154 242 152 243 150 244 148 246 147 249 145 250 143 252 142 253 139 252 137 253 134Z"/><path class="a" d="M105 189 105 186 102 186 99 187 96 187 94 189 92 190 89 191 87 192 84 193 85 195 86 197 87 199 89 200 86 200 83 200 81 202 82 204 81 206 80 208 80 211 79 213 81 215 83 216 82 218 81 220 78 220 77 222 73 222 70 223 68 224 67 227 64 227 61 228 62 231 63 233 63 237 66 239 68 240 73 242 74 245 75 248 76 250 77 253 79 256 81 255 84 258 104 259 103 256 102 254 103 252 106 250 108 248 108 245 110 243 111 241 112 238 113 236 113 233 114 230 115 228 116 226 118 224 119 222 116 221 114 222 115 220 114 217 114 214 114 211 112 210 110 209 109 206 107 204 105 202 104 200 104 197 104 194 105 192 105 189Z"/><path class="a" d="M124 240 126 241 126 244 128 246 131 246 133 247 135 248 137 247 144 241 145 221 145 218 152 209 153 207 151 206 152 204 153 202 152 200 153 198 154 196 155 194 150 192 146 190 147 188 145 187 144 185 142 188 141 185 140 181 140 177 139 175 137 174 133 174 130 173 132 169 129 169 128 167 127 165 126 163 125 161 124 159 123 157 121 155 120 158 119 160 116 163 114 164 113 166 112 168 111 171 110 173 109 175 110 177 110 180 111 182 110 184 109 186 108 188 105 189 105 192 104 194 104 197 105 199 107 200 108 202 108 205 110 207 110 210 113 210 114 212 116 211 117 213 121 216 123 217 122 219 120 220 119 222 118 224 116 226 115 228 114 230 113 232 113 235 112 237 111 239 110 242 112 243 114 242 116 241 118 240 120 238 122 236 124 237 124 240Z"/><path class="a" d="M119 220 117 216 115 212 114 214 114 217 115 219 114 222 116 221 118 222 119 220Z"/><path class="a" d="M108 205 109 203 108 201 106 200 105 202 106 204 108 205Z"/><path class="a" d="M84 163 82 162 83 159 80 159 78 161 77 164 73 165 71 166 72 168 74 170 76 171 79 170 80 168 82 167 82 164 84 163Z"/><path class="a" d="M84 163 86 161 85 159 84 157 82 158 82 162 84 163Z"/><path class="a" d="M312 172 310 171 309 168 308 165 306 164 305 162 305 159 304 157 303 152 302 147 304 145 306 143 307 139 307 136 306 134 304 133 303 131 303 128 303 125 301 124 297 123 295 125 294 128 292 126 290 127 288 128 285 128 283 129 282 131 279 132 276 132 274 133 270 134 268 135 266 134 263 134 260 134 258 135 256 134 254 133 252 135 252 138 253 141 250 143 249 145 246 147 244 148 243 150 242 152 241 154 240 158 237 158 235 157 234 155 234 152 233 149 231 150 229 151 227 152 225 154 222 157 220 163 216 167 214 171 213 175 211 176 209 178 209 181 208 184 206 187 206 190 204 192 203 194 202 196 203 198 202 201 201 203 200 205 201 207 200 210 199 212 198 214 198 217 198 221 198 225 195 227 194 231 196 234 196 237 197 239 196 241 195 243 193 244 192 246 191 248 189 249 187 250 186 252 185 254 183 255 181 256 179 257 178 259 175 264 174 267 173 269 170 272 168 273 169 275 169 279 169 282 171 283 172 285 172 288 172 291 172 294 173 296 175 297 176 300 176 303 177 306 176 308 175 310 177 312 178 315 179 317 178 319 177 321 175 322 172 323 170 324 169 326 167 327 167 330 168 332 169 334 172 335 174 336 173 339 175 342 177 343 179 342 182 344 184 345 186 344 186 341 188 339 189 337 190 335 191 333 192 331 194 330 193 328 195 326 196 324 197 322 197 319 198 317 198 314 199 311 200 309 201 306 200 304 202 300 206 299 208 298 213 297 216 296 218 297 219 294 219 290 218 287 219 284 221 285 224 284 228 283 232 282 233 280 235 279 237 281 239 280 241 279 245 274 246 272 248 269 250 265 252 262 256 258 259 255 260 253 261 249 259 246 262 243 263 241 266 239 267 235 268 232 269 230 270 228 271 225 272 223 275 220 277 213 280 213 282 212 285 212 286 214 296 214 298 215 300 214 302 216 304 214 303 212 305 211 307 210 308 208 309 206 308 203 306 200 308 199 309 197 311 198 314 198 315 196 316 194 317 192 318 190 319 188 320 186 317 185 315 183 313 182 314 180 314 177 312 176 312 173Z"/><path class="a" d="M168 273 166 274 164 275 162 276 160 277 158 278 156 279 154 284 153 286 153 289 152 292 149 291 147 289 145 288 143 286 142 284 141 282 141 279 139 276 137 275 136 273 133 275 131 274 127 274 125 272 124 268 123 266 122 263 122 260 121 258 122 254 123 252 123 249 122 247 123 244 124 242 125 240 123 238 124 236 121 237 119 239 117 240 115 242 113 243 111 242 109 244 108 246 107 249 104 252 102 254 103 256 104 258 84 259 85 261 84 264 83 266 82 268 80 269 77 269 78 271 77 273 76 275 74 276 75 278 76 280 77 282 78 284 79 286 78 288 80 289 79 291 77 292 77 295 78 297 76 299 78 300 79 302 81 303 82 305 81 307 79 308 78 310 78 313 79 315 79 318 78 321 78 324 78 327 80 328 82 329 84 332 87 332 88 335 89 337 92 338 94 337 97 338 98 340 100 338 102 337 105 337 108 337 111 337 114 337 117 337 120 336 122 338 121 340 122 342 121 344 121 347 121 350 120 352 122 351 124 350 126 352 128 355 128 358 129 360 130 364 134 363 136 364 137 366 141 366 142 368 144 369 146 370 148 369 150 368 153 367 155 366 157 364 158 361 160 360 162 359 165 359 168 358 169 356 169 353 170 351 171 349 171 346 172 344 172 341 173 339 174 337 173 335 170 335 168 333 167 331 167 328 168 326 170 325 171 323 173 322 176 322 178 320 179 317 178 315 177 313 176 311 175 309 176 307 176 304 176 301 175 297 173 296 172 294 172 291 172 288 172 285 171 283 169 282 169 279 169 275 168 273Z"/><path class="on" d="M119 220 121 219 123 217 122 215 118 212 116 211 116 215 119 219Z"/></svg><figcaption>Alexandra North within Central Otago District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$38,300</strong><em>Otago $41,300</em></div><div class="card"><span>Median household income</span><strong>$71,200</strong><em>Otago $85,200</em></div><div class="card"><span>Median age</span><strong>47.5</strong><em>Otago 41.3</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>17.0%</strong><em>Otago 27.0%</em></div><div class="card"><span>Unemployment rate</span><strong>1.6%</strong><em>Otago 3.5%</em></div><div class="card"><span>Born overseas</span><strong>15.1%</strong><em>Otago 23.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>4 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>62.7%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$350</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$540</strong></div><div class="card"><span>Stand-alone houses</span><strong>79.4%</strong></div><div class="card"><span>Crowded households</span><strong>2.6%</strong></div><div class="card"><span>Damp homes</span><strong>10.0%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>90.2%</strong></div><div class="card"><span>Māori</span><strong>12.0%</strong></div><div class="card"><span>Asian</span><strong>3.8%</strong></div><div class="card"><span>Pacific</span><strong>2.1%</strong></div><div class="card"><span>Other</span><strong>1.4%</strong></div><div class="card"><span>MELAA</span><strong>0.7%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>62.7%</strong><em>Otago 54.2%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$350</strong><em>Otago $400</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$540</strong><em>Otago $630</em></div><div class="card"><span>Stand-alone houses</span><strong>79.4%</strong><em>Otago 81.9%</em></div><div class="card"><span>Crowded households</span><strong>2.6%</strong><em>Otago 3.5%</em></div><div class="card"><span>Damp homes</span><strong>10.0%</strong><em>Otago 14.4%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:34.3%"></i><u style="left:33.7%" title="Otago: 15.7%"></u></div><b>16.0%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:30.5%"></i><u style="left:47.6%" title="Otago: 22.2%"></u></div><b>14.2%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:90.9%"></i><u style="left:95.2%" title="Otago: 44.4%"></u></div><b>42.4%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:59.0%"></i><u style="left:38.0%" title="Otago: 17.7%"></u></div><b>27.5%</b></div><div class="key"><u></u>Otago average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:90.0%" title="Otago: 85.2%"></u></div><b>90.2%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:12.7%"></i><u style="left:10.5%" title="Otago: 9.9%"></u></div><b>12.0%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:4.0%"></i><u style="left:9.0%" title="Otago: 8.5%"></u></div><b>3.8%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:2.2%"></i><u style="left:3.6%" title="Otago: 3.4%"></u></div><b>2.1%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.5%"></i><u style="left:1.4%" title="Otago: 1.3%"></u></div><b>1.4%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.7%"></i><u style="left:2.3%" title="Otago: 2.2%"></u></div><b>0.7%</b></div><div class="key"><u></u>Otago average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:20.9%"></i><u style="left:24.4%" title="Otago: 16.7%"></u></div><b>14.3%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:93.6%"></i><u style="left:95.2%" title="Otago: 65.1%"></u></div><b>64.0%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:6.4%"></i><u style="left:5.7%" title="Otago: 3.9%"></u></div><b>4.4%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.3%"></i><u style="left:4.5%" title="Otago: 3.1%"></u></div><b>0.2%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:7.3%"></i><u style="left:3.8%" title="Otago: 2.6%"></u></div><b>5.0%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:17.1%"></i><u style="left:11.0%" title="Otago: 7.5%"></u></div><b>11.7%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.6%"></i><u style="left:1.8%" title="Otago: 1.2%"></u></div><b>0.4%</b></div><div class="key"><u></u>Otago average</div></div>
 <h2>Nearby in Central Otago District</h2>
 <ul class="links"><li><a href="/otago/alexandra-south/">Alexandra South</a></li><li><a href="/otago/clyde/">Clyde</a></li><li><a href="/otago/cromwell-east/">Cromwell East</a></li><li><a href="/otago/cromwell-west/">Cromwell West</a></li><li><a href="/otago/dunstan-galloway/">Dunstan-Galloway</a></li><li><a href="/otago/earnscleugh/">Earnscleugh</a></li><li><a href="/otago/lindis-nevis-valleys/">Lindis-Nevis Valleys</a></li><li><a href="/otago/maniototo/">Maniototo</a></li><li><a href="/otago/manuherikia-ida-valleys/">Manuherikia-Ida Valleys</a></li><li><a href="/otago/teviot-valley/">Teviot Valley</a></li></ul>
 

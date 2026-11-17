@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Waikato", "item": "https://population.co.nz/waikato/"}, {"@type": "ListItem", "position": 3, "name": "Putāruru", "item": "https://population.co.nz/waikato/putaruru/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#waikato/putaruru" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/waikato/">Waikato</a> › Putāruru</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/waikato/">Waikato</a> › Putāruru</nav>
 <h1>Putāruru population and demographics</h1>
-<p>Putāruru is a statistical area in South Waikato District, Waikato. At the 2023 Census it had <strong>4,455</strong>
-usually resident people (+3.3% since 2018). It is part of the wider Putāruru-Tīrau area.</p>
-<a class="cta" href="/#waikato/putaruru">Open Putāruru on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>4,455</strong></div><div class="card"><span>Population 2018</span><strong>4,314</strong></div><div class="card"><span>Population 2013</span><strong>3,945</strong></div><div class="card"><span>Median age</span><strong>43.1</strong></div><div class="card"><span>Median personal income</span><strong>$30,100</strong></div><div class="card"><span>Median household income</span><strong>$61,800</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>10.0%</strong></div><div class="card"><span>Unemployment rate</span><strong>7.8%</strong></div><div class="card"><span>Born overseas</span><strong>13.1%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>9</strong></div></div>
+<p class="where">South Waikato District · Waikato · part of the wider Putāruru-Tīrau area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">4,455</span><span class="chip">+3.3% since 2018</span></div>
+    <div class="trend"><div><b>3,945</b><i style="height:62%"></i><span>2013</span></div><div><b>4,314</b><i style="height:68%"></i><span>2018</span></div><div><b>4,455</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Putāruru is in South Waikato District, Waikato. Its population grew 3.3% between the 2018 and 2023 censuses. The median age is 43.1, compared with 37.9 across Waikato.</p>
+    <a class="cta" href="/#waikato/putaruru">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 311 406" role="img" fill-rule="evenodd"><path class="a" d="M192 4 172 20 166 18 167 15 165 13 167 12 170 11 168 9 166 10 164 9 163 11 161 12 158 12 152 12 151 16 150 18 148 20 144 20 142 19 143 17 145 14 141 12 135 10 136 13 136 17 136 20 134 21 131 23 130 21 129 19 124 18 122 15 122 12 120 10 124 8 117 7 117 16 104 17 104 14 102 13 102 10 101 8 103 7 104 4 102 5 102 2 103 0 100 0 99 2 87 4 86 6 80 6 78 7 72 13 70 14 68 15 65 12 62 9 58 4 56 5 53 3 49 6 48 11 40 33 37 32 34 33 32 34 30 35 28 33 27 35 25 36 23 37 21 41 22 43 21 45 22 47 20 49 21 53 20 56 21 60 19 62 20 65 21 67 21 71 21 75 21 79 19 82 17 83 18 85 19 87 17 89 18 91 21 92 20 96 24 98 26 100 29 99 38 98 40 91 42 93 44 94 46 95 48 97 56 95 60 94 65 95 69 89 72 86 74 87 77 87 79 88 80 91 83 91 85 90 87 89 88 86 90 84 92 82 94 81 98 79 100 78 101 74 102 72 104 73 108 74 111 75 113 77 116 77 128 86 143 96 148 99 151 101 157 103 164 88 155 85 160 84 169 86 171 85 177 89 185 79 188 77 196 66 198 64 200 62 202 61 203 58 202 55 200 52 198 51 196 53 194 51 192 50 190 47 189 45 188 41 187 38 186 33 185 29 184 24 186 21 188 20 191 18 193 17 205 13 194 7 192 4Z"/><path class="a" d="M255 96 253 94 252 92 249 90 246 87 244 86 242 85 239 83 237 81 235 80 234 78 232 76 230 74 227 72 223 70 220 70 215 69 212 69 209 68 206 67 202 66 201 64 202 61 200 62 198 64 196 66 188 77 185 79 177 89 171 85 169 86 160 84 155 85 164 88 157 103 151 101 148 99 143 96 128 86 116 79 115 77 111 75 108 74 105 73 102 72 101 74 100 78 98 79 96 81 92 82 91 84 89 85 87 88 86 90 83 91 81 90 80 88 77 87 74 87 72 85 69 89 65 95 60 94 56 95 49 97 47 96 45 94 43 93 40 93 38 97 30 98 27 99 24 98 20 98 21 102 21 107 21 110 21 113 22 115 22 118 20 119 18 121 15 121 11 122 9 123 10 125 10 130 9 134 8 136 9 138 8 140 7 143 8 145 7 147 7 150 6 153 5 155 4 157 3 159 0 160 2 164 2 167 4 168 6 170 6 174 7 178 8 180 10 181 11 183 11 186 13 188 14 191 16 192 18 193 16 194 17 196 19 195 22 196 25 198 23 199 24 201 27 201 28 204 29 206 30 209 31 213 30 215 29 218 30 223 29 226 30 228 31 230 32 232 35 233 39 233 43 233 45 232 49 231 62 230 62 224 56 224 56 211 58 212 62 198 65 200 67 202 69 203 71 204 74 204 78 203 81 204 84 203 87 202 91 201 95 200 97 199 101 199 103 198 106 196 109 192 114 190 118 190 118 186 118 182 119 179 117 177 119 178 121 179 125 181 130 183 132 184 134 182 136 181 139 180 141 181 144 181 148 181 150 180 152 181 154 180 156 181 158 180 162 180 164 179 166 178 168 177 174 177 176 176 178 174 178 170 180 171 182 172 184 174 186 177 188 178 190 179 194 180 198 182 201 183 205 184 206 186 209 188 212 191 216 191 218 192 221 192 225 192 227 193 230 193 232 194 236 183 236 179 231 179 230 181 227 181 210 181 208 178 218 173 222 167 231 147 238 131 242 124 244 119 248 111 250 106 251 104 255 96ZM96 105 95 109 97 108 98 111 97 113 99 115 102 114 104 115 107 114 108 117 106 119 105 122 106 124 105 126 103 125 102 123 99 124 98 126 98 122 97 119 95 118 92 121 93 125 87 122 85 121 82 119 81 117 83 116 86 115 86 112 88 111 87 109 85 108 83 106 84 104 87 104 87 108 90 107 91 105 93 104 95 105Z"/><path class="a" d="M236 183 233 195 230 193 227 193 225 192 221 192 218 192 216 191 213 191 209 189 207 187 205 184 203 183 200 182 195 181 192 179 189 178 186 177 185 175 183 173 181 172 178 170 178 174 176 176 174 177 170 177 167 178 164 179 162 180 159 179 157 180 154 180 152 181 150 180 148 181 145 182 142 181 139 181 137 180 135 181 132 184 130 183 125 181 121 179 119 178 118 176 119 179 118 181 118 184 118 188 116 190 111 192 107 195 103 198 101 199 98 199 95 200 93 201 88 202 85 203 82 204 80 203 75 203 73 204 70 204 69 202 66 201 63 199 58 212 56 211 56 224 62 224 62 230 49 230 47 232 43 233 39 233 35 233 32 232 32 235 32 238 31 241 32 243 34 244 32 246 32 249 32 252 32 255 33 258 34 260 33 262 32 266 33 268 33 271 33 274 34 278 35 280 37 283 37 286 36 290 34 291 34 294 35 296 36 299 38 301 40 305 42 306 44 307 48 309 51 311 54 313 56 315 57 317 59 319 60 322 62 324 64 325 65 327 67 329 67 332 68 334 72 334 74 336 77 336 81 337 84 338 86 339 89 340 91 341 92 343 94 346 94 351 93 353 92 355 90 358 88 360 87 362 86 364 85 367 87 368 88 370 90 374 95 376 97 377 100 378 102 380 103 382 106 384 108 383 109 385 108 387 110 388 112 389 113 391 112 393 114 394 115 397 117 399 120 400 126 399 129 399 131 397 134 395 136 393 139 390 142 390 145 389 147 390 149 389 153 391 155 392 159 393 160 391 162 390 167 388 170 387 173 386 175 385 179 384 183 386 186 386 190 387 194 386 196 384 199 383 202 383 204 382 206 381 208 380 209 378 214 379 215 377 214 375 217 374 219 373 221 371 223 369 225 366 227 365 229 364 231 363 232 361 234 360 235 358 237 356 236 354 234 351 234 348 233 346 234 344 237 344 239 342 241 340 243 339 246 338 248 337 247 335 248 333 250 332 252 331 251 329 254 329 255 326 253 323 256 322 260 319 261 317 265 316 267 314 270 313 272 311 275 310 278 309 281 307 284 308 287 308 288 306 292 304 293 301 295 299 293 298 294 296 295 293 297 294 298 292 298 289 297 286 295 287 294 285 292 284 290 283 287 283 285 282 284 280 282 281 281 279 293 277 286 274 290 269 302 245 304 241 306 237 302 231 299 226 282 199 271 199 270 197 253 197 252 199 236 199 236 192 236 183ZM128 239 125 234 127 233 126 231 134 227 138 225 143 223 144 226 147 227 149 226 151 227 151 230 151 233 151 237 151 242 151 246 159 245 161 251 162 255 163 257 156 253 151 254 152 256 150 257 148 252 146 253 142 254 135 258 135 255 134 253 133 251 133 248 131 246 130 243 128 239Z"/><path class="a" d="M128 239 135 235 139 233 140 229 139 227 138 225 134 227 126 231 127 233 125 234 127 239Z"/><path class="a" d="M140 245 139 242 137 238 135 235 128 239 130 242 132 245 132 248 136 246 138 245Z"/><path class="a" d="M133 247 135 248 137 250 141 250 144 250 147 249 144 244 140 245 136 246 133 247Z"/><path class="a" d="M151 237 151 233 151 230 151 227 149 226 147 227 144 226 143 223 138 225 139 227 140 229 139 231 141 233 143 234 144 232 145 234 147 236 148 238 150 237Z"/><path class="a" d="M144 244 142 238 139 233 135 235 137 238 138 242 140 245 144 244Z"/><path class="a" d="M151 237 149 238 147 236 145 234 144 232 143 234 141 233 139 232 142 238 144 244 147 249 148 252 150 257 152 256 151 254 156 253 162 257 161 251 159 245 151 246 150 241 152 238Z"/><path class="a" d="M147 249 144 250 141 250 138 250 136 249 133 247 133 250 134 252 135 255 135 258 142 254 146 253 148 252 147 249Z"/><path class="on" d="M96 105 94 104 91 105 90 107 87 109 87 106 85 103 83 104 84 107 87 109 88 111 86 112 86 115 84 117 81 117 82 119 85 121 87 122 93 125 93 122 95 118 97 119 98 122 97 125 99 124 102 123 103 125 105 126 106 124 105 122 106 119 108 117 108 113 105 115 103 114 101 115 99 114 97 113 98 111 97 108 95 109 96 107Z"/></svg><figcaption>Putāruru within South Waikato District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$30,100</strong><em>Waikato $42,400</em></div><div class="card"><span>Median household income</span><strong>$61,800</strong><em>Waikato $93,500</em></div><div class="card"><span>Median age</span><strong>43.1</strong><em>Waikato 37.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>10.0%</strong><em>Waikato 22.1%</em></div><div class="card"><span>Unemployment rate</span><strong>7.8%</strong><em>Waikato 4.6%</em></div><div class="card"><span>Born overseas</span><strong>13.1%</strong><em>Waikato 21.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>9 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>54.7%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$330</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$540</strong></div><div class="card"><span>Stand-alone houses</span><strong>84.9%</strong></div><div class="card"><span>Crowded households</span><strong>6.7%</strong></div><div class="card"><span>Damp homes</span><strong>22.7%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>74.0%</strong></div><div class="card"><span>Māori</span><strong>37.2%</strong></div><div class="card"><span>Asian</span><strong>4.8%</strong></div><div class="card"><span>Pacific</span><strong>3.8%</strong></div><div class="card"><span>Other</span><strong>1.0%</strong></div><div class="card"><span>MELAA</span><strong>0.3%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>54.7%</strong><em>Waikato 52.1%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$330</strong><em>Waikato $420</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$540</strong><em>Waikato $575</em></div><div class="card"><span>Stand-alone houses</span><strong>84.9%</strong><em>Waikato 83.9%</em></div><div class="card"><span>Crowded households</span><strong>6.7%</strong><em>Waikato 5.7%</em></div><div class="card"><span>Damp homes</span><strong>22.7%</strong><em>Waikato 17.7%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:43.2%"></i><u style="left:43.8%" title="Waikato: 20.2%"></u></div><b>19.9%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:35.6%"></i><u style="left:40.6%" title="Waikato: 18.7%"></u></div><b>16.4%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:85.9%"></i><u style="left:95.2%" title="Waikato: 43.9%"></u></div><b>39.6%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:52.3%"></i><u style="left:37.5%" title="Waikato: 17.3%"></u></div><b>24.1%</b></div><div class="key"><u></u>Waikato average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:92.3%" title="Waikato: 71.7%"></u></div><b>74.0%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:47.9%"></i><u style="left:32.4%" title="Waikato: 25.2%"></u></div><b>37.2%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:6.2%"></i><u style="left:15.7%" title="Waikato: 12.2%"></u></div><b>4.8%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:4.9%"></i><u style="left:6.7%" title="Waikato: 5.2%"></u></div><b>3.8%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.3%"></i><u style="left:1.4%" title="Waikato: 1.1%"></u></div><b>1.0%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.4%"></i><u style="left:1.8%" title="Waikato: 1.4%"></u></div><b>0.3%</b></div><div class="key"><u></u>Waikato average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:11.8%"></i><u style="left:21.5%" title="Waikato: 18.5%"></u></div><b>10.2%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:82.3%" title="Waikato: 70.9%"></u></div><b>82.0%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:3.6%"></i><u style="left:3.9%" title="Waikato: 3.4%"></u></div><b>3.1%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:1.4%" title="Waikato: 1.2%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:0.3%"></i><u style="left:1.4%" title="Waikato: 1.2%"></u></div><b>0.3%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:3.9%"></i><u style="left:3.8%" title="Waikato: 3.3%"></u></div><b>3.4%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.2%"></i><u style="left:1.6%" title="Waikato: 1.4%"></u></div><b>1.0%</b></div><div class="key"><u></u>Waikato average</div></div>
 <h2>Nearby in South Waikato District</h2>
 <ul class="links"><li><a href="/waikato/kinleith/">Kinleith</a></li><li><a href="/waikato/matarawa/">Matarawa</a></li><li><a href="/waikato/moananui/">Moananui</a></li><li><a href="/waikato/paraonui/">Paraonui</a></li><li><a href="/waikato/parkdale/">Parkdale</a></li><li><a href="/waikato/putaruru-rural/">Putāruru Rural</a></li><li><a href="/waikato/stanley-park/">Stanley Park</a></li><li><a href="/waikato/strathmore-south-waikato-district/">Strathmore (South Waikato District)</a></li><li><a href="/waikato/tokoroa-central/">Tokoroa Central</a></li><li><a href="/waikato/tirau/">Tīrau</a></li></ul>
 

@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Bay of Plenty", "item": "https://population.co.nz/bay-of-plenty/"}, {"@type": "ListItem", "position": 3, "name": "Rangataiki", "item": "https://population.co.nz/bay-of-plenty/rangataiki/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#bay-of-plenty/rangataiki" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/bay-of-plenty/">Bay of Plenty</a> › Rangataiki</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/bay-of-plenty/">Bay of Plenty</a> › Rangataiki</nav>
 <h1>Rangataiki population and demographics</h1>
-<p>Rangataiki is a statistical area in Taupo District, Bay of Plenty. At the 2023 Census it had <strong>123</strong>
-usually resident people (-6.8% since 2018). It is part of the wider Taupo District South area.</p>
-<a class="cta" href="/#bay-of-plenty/rangataiki">Open Rangataiki on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>123</strong></div><div class="card"><span>Population 2018</span><strong>132</strong></div><div class="card"><span>Population 2013</span><strong>135</strong></div><div class="card"><span>Median age</span><strong>30.8</strong></div><div class="card"><span>Median personal income</span><strong>$60,900</strong></div><div class="card"><span>Median household income</span><strong>$73,500</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>18.2%</strong></div><div class="card"><span>Unemployment rate</span><strong>0.0%</strong></div><div class="card"><span>Born overseas</span><strong>14.6%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>7</strong></div></div>
+<p class="where">Taupo District · Bay of Plenty · part of the wider Taupo District South area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">123</span><span class="chip">-6.8% since 2018</span></div>
+    <div class="trend"><div><b>135</b><i style="height:70%"></i><span>2013</span></div><div><b>132</b><i style="height:68%"></i><span>2018</span></div><div><b>123</b><i style="height:64%"></i><span>2023</span></div></div>
+    <p class="lead">Rangataiki is in Taupo District, Bay of Plenty. Its population fell 6.8% between the 2018 and 2023 censuses. The median age is 30.8, compared with 40.1 across Bay of Plenty.</p>
+    <a class="cta" href="/#bay-of-plenty/rangataiki">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 284 406" role="img" fill-rule="evenodd"><path class="on" d="M279 280 256 235 248 221 241 205 233 197 228 155 238 112 246 77 229 68 228 71 227 73 226 75 225 77 224 79 221 79 206 70 200 66 187 57 188 55 183 47 180 41 182 36 179 35 177 34 175 31 173 28 174 24 175 20 162 16 156 13 156 9 156 3 155 1 141 0 138 5 140 13 140 18 140 22 140 25 139 27 138 29 135 30 133 31 131 32 130 34 128 36 125 39 123 42 118 50 114 57 63 139 18 212 0 241 2 307 14 311 31 317 33 316 35 317 37 320 38 322 36 325 36 328 37 334 38 336 39 338 40 341 42 344 43 347 44 349 46 350 47 352 48 355 49 358 51 360 55 360 58 359 60 361 62 362 65 362 66 364 67 366 68 370 69 372 71 375 74 380 75 382 77 384 79 386 81 387 84 387 87 388 90 389 92 392 94 393 96 394 99 395 101 397 104 397 108 396 111 396 113 399 115 400 118 399 122 399 124 393 126 387 113 371 120 364 130 353 134 349 118 332 130 324 128 323 129 321 130 319 130 314 132 311 133 309 135 308 138 306 141 303 144 302 149 302 151 301 152 299 153 297 152 294 153 290 153 287 152 284 152 281 154 280 156 277 160 278 160 272 160 268 159 266 159 263 160 260 161 257 161 253 160 251 159 249 160 245 162 241 164 237 166 234 167 232 170 231 174 232 178 232 182 233 184 232 186 233 190 233 192 234 194 236 197 239 198 241 201 243 203 244 204 248 207 251 209 256 209 259 210 261 211 263 214 260 218 255 220 254 222 253 224 252 228 252 231 252 234 252 237 253 241 252 243 251 246 251 250 252 252 254 254 256 254 261 255 263 257 264 260 263 262 264 265 266 266 268 266 271 266 276 266 279 271 281 274 281 278 280Z"/></svg><figcaption>Rangataiki within Taupo District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$60,900</strong><em>Bay of Plenty $39,900</em></div><div class="card"><span>Median household income</span><strong>$73,500</strong><em>Bay of Plenty $90,600</em></div><div class="card"><span>Median age</span><strong>30.8</strong><em>Bay of Plenty 40.1</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>18.2%</strong><em>Bay of Plenty 21.8%</em></div><div class="card"><span>Unemployment rate</span><strong>0.0%</strong><em>Bay of Plenty 5.3%</em></div><div class="card"><span>Born overseas</span><strong>14.6%</strong><em>Bay of Plenty 20.8%</em></div><div class="card"><span>NZDep2023 decile</span><strong>7 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>6.5%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$150</strong></div><div class="card"><span>Stand-alone houses</span><strong>95.5%</strong></div><div class="card"><span>Crowded households</span><strong>0.0%</strong></div><div class="card"><span>Damp homes</span><strong>18.8%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>82.9%</strong></div><div class="card"><span>Māori</span><strong>24.4%</strong></div><div class="card"><span>Asian</span><strong>9.8%</strong></div><div class="card"><span>Other</span><strong>2.4%</strong></div><div class="card"><span>Pacific</span><strong>0.0%</strong></div><div class="card"><span>MELAA</span><strong>0.0%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>6.5%</strong><em>Bay of Plenty 54.7%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$150</strong><em>Bay of Plenty $460</em></div><div class="card"><span>Stand-alone houses</span><strong>95.5%</strong><em>Bay of Plenty 82.7%</em></div><div class="card"><span>Crowded households</span><strong>0.0%</strong><em>Bay of Plenty 6.5%</em></div><div class="card"><span>Damp homes</span><strong>18.8%</strong><em>Bay of Plenty 17.5%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:38.1%"></i><u style="left:38.8%" title="Bay of Plenty: 19.9%"></u></div><b>19.5%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:52.3%"></i><u style="left:33.6%" title="Bay of Plenty: 17.2%"></u></div><b>26.8%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:84.9%" title="Bay of Plenty: 43.5%"></u></div><b>48.8%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:9.6%"></i><u style="left:37.9%" title="Bay of Plenty: 19.4%"></u></div><b>4.9%</b></div><div class="key"><u></u>Bay of Plenty average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:82.6%" title="Bay of Plenty: 71.9%"></u></div><b>82.9%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:28.0%"></i><u style="left:35.2%" title="Bay of Plenty: 30.6%"></u></div><b>24.4%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:11.3%"></i><u style="left:10.1%" title="Bay of Plenty: 8.8%"></u></div><b>9.8%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.8%"></i><u style="left:1.3%" title="Bay of Plenty: 1.1%"></u></div><b>2.4%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:0.0%"></i><u style="left:4.8%" title="Bay of Plenty: 4.2%"></u></div><b>0.0%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.0%"></i><u style="left:1.4%" title="Bay of Plenty: 1.2%"></u></div><b>0.0%</b></div><div class="key"><u></u>Bay of Plenty average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:42.2%"></i><u style="left:22.7%" title="Bay of Plenty: 17.3%"></u></div><b>32.1%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:79.7%"></i><u style="left:95.2%" title="Bay of Plenty: 72.5%"></u></div><b>60.7%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:0.0%"></i><u style="left:4.9%" title="Bay of Plenty: 3.7%"></u></div><b>0.0%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:1.4%" title="Bay of Plenty: 1.1%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:0.0%"></i><u style="left:2.2%" title="Bay of Plenty: 1.7%"></u></div><b>0.0%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:0.0%"></i><u style="left:3.4%" title="Bay of Plenty: 2.6%"></u></div><b>0.0%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:9.3%"></i><u style="left:1.4%" title="Bay of Plenty: 1.1%"></u></div><b>7.1%</b></div><div class="key"><u></u>Bay of Plenty average</div></div>
 <h2>Nearby in Taupo District</h2>
 <ul class="links"><li><a href="/bay-of-plenty/">All Bay of Plenty suburbs</a></li></ul>
 

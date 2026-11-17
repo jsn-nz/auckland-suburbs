@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Waikato", "item": "https://population.co.nz/waikato/"}, {"@type": "ListItem", "position": 3, "name": "Te Kawa", "item": "https://population.co.nz/waikato/te-kawa/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#waikato/te-kawa" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/waikato/">Waikato</a> › Te Kawa</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/waikato/">Waikato</a> › Te Kawa</nav>
 <h1>Te Kawa population and demographics</h1>
-<p>Te Kawa is a statistical area in Ōtorohanga District, Waikato. At the 2023 Census it had <strong>1,182</strong>
-usually resident people (-2.2% since 2018). It is part of the wider Ōtorohanga District East area.</p>
-<a class="cta" href="/#waikato/te-kawa">Open Te Kawa on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,182</strong></div><div class="card"><span>Population 2018</span><strong>1,209</strong></div><div class="card"><span>Population 2013</span><strong>1,074</strong></div><div class="card"><span>Median age</span><strong>35.6</strong></div><div class="card"><span>Median personal income</span><strong>$48,600</strong></div><div class="card"><span>Median household income</span><strong>$96,700</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>15.6%</strong></div><div class="card"><span>Unemployment rate</span><strong>1.3%</strong></div><div class="card"><span>Born overseas</span><strong>12.0%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>5</strong></div></div>
+<p class="where">Ōtorohanga District · Waikato · part of the wider Ōtorohanga District East area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,182</span><span class="chip">-2.2% since 2018</span></div>
+    <div class="trend"><div><b>1,074</b><i style="height:62%"></i><span>2013</span></div><div><b>1,209</b><i style="height:70%"></i><span>2018</span></div><div><b>1,182</b><i style="height:68%"></i><span>2023</span></div></div>
+    <p class="lead">Te Kawa is in Ōtorohanga District, Waikato. Its population fell 2.2% between the 2018 and 2023 censuses. The median age is 35.6, compared with 37.9 across Waikato.</p>
+    <a class="cta" href="/#waikato/te-kawa">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 241" role="img" fill-rule="evenodd"><path class="a" d="M147 17 145 18 146 20 141 19 134 17 134 22 131 21 130 26 130 29 123 29 116 25 116 33 113 33 113 36 114 39 113 41 111 42 109 41 109 44 108 42 106 41 104 40 101 40 100 38 101 36 97 41 96 44 95 46 98 46 99 49 103 49 103 52 101 53 99 54 97 53 98 51 95 51 92 51 93 53 95 55 96 57 98 58 100 57 101 55 103 56 105 57 104 59 102 60 104 62 105 64 107 65 108 67 108 70 106 72 107 74 109 75 108 78 107 80 105 81 104 83 103 85 102 87 103 90 102 92 100 94 98 96 96 95 95 101 96 103 97 105 103 107 105 108 109 109 115 112 118 113 122 114 121 117 126 117 129 115 134 115 137 114 139 113 141 116 142 121 142 125 140 126 143 129 144 127 145 125 148 122 149 119 149 116 149 112 149 109 148 107 149 104 148 102 147 100 148 98 147 96 146 94 148 93 149 90 148 88 149 85 150 83 151 81 149 80 152 80 151 78 150 76 148 74 148 71 148 67 148 64 146 63 148 62 146 61 144 62 143 60 141 58 140 55 141 53 141 50 139 49 140 47 142 46 142 43 141 41 142 39 144 37 146 35 148 34 149 32 148 29 147 27 148 25 150 23 151 21 152 19 148 19 147 17Z"/><path class="a" d="M227 190 229 189 231 188 232 186 235 186 237 183 238 181 238 178 238 175 238 172 238 169 239 167 237 158 235 154 237 155 240 153 249 153 250 151 249 149 248 146 248 143 249 141 249 138 248 136 247 134 247 131 247 128 246 126 245 124 246 122 246 119 245 116 244 114 243 112 242 110 234 110 232 111 228 111 226 106 224 102 222 101 221 98 219 97 217 96 214 96 211 97 210 95 210 92 209 88 207 87 207 84 207 81 208 79 209 77 212 77 212 74 208 73 204 73 202 72 202 69 201 67 199 65 197 67 195 68 193 69 191 71 190 73 189 76 190 79 191 77 194 79 191 79 189 81 188 83 188 86 185 88 181 91 179 89 177 90 175 89 172 88 169 89 168 91 164 94 162 95 158 95 157 97 156 100 153 100 151 101 153 103 151 104 149 103 148 105 148 108 149 110 149 115 149 118 148 121 145 125 144 127 143 129 141 131 143 130 145 131 153 134 151 139 151 143 157 144 156 148 154 151 153 154 157 153 159 152 162 153 167 154 170 153 169 150 178 151 179 153 183 152 186 152 188 156 190 157 189 159 190 161 192 167 193 169 194 171 192 173 193 175 199 176 200 181 197 183 198 185 199 187 200 189 202 191 204 192 206 194 212 193 220 192 218 185 217 182 224 180 226 187 227 190Z"/><path class="a" d="M229 62 227 61 225 60 223 59 221 58 219 57 216 56 214 55 212 56 210 55 209 53 206 53 200 55 198 54 197 56 198 59 199 62 199 65 201 67 202 69 202 72 204 73 208 73 212 74 212 77 209 77 208 79 207 81 207 84 207 87 209 88 210 90 210 93 210 96 213 96 217 96 219 97 221 98 222 100 223 102 226 106 228 111 232 111 234 110 242 108 242 111 243 113 244 115 246 117 246 121 245 124 246 126 247 128 247 131 247 134 248 136 249 138 249 141 248 143 247 145 248 148 249 150 250 152 240 153 237 155 235 154 236 158 239 165 239 168 238 170 238 175 238 178 238 181 237 183 236 185 234 186 231 188 229 189 227 190 228 194 242 192 244 200 247 203 250 206 259 215 263 220 266 223 264 225 272 234 274 235 290 232 289 225 288 221 290 217 291 215 289 214 290 212 292 211 293 209 294 207 296 206 299 205 301 204 303 202 303 199 305 197 308 197 310 196 311 194 313 192 314 190 315 187 317 185 320 184 319 181 319 178 317 177 317 174 317 171 316 169 316 166 317 164 315 163 313 162 311 161 309 160 307 159 307 156 308 154 310 153 312 152 313 150 314 148 315 145 316 143 315 141 314 139 314 136 313 134 314 132 313 130 314 128 313 126 313 123 313 120 314 117 312 116 313 114 312 112 312 109 311 107 311 103 311 100 312 98 311 96 310 93 308 92 308 89 306 88 303 88 304 86 302 85 301 83 291 86 279 91 275 92 273 97 271 100 269 104 266 100 265 98 262 94 257 87 255 86 254 84 253 82 254 80 253 78 252 76 250 74 248 73 245 73 242 74 241 72 240 74 239 72 237 73 235 72 234 70 235 68 234 66 232 65 231 63 229 62Z"/><path class="a" d="M30 62 30 65 31 67 32 69 33 67 31 65 30 63ZM113 7 112 9 101 10 91 11 91 7 88 7 86 6 84 5 82 6 80 7 77 7 75 6 74 4 72 5 70 6 69 4 67 3 65 2 63 0 61 1 60 4 58 5 57 7 56 9 55 11 53 12 51 11 49 10 47 9 40 6 32 7 31 9 30 11 32 12 32 15 30 12 28 13 27 15 28 17 26 18 26 21 27 23 25 22 23 23 24 25 25 27 22 27 20 28 21 26 20 24 17 24 15 25 16 22 18 21 17 19 14 20 12 21 10 24 8 25 6 26 5 28 3 30 3 33 2 36 2 39 1 42 1 45 0 47 0 51 1 54 3 53 6 52 9 52 12 51 13 49 15 46 17 44 18 42 18 39 17 37 19 36 21 35 23 34 22 36 21 38 22 40 22 43 24 42 27 41 27 38 26 36 28 33 27 35 28 37 28 40 30 41 32 40 33 38 36 38 38 37 37 39 35 40 36 42 38 41 40 42 39 44 41 43 43 42 45 40 43 42 42 44 41 46 44 46 42 47 43 49 41 50 39 49 38 47 36 48 34 50 36 51 38 52 41 51 43 50 46 51 47 49 47 52 45 53 47 54 47 57 48 55 50 57 48 55 47 58 46 56 44 55 42 56 41 58 42 56 40 55 39 57 37 56 35 58 33 59 31 60 32 62 34 64 34 67 37 67 40 65 38 67 40 68 38 69 36 68 34 69 33 71 31 70 30 68 29 66 28 64 29 62 27 61 26 63 25 65 26 67 27 69 26 67 25 69 24 67 24 64 23 62 21 63 19 64 17 65 18 67 17 70 15 71 14 73 17 73 19 72 20 70 22 69 23 71 22 73 25 73 27 74 26 76 27 78 28 80 27 82 26 84 25 87 23 88 22 90 21 93 20 100 20 108 25 108 32 103 36 100 39 102 42 102 44 101 46 102 49 102 52 101 55 101 57 102 60 103 63 103 66 103 68 104 70 103 68 101 69 97 68 95 70 94 68 93 69 90 71 89 73 88 75 89 77 90 84 89 83 91 82 94 89 94 92 94 94 95 97 95 99 94 101 93 102 91 102 88 102 85 104 84 105 81 107 80 108 78 110 76 108 75 106 74 107 71 108 69 107 66 105 65 103 63 102 60 104 59 105 57 103 56 101 55 100 57 98 58 96 57 95 55 93 54 92 52 94 51 97 51 98 53 101 53 103 52 103 49 99 49 100 46 95 46 96 44 97 42 100 36 101 39 103 40 105 41 107 42 108 44 109 42 111 41 113 42 114 40 113 38 113 34 111 33 116 33 116 25 123 30 123 23 114 18 119 14 115 10 113 7Z"/><path class="a" d="M160 95 159 93 157 92 155 93 149 94 148 96 147 98 148 101 149 103 151 104 153 103 151 101 153 100 155 101 157 99 156 97 158 95Z"/><path class="on" d="M176 56 166 55 162 54 157 51 154 50 152 48 150 47 148 46 147 44 145 43 146 41 144 42 145 39 146 37 144 36 143 38 141 40 142 42 142 45 141 47 139 48 140 50 141 52 140 55 141 58 143 60 144 62 146 61 148 62 146 63 148 64 148 67 147 70 148 72 148 76 150 77 151 79 149 80 151 81 150 83 150 86 148 88 149 90 147 92 146 94 147 97 148 95 154 94 156 93 158 92 160 93 161 95 164 94 168 91 169 89 171 87 173 89 176 90 178 89 180 90 185 88 188 86 188 83 189 81 191 79 194 79 192 76 191 78 189 76 190 73 191 71 193 70 194 68 196 67 198 66 199 64 198 59 197 57 196 54 193 54 191 55 189 56 181 55 179 56 176 56Z"/></svg><figcaption>Te Kawa within Ōtorohanga District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$48,600</strong><em>Waikato $42,400</em></div><div class="card"><span>Median household income</span><strong>$96,700</strong><em>Waikato $93,500</em></div><div class="card"><span>Median age</span><strong>35.6</strong><em>Waikato 37.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>15.6%</strong><em>Waikato 22.1%</em></div><div class="card"><span>Unemployment rate</span><strong>1.3%</strong><em>Waikato 4.6%</em></div><div class="card"><span>Born overseas</span><strong>12.0%</strong><em>Waikato 21.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>5 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>53.1%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$250</strong></div><div class="card"><span>Stand-alone houses</span><strong>95.6%</strong></div><div class="card"><span>Crowded households</span><strong>3.8%</strong></div><div class="card"><span>Damp homes</span><strong>18.5%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>87.6%</strong></div><div class="card"><span>Māori</span><strong>16.5%</strong></div><div class="card"><span>Asian</span><strong>4.3%</strong></div><div class="card"><span>Pacific</span><strong>2.3%</strong></div><div class="card"><span>Other</span><strong>2.0%</strong></div><div class="card"><span>MELAA</span><strong>0.5%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>53.1%</strong><em>Waikato 52.1%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$250</strong><em>Waikato $420</em></div><div class="card"><span>Stand-alone houses</span><strong>95.6%</strong><em>Waikato 83.9%</em></div><div class="card"><span>Crowded households</span><strong>3.8%</strong><em>Waikato 5.7%</em></div><div class="card"><span>Damp homes</span><strong>18.5%</strong><em>Waikato 17.7%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:49.7%"></i><u style="left:41.6%" title="Waikato: 20.2%"></u></div><b>24.1%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:35.0%"></i><u style="left:38.5%" title="Waikato: 18.7%"></u></div><b>17.0%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:90.5%" title="Waikato: 43.9%"></u></div><b>46.2%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:26.2%"></i><u style="left:35.7%" title="Waikato: 17.3%"></u></div><b>12.7%</b></div><div class="key"><u></u>Waikato average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:78.0%" title="Waikato: 71.7%"></u></div><b>87.6%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:17.9%"></i><u style="left:27.4%" title="Waikato: 25.2%"></u></div><b>16.5%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:4.7%"></i><u style="left:13.3%" title="Waikato: 12.2%"></u></div><b>4.3%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:2.5%"></i><u style="left:5.7%" title="Waikato: 5.2%"></u></div><b>2.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.2%"></i><u style="left:1.2%" title="Waikato: 1.1%"></u></div><b>2.0%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.5%"></i><u style="left:1.5%" title="Waikato: 1.4%"></u></div><b>0.5%</b></div><div class="key"><u></u>Waikato average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:45.8%"></i><u style="left:24.9%" title="Waikato: 18.5%"></u></div><b>34.1%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:75.5%"></i><u style="left:95.2%" title="Waikato: 70.9%"></u></div><b>56.2%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:1.7%"></i><u style="left:4.6%" title="Waikato: 3.4%"></u></div><b>1.3%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:1.6%" title="Waikato: 1.2%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:0.5%"></i><u style="left:1.6%" title="Waikato: 1.2%"></u></div><b>0.4%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:1.7%"></i><u style="left:4.4%" title="Waikato: 3.3%"></u></div><b>1.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:8.3%"></i><u style="left:1.9%" title="Waikato: 1.4%"></u></div><b>6.2%</b></div><div class="key"><u></u>Waikato average</div></div>
 <h2>Nearby in Ōtorohanga District</h2>
 <ul class="links"><li><a href="/waikato/honikiwi/">Honikiwi</a></li><li><a href="/waikato/maihiihi/">Maihiihi</a></li><li><a href="/waikato/pirongia-forest/">Pirongia Forest</a></li><li><a href="/waikato/puniu/">Puniu</a></li><li><a href="/waikato/otorohanga/">Ōtorohanga</a></li></ul>
 

@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Hawke's Bay", "item": "https://population.co.nz/hawkes-bay/"}, {"@type": "ListItem", "position": 3, "name": "Onekawa West", "item": "https://population.co.nz/hawkes-bay/onekawa-west/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#hawkes-bay/onekawa-west" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/hawkes-bay/">Hawke&#x27;s Bay</a> › Onekawa West</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/hawkes-bay/">Hawke&#x27;s Bay</a> › Onekawa West</nav>
 <h1>Onekawa West population and demographics</h1>
-<p>Onekawa West is a statistical area in Napier City, Hawke&#x27;s Bay. At the 2023 Census it had <strong>225</strong>
-usually resident people (-16.7% since 2018). It is part of the wider Onekawa area.</p>
-<a class="cta" href="/#hawkes-bay/onekawa-west">Open Onekawa West on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>225</strong></div><div class="card"><span>Population 2018</span><strong>270</strong></div><div class="card"><span>Population 2013</span><strong>246</strong></div><div class="card"><span>Median age</span><strong>57.6</strong></div><div class="card"><span>Median personal income</span><strong>$40,500</strong></div><div class="card"><span>Median household income</span><strong>$60,600</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>22.7%</strong></div><div class="card"><span>Unemployment rate</span><strong>2.1%</strong></div><div class="card"><span>Born overseas</span><strong>16.2%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>5</strong></div></div>
+<p class="where">Napier City · Hawke&#x27;s Bay · part of the wider Onekawa area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">225</span><span class="chip">-16.7% since 2018</span></div>
+    <div class="trend"><div><b>246</b><i style="height:64%"></i><span>2013</span></div><div><b>270</b><i style="height:70%"></i><span>2018</span></div><div><b>225</b><i style="height:58%"></i><span>2023</span></div></div>
+    <p class="lead">Onekawa West is in Napier City, Hawke&#x27;s Bay. Its population fell 16.7% between the 2018 and 2023 censuses. The median age is 57.6, compared with 40.9 across Hawke&#x27;s Bay.</p>
+    <a class="cta" href="/#hawkes-bay/onekawa-west">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 200 406" role="img" fill-rule="evenodd"><path class="a" d="M126 20 122 20 120 23 119 26 116 26 114 22 116 18 113 12 110 10 107 9 105 8 103 2 100 0 97 3 96 7 94 10 90 13 83 14 76 12 72 10 69 27 70 30 69 34 72 34 74 36 74 39 76 42 79 44 74 47 72 48 74 51 75 57 76 61 73 59 70 64 68 63 66 64 63 61 63 64 62 66 60 67 58 70 62 78 63 80 65 81 65 86 64 92 62 94 62 98 60 101 58 100 55 100 54 103 52 104 49 105 45 107 42 109 34 111 34 114 39 121 39 126 35 129 38 134 40 133 42 132 43 130 46 126 48 122 50 124 52 130 51 133 50 140 48 142 45 143 42 142 38 145 35 145 33 146 32 148 29 150 27 151 29 156 28 159 25 159 24 164 27 171 42 193 40 181 45 190 50 195 54 199 57 201 63 203 75 204 88 207 100 208 106 208 109 207 112 208 114 195 113 191 112 183 109 177 105 162 104 160 103 154 105 153 105 149 104 133 103 125 104 118 105 108 106 102 108 91 110 76 113 64 115 57 120 41 125 26 126 20Z"/><path class="a" d="M60 297 57 297 54 295 53 292 50 291 47 290 46 287 43 289 39 286 38 288 36 287 33 286 33 290 29 297 32 301 33 304 35 307 37 309 36 311 39 312 42 312 46 313 48 315 49 319 50 322 52 325 60 297Z"/><path class="a" d="M183 296 182 283 182 264 183 250 184 241 178 241 176 242 165 252 174 262 175 268 174 272 171 278 172 280 177 283 177 288 179 289 178 296 183 296Z"/><path class="a" d="M152 264 149 267 146 272 147 279 148 284 149 286 150 291 152 288 160 297 169 281 152 264Z"/><path class="a" d="M131 295 124 272 105 290 112 291 131 295Z"/><path class="a" d="M147 279 146 272 148 267 152 264 151 261 144 254 132 265 144 279 147 279Z"/><path class="a" d="M131 295 138 295 146 296 149 296 150 291 149 286 148 284 147 279 144 279 132 265 124 272 131 293Z"/><path class="a" d="M104 289 90 287 87 285 86 289 82 287 79 288 73 294 70 299 77 305 79 308 91 298 98 295 101 294 105 290Z"/><path class="a" d="M79 355 80 350 83 338 85 331 64 327 62 329 59 334 49 349 47 351 42 353 42 357 45 354 49 352 53 351 56 352 59 353 61 354 69 353 79 355Z"/><path class="a" d="M124 272 132 265 144 254 139 250 131 248 124 258 121 261 124 272Z"/><path class="a" d="M105 290 124 272 121 261 118 264 110 269 108 272 107 276 104 289Z"/><path class="a" d="M171 278 174 272 175 268 174 262 165 252 157 244 144 254 151 261 152 264 169 281 171 278Z"/><path class="a" d="M67 265 61 265 65 268 64 271 65 273 61 293 65 291 68 291 70 297 73 294 78 288 82 286 81 284 81 281 83 272 75 271 73 267 70 267 67 265Z"/><path class="a" d="M42 195 36 197 34 200 31 201 28 203 26 204 26 207 23 207 21 211 18 214 21 218 29 216 30 219 17 225 6 232 4 234 2 253 10 259 9 263 13 266 25 272 27 275 26 278 33 284 36 287 38 288 39 286 43 289 46 287 47 290 50 291 53 292 54 295 57 297 60 297 61 293 65 273 64 271 65 268 61 265 67 265 71 258 72 252 70 250 73 246 69 245 69 241 67 239 63 241 60 241 59 238 56 236 55 233 52 232 55 231 58 229 61 229 61 226 60 219 59 215 58 213 58 210 56 208 52 210 50 209 45 210 44 208 43 205 42 203 43 201 42 195Z"/><path class="a" d="M112 208 109 207 106 208 101 207 88 207 75 204 63 203 57 201 54 199 50 195 45 190 40 181 42 193 43 201 42 203 43 205 45 207 45 210 50 209 52 210 55 208 58 210 58 213 59 215 60 219 60 225 61 229 58 229 57 231 52 231 55 233 56 236 59 238 60 241 63 241 67 239 69 241 69 245 73 246 70 250 72 252 71 258 67 265 70 267 73 267 75 271 83 272 84 268 85 266 87 264 94 261 98 258 100 254 102 251 101 245 102 241 106 238 110 216 112 208Z"/><path class="a" d="M54 325 50 322 49 319 48 315 46 313 42 312 40 311 36 311 37 309 35 307 33 304 21 327 6 351 0 359 3 359 6 365 9 366 12 366 15 369 26 368 32 366 37 360 40 359 42 357 41 354 47 351 49 349 59 334 62 329 54 325Z"/><path class="a" d="M131 207 135 206 138 205 139 203 140 200 135 202 131 201 127 198 124 196 120 189 115 179 112 175 110 169 107 160 105 153 103 154 104 160 105 162 109 177 112 183 113 191 114 195 112 208 114 205 117 204 117 198 122 202 118 205 116 208 123 205 130 206Z"/><path class="a" d="M70 299 68 291 65 291 61 293 60 297 54 325 62 327 66 320 67 318 79 308 77 305 70 299Z"/><path class="a" d="M104 289 107 276 104 275 101 272 97 270 94 273 93 275 87 285 90 287 104 289Z"/><path class="a" d="M164 197 160 197 156 198 149 199 145 197 142 202 146 204 141 205 138 214 136 213 136 210 133 210 132 208 136 222 137 224 139 219 142 220 145 218 150 213 161 204 166 200 164 197Z"/><path class="a" d="M151 235 142 235 140 238 137 238 131 242 128 242 130 245 132 247 139 250 143 253 157 244 152 239 151 235Z"/><path class="a" d="M186 213 186 209 188 204 189 202 188 198 189 195 191 193 190 186 186 180 184 179 180 179 182 183 186 186 186 195 184 196 181 191 181 196 179 195 179 188 168 190 168 193 168 196 164 197 166 200 161 204 162 206 160 210 162 214 169 219 170 223 172 224 176 223 178 220 181 219 183 216 183 213 186 213Z"/><path class="a" d="M172 224 170 223 169 219 164 214 160 210 162 206 161 204 150 213 145 218 142 220 139 219 137 224 139 229 138 232 139 234 142 235 151 235 153 234 160 231 161 229 172 225Z"/><path class="a" d="M82 286 86 289 87 285 93 275 94 273 97 270 96 265 94 261 87 264 85 266 84 268 83 272 81 281 81 284 82 286Z"/><path class="a" d="M107 276 108 272 110 269 110 264 109 260 107 247 103 251 101 253 98 258 94 261 96 265 97 270 101 272 104 275 107 276Z"/><path class="a" d="M184 241 184 231 185 222 185 215 186 213 183 213 183 216 181 219 178 220 176 223 172 224 161 229 160 231 165 232 169 233 173 237 176 242 178 241 184 241Z"/><path class="a" d="M112 291 105 290 101 294 98 295 91 298 79 308 84 313 88 315 90 313 93 310 106 299 111 294 112 291Z"/><path class="a" d="M176 242 173 237 169 233 165 232 160 233 153 234 151 235 152 239 157 244 165 252 176 242Z"/><path class="a" d="M85 331 85 323 87 319 88 315 83 314 79 308 67 318 66 320 64 327 85 331Z"/><path class="a" d="M183 296 178 296 179 289 177 288 177 283 172 280 171 278 169 281 160 297 152 288 150 291 149 296 146 296 138 294 133 295 112 291 111 294 106 299 93 310 90 313 88 315 87 319 85 323 85 331 83 338 80 350 79 355 83 356 89 359 91 362 94 363 96 367 96 371 97 374 99 375 100 380 102 382 104 385 105 389 108 392 112 392 114 395 118 396 124 400 130 399 135 399 142 398 146 396 148 394 158 389 160 388 166 387 168 384 173 383 175 381 181 379 187 379 191 379 195 380 191 371 189 363 188 354 185 330 183 313 183 296Z"/><path class="on" d="M137 224 136 222 132 208 132 213 129 215 127 219 121 221 118 219 113 218 111 215 106 238 102 241 101 245 102 251 101 253 103 251 107 247 109 260 110 264 109 268 118 264 121 261 124 258 131 248 130 245 128 242 131 242 137 238 140 238 142 235 139 234 138 232 139 229 137 226Z"/></svg><figcaption>Onekawa West within Napier City</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$40,500</strong><em>Hawke&#x27;s Bay $39,600</em></div><div class="card"><span>Median household income</span><strong>$60,600</strong><em>Hawke&#x27;s Bay $86,200</em></div><div class="card"><span>Median age</span><strong>57.6</strong><em>Hawke&#x27;s Bay 40.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>22.7%</strong><em>Hawke&#x27;s Bay 20.2%</em></div><div class="card"><span>Unemployment rate</span><strong>2.1%</strong><em>Hawke&#x27;s Bay 4.3%</em></div><div class="card"><span>Born overseas</span><strong>16.2%</strong><em>Hawke&#x27;s Bay 17.6%</em></div><div class="card"><span>NZDep2023 decile</span><strong>5 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>50.0%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$450</strong></div><div class="card"><span>Stand-alone houses</span><strong>16.3%</strong></div><div class="card"><span>Crowded households</span><strong>5.6%</strong></div><div class="card"><span>Damp homes</span><strong>6.2%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>89.3%</strong></div><div class="card"><span>Māori</span><strong>13.3%</strong></div><div class="card"><span>Asian</span><strong>4.0%</strong></div><div class="card"><span>Pacific</span><strong>2.7%</strong></div><div class="card"><span>MELAA</span><strong>1.3%</strong></div><div class="card"><span>Other</span><strong>0.0%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>50.0%</strong><em>Hawke&#x27;s Bay 55.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$450</strong><em>Hawke&#x27;s Bay $380</em></div><div class="card"><span>Stand-alone houses</span><strong>16.3%</strong><em>Hawke&#x27;s Bay 82.0%</em></div><div class="card"><span>Crowded households</span><strong>5.6%</strong><em>Hawke&#x27;s Bay 7.2%</em></div><div class="card"><span>Damp homes</span><strong>6.2%</strong><em>Hawke&#x27;s Bay 17.8%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:12.0%"></i><u style="left:35.4%" title="Hawke&#x27;s Bay: 19.8%"></u></div><b>6.7%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:12.0%"></i><u style="left:30.9%" title="Hawke&#x27;s Bay: 17.3%"></u></div><b>6.7%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:77.9%" title="Hawke&#x27;s Bay: 43.6%"></u></div><b>53.3%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:57.2%"></i><u style="left:34.7%" title="Hawke&#x27;s Bay: 19.4%"></u></div><b>32.0%</b></div><div class="key"><u></u>Hawke&#x27;s Bay average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:78.2%" title="Hawke&#x27;s Bay: 73.3%"></u></div><b>89.3%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:14.2%"></i><u style="left:30.5%" title="Hawke&#x27;s Bay: 28.6%"></u></div><b>13.3%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:4.3%"></i><u style="left:6.9%" title="Hawke&#x27;s Bay: 6.5%"></u></div><b>4.0%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:2.9%"></i><u style="left:6.6%" title="Hawke&#x27;s Bay: 6.2%"></u></div><b>2.7%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:1.4%"></i><u style="left:0.9%" title="Hawke&#x27;s Bay: 0.8%"></u></div><b>1.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.0%"></i><u style="left:1.3%" title="Hawke&#x27;s Bay: 1.2%"></u></div><b>0.0%</b></div><div class="key"><u></u>Hawke&#x27;s Bay average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:32.8%"></i><u style="left:20.3%" title="Hawke&#x27;s Bay: 15.8%"></u></div><b>25.5%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:87.6%"></i><u style="left:95.2%" title="Hawke&#x27;s Bay: 74.0%"></u></div><b>68.1%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:0.0%"></i><u style="left:5.4%" title="Hawke&#x27;s Bay: 4.2%"></u></div><b>0.0%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:0.6%" title="Hawke&#x27;s Bay: 0.5%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:2.7%"></i><u style="left:2.2%" title="Hawke&#x27;s Bay: 1.7%"></u></div><b>2.1%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:2.7%"></i><u style="left:3.9%" title="Hawke&#x27;s Bay: 3.0%"></u></div><b>2.1%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.0%"></i><u style="left:1.3%" title="Hawke&#x27;s Bay: 1.0%"></u></div><b>0.0%</b></div><div class="key"><u></u>Hawke&#x27;s Bay average</div></div>
 <h2>Nearby in Napier City</h2>
 <ul class="links"><li><a href="/hawkes-bay/ahuriri/">Ahuriri</a></li><li><a href="/hawkes-bay/bay-view-napier-city/">Bay View (Napier City)</a></li><li><a href="/hawkes-bay/bledisloe-park/">Bledisloe Park</a></li><li><a href="/hawkes-bay/bluff-hill/">Bluff Hill</a></li><li><a href="/hawkes-bay/greenmeadows-central/">Greenmeadows Central</a></li><li><a href="/hawkes-bay/greenmeadows-south/">Greenmeadows South</a></li><li><a href="/hawkes-bay/greenmeadows-west/">Greenmeadows West</a></li><li><a href="/hawkes-bay/hospital-hill/">Hospital Hill</a></li><li><a href="/hawkes-bay/maraenui/">Maraenui</a></li><li><a href="/hawkes-bay/marewa-east/">Marewa East</a></li><li><a href="/hawkes-bay/marewa-west/">Marewa West</a></li><li><a href="/hawkes-bay/mclean-park/">McLean Park</a></li><li><a href="/hawkes-bay/meeanee-awatoto/">Meeanee-Awatoto</a></li><li><a href="/hawkes-bay/napier-central/">Napier Central</a></li><li><a href="/hawkes-bay/nelson-park/">Nelson Park</a></li><li><a href="/hawkes-bay/onekawa-central/">Onekawa Central</a></li><li><a href="/hawkes-bay/onekawa-east/">Onekawa East</a></li><li><a href="/hawkes-bay/onekawa-south/">Onekawa South</a></li><li><a href="/hawkes-bay/pirimai-east/">Pirimai East</a></li><li><a href="/hawkes-bay/pirimai-west/">Pirimai West</a></li><li><a href="/hawkes-bay/poraiti-flat/">Poraiti Flat</a></li><li><a href="/hawkes-bay/poraiti-hills/">Poraiti Hills</a></li><li><a href="/hawkes-bay/tamatea-east/">Tamatea East</a></li><li><a href="/hawkes-bay/tamatea-north/">Tamatea North</a></li><li><a href="/hawkes-bay/tamatea-west/">Tamatea West</a></li><li><a href="/hawkes-bay/taradale-central/">Taradale Central</a></li><li><a href="/hawkes-bay/taradale-south/">Taradale South</a></li><li><a href="/hawkes-bay/taradale-west/">Taradale West</a></li><li><a href="/hawkes-bay/tareha-reserve/">Tareha Reserve</a></li><li><a href="/hawkes-bay/westshore/">Westshore</a></li></ul>
 

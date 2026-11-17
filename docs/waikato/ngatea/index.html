@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Waikato", "item": "https://population.co.nz/waikato/"}, {"@type": "ListItem", "position": 3, "name": "Ngatea", "item": "https://population.co.nz/waikato/ngatea/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#waikato/ngatea" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/waikato/">Waikato</a> › Ngatea</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/waikato/">Waikato</a> › Ngatea</nav>
 <h1>Ngatea population and demographics</h1>
-<p>Ngatea is a statistical area in Hauraki District, Waikato. At the 2023 Census it had <strong>1,548</strong>
-usually resident people (+7.7% since 2018). It is part of the wider Hauraki Plains area.</p>
-<a class="cta" href="/#waikato/ngatea">Open Ngatea on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,548</strong></div><div class="card"><span>Population 2018</span><strong>1,437</strong></div><div class="card"><span>Population 2013</span><strong>1,245</strong></div><div class="card"><span>Median age</span><strong>47.0</strong></div><div class="card"><span>Median personal income</span><strong>$36,600</strong></div><div class="card"><span>Median household income</span><strong>$79,800</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>14.2%</strong></div><div class="card"><span>Unemployment rate</span><strong>3.9%</strong></div><div class="card"><span>Born overseas</span><strong>16.0%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>6</strong></div></div>
+<p class="where">Hauraki District · Waikato · part of the wider Hauraki Plains area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,548</span><span class="chip">+7.7% since 2018</span></div>
+    <div class="trend"><div><b>1,245</b><i style="height:56%"></i><span>2013</span></div><div><b>1,437</b><i style="height:65%"></i><span>2018</span></div><div><b>1,548</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Ngatea is in Hauraki District, Waikato. Its population grew 7.7% between the 2018 and 2023 censuses. The median age is 47.0, compared with 37.9 across Waikato.</p>
+    <a class="cta" href="/#waikato/ngatea">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 325 305" role="img" fill-rule="evenodd"><path class="a" d="M45 89 47 88 46 85 45 82 44 79 43 77 41 74 40 71 39 69 38 67 37 64 37 61 37 58 36 56 34 55 34 52 35 49 36 46 36 42 37 40 38 38 39 36 37 34 35 31 35 28 35 25 36 22 37 20 38 17 37 15 36 12 35 10 35 7 33 6 33 3 33 0 22 2 24 12 22 13 20 14 19 16 18 18 19 20 18 22 20 23 10 24 10 35 15 35 15 48 11 49 8 47 5 47 2 47 0 52 2 53 4 54 4 57 11 64 14 62 18 62 18 72 19 84 19 88 20 93 22 92 23 90 26 91 28 92 30 90 33 89 37 88 40 89 44 89Z"/><path class="a" d="M125 95 122 95 117 96 112 100 109 102 107 103 104 104 101 106 99 107 96 108 92 108 89 109 86 109 82 110 80 111 79 113 77 114 78 112 77 110 75 109 71 109 69 108 67 107 64 106 62 105 60 104 57 103 55 102 52 99 50 97 48 95 47 93 46 91 45 89 41 102 38 112 43 116 44 123 41 126 46 144 50 154 55 166 56 168 63 183 66 187 81 169 83 166 86 163 93 155 94 153 90 142 97 142 105 141 109 150 115 149 124 146 126 145 125 143 123 142 120 143 119 140 115 138 118 137 117 134 120 134 120 137 124 137 124 133 125 131 127 129 128 126 125 124 123 123 121 124 120 122 121 120 123 119 123 115 122 112 120 111 119 108 121 104 123 102 125 101 126 99 125 97Z"/><path class="a" d="M142 80 139 80 135 82 130 89 129 91 126 91 126 94 125 97 126 99 125 101 123 102 121 104 119 107 119 110 121 112 123 114 123 117 122 119 120 120 121 123 124 123 127 125 128 128 126 130 124 133 124 136 124 139 126 142 127 144 129 143 132 144 134 145 141 143 144 144 147 148 148 150 149 152 159 148 163 143 167 140 169 135 170 133 172 131 173 128 175 126 176 124 177 122 176 120 174 119 169 119 166 119 162 121 159 122 157 121 156 119 155 115 155 111 154 108 153 106 152 104 152 101 152 98 152 94 151 90 149 87 148 85 146 83 143 81Z"/><path class="a" d="M126 144 124 146 116 148 109 150 105 141 97 142 90 142 94 153 93 155 86 163 83 166 81 169 66 187 69 191 71 192 73 193 72 196 72 199 71 201 70 203 71 205 74 207 75 209 76 212 78 213 78 216 79 219 78 222 77 224 76 226 79 230 85 222 86 224 84 227 94 231 97 231 97 236 104 232 111 228 115 228 118 227 126 226 129 225 132 223 133 221 134 219 137 219 140 218 139 216 139 213 140 211 138 210 139 208 138 206 136 205 133 205 133 202 132 199 130 196 128 195 126 194 129 194 156 194 164 187 156 177 159 175 158 173 160 170 158 169 157 167 161 167 166 166 168 164 172 165 173 162 172 160 173 158 174 155 175 153 177 151 180 150 182 149 183 147 181 145 179 144 176 146 173 146 171 144 169 143 167 141 163 143 159 148 150 151 148 150 147 148 145 145 142 143 135 145 133 144 131 143 127 143Z"/><path class="a" d="M197 187 195 190 193 191 193 194 193 197 196 197 198 198 198 202 199 204 203 202 204 200 207 199 208 197 209 195 211 194 209 192 207 191 205 190 199 188 197 187Z"/><path class="a" d="M292 114 289 113 287 112 285 113 283 115 282 117 281 119 283 121 283 124 279 123 277 122 275 123 274 125 273 129 272 131 270 133 269 135 269 138 268 140 257 140 252 141 255 145 256 148 255 150 254 153 254 156 249 156 250 161 245 161 244 163 246 164 248 165 249 167 248 169 244 169 244 173 239 173 238 175 239 178 237 180 236 182 237 184 236 186 236 189 235 191 233 193 233 196 231 195 229 196 230 198 229 200 230 202 230 205 232 207 231 209 230 211 227 217 228 219 227 221 226 223 226 240 227 243 237 243 237 246 237 251 236 254 237 256 236 258 235 260 236 262 235 264 236 266 236 269 236 273 235 277 232 282 241 277 255 291 262 299 262 296 263 293 265 292 267 291 269 288 270 286 270 283 269 281 267 279 268 275 267 273 264 271 261 271 259 270 260 267 261 264 264 262 265 260 264 258 263 255 271 248 274 253 276 257 281 261 286 264 288 261 299 261 300 257 298 255 297 253 292 247 289 249 287 247 284 242 290 236 292 234 291 232 293 231 297 233 305 225 307 223 306 221 304 220 303 217 304 214 303 211 306 211 309 211 312 211 310 210 308 209 310 204 310 201 312 200 310 198 308 197 310 195 313 195 316 194 319 194 318 192 319 189 317 187 318 185 320 183 319 181 320 178 318 176 317 174 316 172 315 170 314 168 313 166 311 164 312 162 311 160 311 157 307 154 307 151 306 148 304 146 302 144 301 142 301 138 300 136 299 133 299 130 298 128 297 126 299 124 298 122 297 120 296 117 295 115 292 115ZM274 197 275 194 274 191 277 192 278 194 280 193 281 195 286 194 287 196 288 198 287 200 285 201 283 202 281 201 279 202 280 204 279 206 278 208 276 210 274 209 272 210 270 211 268 210 266 211 266 208 265 204 268 204 268 201 268 197 274 197Z"/><path class="a" d="M278 201 277 198 275 199 274 197 268 197 269 201 268 203 265 204 266 207 271 204 274 204 276 202 278 201Z"/><path class="a" d="M251 141 247 141 247 144 246 146 244 147 242 145 240 146 237 145 235 146 233 147 231 149 229 148 226 149 224 147 221 146 218 146 218 149 216 148 213 150 212 148 210 149 208 150 206 151 204 150 202 149 200 147 197 148 195 149 194 151 192 152 190 150 188 149 187 147 185 146 184 143 183 145 183 148 181 150 178 151 176 152 174 155 173 157 172 160 173 162 172 165 168 164 166 166 161 167 157 167 158 169 160 170 158 171 159 175 156 177 164 187 156 192 129 194 126 194 128 195 130 196 131 198 133 200 134 202 133 204 135 205 137 206 139 207 138 210 140 211 139 213 139 216 140 218 137 219 161 219 163 222 168 219 182 219 183 221 182 223 182 226 185 228 186 230 185 232 186 234 186 238 189 239 193 237 195 238 199 236 202 238 206 240 208 243 213 241 215 246 215 241 218 243 227 243 226 240 226 224 227 222 228 220 229 218 227 217 230 213 229 211 231 210 232 208 231 206 230 204 230 201 229 199 230 197 231 195 233 196 234 194 235 191 236 189 237 187 237 184 236 182 237 180 239 178 238 175 239 173 244 173 244 169 248 169 249 167 248 165 246 164 244 163 245 161 250 161 249 156 253 156 254 154 255 152 255 149 255 146 252 141ZM197 187 199 188 205 190 207 191 209 192 211 193 210 195 208 196 210 197 208 199 206 200 204 201 199 204 198 202 198 198 196 197 193 197 193 194 193 191 195 190 197 189Z"/><path class="a" d="M280 204 279 202 281 201 283 202 285 201 288 200 288 197 287 195 282 195 280 196 280 193 278 194 276 193 274 191 273 194 274 196 275 199 277 198 278 201 279 204Z"/><path class="a" d="M280 204 278 202 274 204 271 204 267 208 266 210 269 211 271 210 273 209 275 210 276 208 278 207 280 205Z"/><path class="on" d="M124 137 121 137 120 134 118 135 115 137 119 138 118 140 120 143 123 143 125 142 126 139 124 137Z"/></svg><figcaption>Ngatea within Hauraki District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$36,600</strong><em>Waikato $42,400</em></div><div class="card"><span>Median household income</span><strong>$79,800</strong><em>Waikato $93,500</em></div><div class="card"><span>Median age</span><strong>47.0</strong><em>Waikato 37.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>14.2%</strong><em>Waikato 22.1%</em></div><div class="card"><span>Unemployment rate</span><strong>3.9%</strong><em>Waikato 4.6%</em></div><div class="card"><span>Born overseas</span><strong>16.0%</strong><em>Waikato 21.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>6 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>62.8%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$366</strong></div><div class="card"><span>Stand-alone houses</span><strong>91.2%</strong></div><div class="card"><span>Crowded households</span><strong>2.5%</strong></div><div class="card"><span>Damp homes</span><strong>12.6%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>87.0%</strong></div><div class="card"><span>Māori</span><strong>16.9%</strong></div><div class="card"><span>Asian</span><strong>5.4%</strong></div><div class="card"><span>Pacific</span><strong>2.5%</strong></div><div class="card"><span>Other</span><strong>1.0%</strong></div><div class="card"><span>MELAA</span><strong>0.4%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>62.8%</strong><em>Waikato 52.1%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$366</strong><em>Waikato $420</em></div><div class="card"><span>Stand-alone houses</span><strong>91.2%</strong><em>Waikato 83.9%</em></div><div class="card"><span>Crowded households</span><strong>2.5%</strong><em>Waikato 5.7%</em></div><div class="card"><span>Damp homes</span><strong>12.6%</strong><em>Waikato 17.7%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:40.8%"></i><u style="left:43.8%" title="Waikato: 20.2%"></u></div><b>18.8%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:30.6%"></i><u style="left:40.6%" title="Waikato: 18.7%"></u></div><b>14.1%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:88.7%"></i><u style="left:95.2%" title="Waikato: 43.9%"></u></div><b>40.9%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:57.3%"></i><u style="left:37.5%" title="Waikato: 17.3%"></u></div><b>26.4%</b></div><div class="key"><u></u>Waikato average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:78.5%" title="Waikato: 71.7%"></u></div><b>87.0%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:18.5%"></i><u style="left:27.6%" title="Waikato: 25.2%"></u></div><b>16.9%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:5.9%"></i><u style="left:13.4%" title="Waikato: 12.2%"></u></div><b>5.4%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:2.7%"></i><u style="left:5.7%" title="Waikato: 5.2%"></u></div><b>2.5%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.1%"></i><u style="left:1.2%" title="Waikato: 1.1%"></u></div><b>1.0%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.4%"></i><u style="left:1.5%" title="Waikato: 1.4%"></u></div><b>0.4%</b></div><div class="key"><u></u>Waikato average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:14.1%"></i><u style="left:22.6%" title="Waikato: 18.5%"></u></div><b>11.5%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:86.7%" title="Waikato: 70.9%"></u></div><b>77.9%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:3.1%"></i><u style="left:4.2%" title="Waikato: 3.4%"></u></div><b>2.5%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:1.5%" title="Waikato: 1.2%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:1.0%"></i><u style="left:1.5%" title="Waikato: 1.2%"></u></div><b>0.8%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:8.6%"></i><u style="left:4.0%" title="Waikato: 3.3%"></u></div><b>7.0%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.0%"></i><u style="left:1.7%" title="Waikato: 1.4%"></u></div><b>0.0%</b></div><div class="key"><u></u>Waikato average</div></div>
 <h2>Nearby in Hauraki District</h2>
 <ul class="links"><li><a href="/waikato/hauraki-plains-east/">Hauraki Plains East</a></li><li><a href="/waikato/hauraki-plains-north/">Hauraki Plains North</a></li><li><a href="/waikato/hauraki-plains-south/">Hauraki Plains South</a></li><li><a href="/waikato/miranda-pukorokoro/">Miranda-Pūkorokoro</a></li><li><a href="/waikato/paeroa/">Paeroa</a></li><li><a href="/waikato/paeroa-rural/">Paeroa Rural</a></li><li><a href="/waikato/waihi-east/">Waihī East</a></li><li><a href="/waikato/waihi-north/">Waihī North</a></li><li><a href="/waikato/waihi-rural/">Waihī Rural</a></li><li><a href="/waikato/waihi-south/">Waihī South</a></li></ul>
 

@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Wellington", "item": "https://population.co.nz/wellington/"}, {"@type": "ListItem", "position": 3, "name": "Martinborough", "item": "https://population.co.nz/wellington/martinborough/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#wellington/martinborough" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Martinborough</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Martinborough</nav>
 <h1>Martinborough population and demographics</h1>
-<p>Martinborough is a statistical area in South Wairarapa District, Wellington. At the 2023 Census it had <strong>1,875</strong>
-usually resident people (+2.8% since 2018). It is part of the wider South Wairarapa District East area.</p>
-<a class="cta" href="/#wellington/martinborough">Open Martinborough on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,875</strong></div><div class="card"><span>Population 2018</span><strong>1,824</strong></div><div class="card"><span>Population 2013</span><strong>1,494</strong></div><div class="card"><span>Median age</span><strong>52.2</strong></div><div class="card"><span>Median personal income</span><strong>$44,100</strong></div><div class="card"><span>Median household income</span><strong>$96,700</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>31.1%</strong></div><div class="card"><span>Unemployment rate</span><strong>3.2%</strong></div><div class="card"><span>Born overseas</span><strong>21.0%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>3</strong></div></div>
+<p class="where">South Wairarapa District · Wellington · part of the wider South Wairarapa District East area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,875</span><span class="chip">+2.8% since 2018</span></div>
+    <div class="trend"><div><b>1,494</b><i style="height:56%"></i><span>2013</span></div><div><b>1,824</b><i style="height:68%"></i><span>2018</span></div><div><b>1,875</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Martinborough is in South Wairarapa District, Wellington. Its population grew 2.8% between the 2018 and 2023 censuses. The median age is 52.2, compared with 38.1 across Wellington.</p>
+    <a class="cta" href="/#wellington/martinborough">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 352" role="img" fill-rule="evenodd"><path class="a" d="M201 69 199 70 197 72 194 71 190 70 187 70 183 69 180 69 178 70 175 70 172 71 168 70 166 68 165 66 165 63 166 60 164 61 164 56 163 54 165 52 166 50 166 47 164 45 162 43 164 42 162 40 163 38 161 37 162 35 163 33 162 31 160 28 159 26 160 24 161 22 160 19 161 17 162 15 163 12 165 10 167 7 166 4 164 3 163 1 160 2 158 1 155 1 154 3 152 4 150 6 148 5 146 6 144 7 142 8 139 8 136 8 133 7 130 7 128 8 127 10 125 11 122 12 121 14 121 17 120 19 118 21 116 23 114 24 115 26 116 29 117 31 120 32 124 32 127 32 130 33 130 36 128 39 126 41 125 43 123 45 121 47 120 49 119 51 117 52 115 53 114 56 113 59 112 63 111 66 110 68 108 70 107 72 106 75 108 79 109 82 110 84 108 85 106 87 102 91 102 94 103 97 106 96 108 95 110 94 112 93 113 95 115 94 119 94 122 93 125 93 128 92 131 94 133 96 136 93 139 92 142 94 141 97 143 99 142 102 147 105 149 108 151 111 161 124 169 128 172 128 174 129 179 129 178 131 179 136 181 138 184 139 187 139 189 138 189 135 189 132 192 131 194 130 195 128 193 126 192 124 195 124 197 123 196 120 194 119 193 117 195 116 197 118 199 117 200 114 197 113 194 111 194 108 196 107 199 106 198 103 196 101 199 99 201 96 202 94 204 93 206 92 207 90 208 88 207 86 206 84 205 82 206 79 207 76 205 75 203 74 203 71 202 69ZM186 75 188 72 191 76 193 77 194 79 192 81 190 82 189 84 187 85 185 87 182 86 180 87 179 85 181 84 178 82 182 83 185 79 183 77 185 75Z"/><path class="a" d="M133 96 131 94 129 93 126 92 124 93 121 94 117 94 114 94 112 93 110 94 108 95 106 96 104 97 102 99 99 101 98 103 97 105 94 108 93 110 93 114 91 115 89 114 86 115 85 117 84 119 83 121 81 124 79 125 78 128 76 129 75 131 74 133 74 137 73 139 72 141 69 142 68 144 66 145 64 147 62 145 59 145 57 146 55 145 52 145 51 147 49 149 47 151 46 153 46 156 45 158 46 160 44 161 44 165 45 167 47 169 48 171 47 173 46 176 48 178 47 180 46 182 44 183 43 185 42 187 40 188 39 190 37 192 36 194 34 196 33 198 33 201 31 202 32 204 28 205 27 207 25 209 24 211 25 213 23 214 21 215 18 213 16 212 13 212 12 214 11 216 10 218 9 221 8 223 6 224 4 225 3 227 1 229 0 231 9 237 12 236 14 235 16 234 19 234 22 233 24 232 26 231 28 229 30 227 32 226 35 227 38 228 41 229 47 230 50 231 53 232 55 233 58 234 61 234 64 235 66 237 68 238 70 239 72 240 70 238 70 235 71 231 71 228 70 226 68 224 68 220 69 216 71 215 73 214 75 213 77 210 77 207 76 205 77 203 79 201 81 200 84 201 87 200 90 197 92 196 94 195 96 192 99 190 101 189 103 188 105 189 107 187 110 187 113 187 115 186 115 183 117 184 120 183 123 183 125 182 126 179 128 178 129 176 132 176 134 177 136 178 138 179 139 177 141 175 144 173 146 174 148 173 148 170 150 169 153 168 152 166 151 164 153 163 155 164 158 164 158 161 161 160 163 158 163 155 162 153 161 151 161 148 163 150 165 151 167 152 169 151 168 149 166 148 167 146 170 145 170 142 172 141 173 143 172 145 173 147 176 146 177 144 180 144 182 145 183 143 181 142 179 141 180 139 179 136 177 132 179 130 174 129 172 128 169 128 161 124 151 111 149 108 148 106 142 102 140 103 139 101 136 100 135 98 133 97ZM123 119 125 120 128 120 127 122 129 123 132 123 133 126 134 128 133 130 131 133 129 138 128 140 128 144 125 147 120 152 112 158 108 159 104 161 101 162 97 162 95 161 88 162 85 165 85 169 86 171 82 176 83 178 84 180 85 183 85 186 83 184 79 185 76 184 76 180 79 177 82 173 81 168 80 166 79 164 80 160 80 155 81 153 87 148 90 147 92 143 96 141 99 138 105 134 109 132 111 131 113 129 116 124 119 121 121 120 123 119Z"/><path class="a" d="M142 102 143 99 141 97 142 94 141 92 137 94 133 97 135 98 136 100 138 102 140 103 142 102Z"/><path class="a" d="M186 75 183 77 185 79 182 83 179 81 180 83 181 85 180 87 182 86 184 88 186 86 188 84 190 83 191 81 193 79 192 77 188 74 186 75Z"/><path class="a" d="M317 221 316 218 317 216 316 214 311 211 320 202 304 198 306 189 315 191 317 182 309 180 298 177 300 170 298 168 296 166 294 165 292 166 294 167 292 169 290 168 289 166 291 164 292 161 294 160 295 158 293 157 296 157 300 144 298 142 296 141 294 142 292 141 289 146 287 154 284 154 282 155 281 157 279 158 278 156 277 154 275 155 273 154 274 152 271 152 270 150 259 146 258 144 255 146 253 145 251 144 247 143 244 143 243 141 241 143 239 142 237 140 235 139 235 136 236 133 237 130 238 128 237 126 235 127 234 125 232 124 233 121 228 119 216 117 212 115 210 113 206 113 201 112 200 114 199 117 197 118 195 116 193 117 194 119 196 120 197 122 195 124 193 123 193 126 195 127 194 130 192 131 190 132 189 135 189 138 187 139 184 139 182 138 180 139 179 141 181 142 183 143 182 145 180 144 177 144 176 146 174 147 172 146 173 143 172 141 170 142 170 145 167 146 166 148 167 150 169 149 168 151 165 151 163 150 162 148 160 150 162 152 163 155 163 158 161 160 158 160 158 163 156 164 153 163 151 164 152 166 153 168 151 169 148 169 149 172 147 174 144 173 142 174 140 176 138 179 136 178 134 177 132 176 129 176 128 178 126 179 125 181 124 183 121 183 118 184 116 183 115 185 113 187 111 188 109 187 106 188 103 189 100 189 97 191 94 194 92 196 90 197 88 200 86 201 82 201 80 200 78 202 76 205 77 207 78 209 75 213 73 214 71 215 69 216 68 218 68 222 69 225 71 226 71 229 70 233 70 236 72 238 73 240 75 241 77 242 80 244 82 245 84 246 86 247 88 248 90 249 91 251 93 252 95 253 97 255 97 258 97 261 98 263 99 265 98 268 98 271 96 273 95 275 94 277 94 281 94 284 94 288 94 291 93 293 92 295 91 298 90 300 89 303 91 304 93 306 95 308 97 309 98 311 97 313 98 315 99 318 99 321 99 325 100 327 101 330 103 331 104 333 103 335 103 338 104 341 105 343 107 341 110 341 114 342 116 343 118 345 121 345 124 346 128 346 130 344 132 343 134 344 136 343 139 341 141 339 142 337 144 336 147 336 148 334 149 332 151 333 150 331 151 329 152 326 155 325 158 324 160 323 162 324 164 323 167 323 171 323 174 323 176 324 177 326 178 324 182 323 183 321 185 320 186 318 187 316 190 316 191 314 193 312 195 311 196 309 198 307 200 306 202 304 204 301 205 299 206 295 208 294 210 293 212 292 215 292 216 290 217 287 220 288 222 287 224 286 226 287 229 285 231 284 232 282 235 283 237 281 239 279 241 278 243 276 244 274 245 272 247 270 249 269 251 268 253 267 255 265 256 263 257 261 260 260 261 258 263 256 265 254 266 252 267 250 269 247 272 247 274 244 276 243 279 242 282 242 283 240 285 239 287 238 289 237 291 236 294 235 297 234 299 232 301 231 303 230 304 228 305 226 306 224 310 224 313 222 315 221ZM189 143 191 146 193 148 194 151 192 153 194 156 192 157 189 153 186 155 182 153 185 152 183 149 182 147 184 146 186 145 187 143Z"/><path class="on" d="M189 143 186 143 184 146 182 147 184 149 185 152 182 153 185 156 189 153 192 157 194 156 192 153 194 151 193 148 191 146 189 143Z"/></svg><figcaption>Martinborough within South Wairarapa District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$44,100</strong><em>Wellington $48,400</em></div><div class="card"><span>Median household income</span><strong>$96,700</strong><em>Wellington $113,700</em></div><div class="card"><span>Median age</span><strong>52.2</strong><em>Wellington 38.1</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>31.1%</strong><em>Wellington 35.6%</em></div><div class="card"><span>Unemployment rate</span><strong>3.2%</strong><em>Wellington 4.1%</em></div><div class="card"><span>Born overseas</span><strong>21.0%</strong><em>Wellington 28.3%</em></div><div class="card"><span>NZDep2023 decile</span><strong>3 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>70.8%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$455</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$573</strong></div><div class="card"><span>Stand-alone houses</span><strong>93.0%</strong></div><div class="card"><span>Crowded households</span><strong>2.7%</strong></div><div class="card"><span>Damp homes</span><strong>10.0%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>86.1%</strong></div><div class="card"><span>Māori</span><strong>17.0%</strong></div><div class="card"><span>Asian</span><strong>4.8%</strong></div><div class="card"><span>Pacific</span><strong>2.9%</strong></div><div class="card"><span>Other</span><strong>1.8%</strong></div><div class="card"><span>MELAA</span><strong>0.8%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>70.8%</strong><em>Wellington 52.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$455</strong><em>Wellington $510</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$573</strong><em>Wellington $610</em></div><div class="card"><span>Stand-alone houses</span><strong>93.0%</strong><em>Wellington 72.7%</em></div><div class="card"><span>Crowded households</span><strong>2.7%</strong><em>Wellington 5.4%</em></div><div class="card"><span>Damp homes</span><strong>10.0%</strong><em>Wellington 19.9%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:30.6%"></i><u style="left:35.4%" title="Wellington: 17.2%"></u></div><b>14.9%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:21.8%"></i><u style="left:43.0%" title="Wellington: 20.9%"></u></div><b>10.6%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:91.7%"></i><u style="left:95.2%" title="Wellington: 46.3%"></u></div><b>44.6%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:61.3%"></i><u style="left:31.9%" title="Wellington: 15.5%"></u></div><b>29.8%</b></div><div class="key"><u></u>Wellington average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:80.3%" title="Wellington: 72.6%"></u></div><b>86.1%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:18.8%"></i><u style="left:17.1%" title="Wellington: 15.5%"></u></div><b>17.0%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:5.3%"></i><u style="left:16.8%" title="Wellington: 15.2%"></u></div><b>4.8%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:3.2%"></i><u style="left:10.1%" title="Wellington: 9.1%"></u></div><b>2.9%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.0%"></i><u style="left:1.2%" title="Wellington: 1.1%"></u></div><b>1.8%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.9%"></i><u style="left:2.5%" title="Wellington: 2.3%"></u></div><b>0.8%</b></div><div class="key"><u></u>Wellington average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:48.2%"></i><u style="left:33.6%" title="Wellington: 19.0%"></u></div><b>27.2%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:87.6%" title="Wellington: 49.5%"></u></div><b>53.8%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:3.2%"></i><u style="left:6.5%" title="Wellington: 3.7%"></u></div><b>1.8%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:12.2%"></i><u style="left:27.4%" title="Wellington: 15.5%"></u></div><b>6.9%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:3.7%"></i><u style="left:4.2%" title="Wellington: 2.4%"></u></div><b>2.1%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:14.0%"></i><u style="left:14.7%" title="Wellington: 8.3%"></u></div><b>7.9%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.6%"></i><u style="left:2.8%" title="Wellington: 1.6%"></u></div><b>0.9%</b></div><div class="key"><u></u>Wellington average</div></div>
 <h2>Nearby in South Wairarapa District</h2>
 <ul class="links"><li><a href="/wellington/aorangi-forest/">Aorangi Forest</a></li><li><a href="/wellington/featherston/">Featherston</a></li><li><a href="/wellington/greytown/">Greytown</a></li><li><a href="/wellington/kahutara/">Kahutara</a></li><li><a href="/wellington/tauherenikau/">Tauherenikau</a></li></ul>
 

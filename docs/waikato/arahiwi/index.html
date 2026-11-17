@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Waikato", "item": "https://population.co.nz/waikato/"}, {"@type": "ListItem", "position": 3, "name": "Arahiwi", "item": "https://population.co.nz/waikato/arahiwi/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#waikato/arahiwi" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/waikato/">Waikato</a> › Arahiwi</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/waikato/">Waikato</a> › Arahiwi</nav>
 <h1>Arahiwi population and demographics</h1>
-<p>Arahiwi is a statistical area in Rotorua District, Waikato. At the 2023 Census it had <strong>144</strong>
-usually resident people (-7.7% since 2018). It is part of the wider Rotorua District South area.</p>
-<a class="cta" href="/#waikato/arahiwi">Open Arahiwi on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>144</strong></div><div class="card"><span>Population 2018</span><strong>156</strong></div><div class="card"><span>Population 2013</span><strong>177</strong></div><div class="card"><span>Median age</span><strong>32.8</strong></div><div class="card"><span>Median personal income</span><strong>$43,100</strong></div><div class="card"><span>Median household income</span><strong>$95,100</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>7.7%</strong></div><div class="card"><span>Unemployment rate</span><strong>0.0%</strong></div><div class="card"><span>Born overseas</span><strong>12.5%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>7</strong></div></div>
+<p class="where">Rotorua District · Waikato · part of the wider Rotorua District South area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">144</span><span class="chip">-7.7% since 2018</span></div>
+    <div class="trend"><div><b>177</b><i style="height:70%"></i><span>2013</span></div><div><b>156</b><i style="height:62%"></i><span>2018</span></div><div><b>144</b><i style="height:57%"></i><span>2023</span></div></div>
+    <p class="lead">Arahiwi is in Rotorua District, Waikato. Its population fell 7.7% between the 2018 and 2023 censuses. The median age is 32.8, compared with 37.9 across Waikato.</p>
+    <a class="cta" href="/#waikato/arahiwi">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 316 406" role="img" fill-rule="evenodd"><path class="a" d="M169 132 165 134 164 136 162 135 162 141 159 143 157 144 155 146 153 147 151 149 149 151 144 149 142 150 141 148 142 144 144 143 140 142 139 136 137 135 135 136 132 125 130 127 126 127 124 118 110 124 106 128 100 135 98 139 96 143 84 168 82 172 80 173 88 176 75 178 76 180 78 179 78 182 81 182 83 183 86 183 88 184 89 186 91 187 93 188 92 191 91 193 88 194 88 197 89 199 87 202 83 205 81 207 78 208 75 207 72 208 70 210 66 210 64 213 60 214 58 216 55 217 53 219 50 222 48 223 47 226 47 229 45 230 43 232 41 234 40 237 39 239 37 240 35 241 32 242 30 244 28 245 25 246 26 248 27 251 28 254 29 256 28 259 26 261 29 262 32 262 36 261 38 262 42 265 44 266 46 267 47 269 49 270 51 273 52 276 55 278 58 278 60 279 63 277 65 280 67 281 69 282 72 282 76 281 79 282 82 284 84 286 86 288 88 292 89 294 89 297 91 298 92 300 94 302 93 304 94 307 95 311 95 314 95 317 96 319 98 320 132 301 143 293 148 289 159 266 164 258 174 249 177 247 194 234 196 230 202 233 205 230 207 229 208 227 208 224 211 225 212 222 209 220 210 218 212 217 215 217 232 213 233 210 234 208 235 206 233 203 230 200 228 198 226 196 224 194 223 191 220 189 218 187 217 185 216 183 213 183 212 181 211 179 209 175 208 173 207 171 208 169 207 167 204 167 201 167 200 159 198 157 196 156 195 154 192 152 190 151 189 148 188 146 187 143 184 142 182 139 179 138 178 135 174 133 172 132 169 132Z"/><path class="a" d="M311 274 305 266 297 256 292 249 289 241 286 241 283 240 279 240 276 240 276 236 277 234 278 231 278 220 277 218 274 214 272 212 274 210 272 209 271 207 269 208 266 207 264 209 260 211 258 213 256 215 254 216 252 217 250 216 248 215 245 215 243 214 241 212 240 210 238 209 236 207 235 205 234 208 233 210 232 213 216 217 212 215 210 217 209 219 212 222 211 224 208 224 208 227 207 229 205 230 202 233 196 230 194 233 177 247 174 249 164 258 159 266 148 289 143 293 132 301 98 322 97 326 97 330 98 333 99 337 101 340 103 343 105 342 109 344 111 345 113 347 112 350 112 353 113 355 114 357 115 359 116 361 118 362 121 362 123 361 127 362 130 366 133 366 135 364 139 363 143 362 145 365 148 364 149 361 151 360 154 358 155 356 158 354 160 355 162 354 164 351 167 352 168 350 171 348 172 346 173 344 175 341 176 339 179 338 181 337 185 337 187 339 189 338 191 339 194 342 194 345 195 347 197 346 198 348 199 350 202 351 203 353 201 354 199 355 200 357 199 359 196 363 195 365 196 367 195 370 193 371 190 374 191 376 189 375 188 377 190 379 191 383 189 387 224 400 232 376 240 353 245 355 248 356 250 357 254 358 256 359 258 360 263 362 277 368 281 369 282 371 284 372 289 371 294 373 294 369 293 361 294 356 297 342 300 331 301 323 304 314 308 297 311 274Z"/><path class="on" d="M64 94 63 92 62 89 60 86 60 83 59 80 59 77 58 75 58 72 57 69 57 66 58 64 56 62 56 47 52 48 51 46 49 42 50 39 52 36 56 37 56 25 56 13 56 7 51 4 48 2 44 0 41 6 37 13 35 19 31 26 23 42 14 63 10 69 0 75 2 77 20 77 23 78 24 75 29 75 29 79 29 88 29 96 45 96 46 94 64 94Z"/></svg><figcaption>Arahiwi within Rotorua District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$43,100</strong><em>Waikato $42,400</em></div><div class="card"><span>Median household income</span><strong>$95,100</strong><em>Waikato $93,500</em></div><div class="card"><span>Median age</span><strong>32.8</strong><em>Waikato 37.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>7.7%</strong><em>Waikato 22.1%</em></div><div class="card"><span>Unemployment rate</span><strong>0.0%</strong><em>Waikato 4.6%</em></div><div class="card"><span>Born overseas</span><strong>12.5%</strong><em>Waikato 21.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>7 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>61.8%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$200</strong></div><div class="card"><span>Stand-alone houses</span><strong>100.0%</strong></div><div class="card"><span>Crowded households</span><strong>6.2%</strong></div><div class="card"><span>Damp homes</span><strong>15.4%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>87.5%</strong></div><div class="card"><span>Māori</span><strong>31.2%</strong></div><div class="card"><span>Pacific</span><strong>4.2%</strong></div><div class="card"><span>Asian</span><strong>2.1%</strong></div><div class="card"><span>Other</span><strong>2.1%</strong></div><div class="card"><span>MELAA</span><strong>0.0%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>61.8%</strong><em>Waikato 52.1%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$200</strong><em>Waikato $420</em></div><div class="card"><span>Stand-alone houses</span><strong>100.0%</strong><em>Waikato 83.9%</em></div><div class="card"><span>Crowded households</span><strong>6.2%</strong><em>Waikato 5.7%</em></div><div class="card"><span>Damp homes</span><strong>15.4%</strong><em>Waikato 17.7%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:34.7%"></i><u style="left:42.0%" title="Waikato: 20.2%"></u></div><b>16.7%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:52.0%"></i><u style="left:38.9%" title="Waikato: 18.7%"></u></div><b>25.0%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:91.3%" title="Waikato: 43.9%"></u></div><b>45.8%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:26.0%"></i><u style="left:36.0%" title="Waikato: 17.3%"></u></div><b>12.5%</b></div><div class="key"><u></u>Waikato average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:78.0%" title="Waikato: 71.7%"></u></div><b>87.5%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:34.0%"></i><u style="left:27.4%" title="Waikato: 25.2%"></u></div><b>31.2%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:4.6%"></i><u style="left:5.7%" title="Waikato: 5.2%"></u></div><b>4.2%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:2.3%"></i><u style="left:13.3%" title="Waikato: 12.2%"></u></div><b>2.1%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.3%"></i><u style="left:1.2%" title="Waikato: 1.1%"></u></div><b>2.1%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.0%"></i><u style="left:1.5%" title="Waikato: 1.4%"></u></div><b>0.0%</b></div><div class="key"><u></u>Waikato average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:49.3%"></i><u style="left:24.9%" title="Waikato: 18.5%"></u></div><b>36.7%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:76.2%"></i><u style="left:95.2%" title="Waikato: 70.9%"></u></div><b>56.7%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:9.0%"></i><u style="left:4.6%" title="Waikato: 3.4%"></u></div><b>6.7%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:4.4%"></i><u style="left:1.6%" title="Waikato: 1.2%"></u></div><b>3.3%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:0.0%"></i><u style="left:1.6%" title="Waikato: 1.2%"></u></div><b>0.0%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:0.0%"></i><u style="left:4.4%" title="Waikato: 3.3%"></u></div><b>0.0%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.0%"></i><u style="left:1.9%" title="Waikato: 1.4%"></u></div><b>0.0%</b></div><div class="key"><u></u>Waikato average</div></div>
 <h2>Nearby in Rotorua District</h2>
 <ul class="links"><li><a href="/waikato/golden-springs/">Golden Springs</a></li><li><a href="/waikato/ngakuru/">Ngakuru</a></li></ul>
 

@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Nelson", "item": "https://population.co.nz/nelson/"}, {"@type": "ListItem", "position": 3, "name": "Nelson Central-Trafalgar", "item": "https://population.co.nz/nelson/nelson-central-trafalgar/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#nelson/nelson-central-trafalgar" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/nelson/">Nelson</a> › Nelson Central-Trafalgar</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/nelson/">Nelson</a> › Nelson Central-Trafalgar</nav>
 <h1>Nelson Central-Trafalgar population and demographics</h1>
-<p>Nelson Central-Trafalgar is a statistical area in Nelson City, Nelson. At the 2023 Census it had <strong>660</strong>
-usually resident people (-2.2% since 2018). It is part of the wider Nelson Centre area.</p>
-<a class="cta" href="/#nelson/nelson-central-trafalgar">Open Nelson Central-Trafalgar on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>660</strong></div><div class="card"><span>Population 2018</span><strong>675</strong></div><div class="card"><span>Population 2013</span><strong>579</strong></div><div class="card"><span>Median age</span><strong>40.4</strong></div><div class="card"><span>Median personal income</span><strong>$34,500</strong></div><div class="card"><span>Median household income</span><strong>$64,000</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>28.2%</strong></div><div class="card"><span>Unemployment rate</span><strong>9.0%</strong></div><div class="card"><span>Born overseas</span><strong>40.0%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>9</strong></div></div>
+<p class="where">Nelson City · Nelson · part of the wider Nelson Centre area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">660</span><span class="chip">-2.2% since 2018</span></div>
+    <div class="trend"><div><b>579</b><i style="height:60%"></i><span>2013</span></div><div><b>675</b><i style="height:70%"></i><span>2018</span></div><div><b>660</b><i style="height:68%"></i><span>2023</span></div></div>
+    <p class="lead">Nelson Central-Trafalgar is in Nelson City, Nelson. Its population fell 2.2% between the 2018 and 2023 censuses. The median age is 40.4, compared with 43.0 across Nelson.</p>
+    <a class="cta" href="/#nelson/nelson-central-trafalgar">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 362" role="img" fill-rule="evenodd"><path class="a" d="M86 229 83 231 80 231 80 234 80 238 82 237 84 239 86 240 88 239 87 237 91 236 92 233 90 232 87 233 86 229Z"/><path class="a" d="M38 297 38 293 33 287 31 286 30 284 33 281 29 278 24 280 20 284 31 297 38 297Z"/><path class="a" d="M84 356 87 356 90 356 92 355 95 353 97 352 100 352 102 351 103 349 106 349 113 348 116 347 118 342 120 339 122 336 131 322 134 314 146 303 160 297 170 291 176 283 177 280 178 277 177 275 178 273 180 270 181 267 180 261 181 259 180 257 179 253 177 249 178 246 183 242 185 239 187 236 189 234 193 231 194 229 196 227 196 224 197 222 199 221 201 218 204 216 206 214 208 213 210 211 212 208 214 206 215 204 218 202 219 200 221 198 221 195 221 190 223 188 224 185 226 183 230 181 232 179 234 177 238 175 240 174 243 174 247 173 248 171 251 171 254 170 257 167 258 164 259 162 259 158 258 155 261 153 264 151 266 152 270 151 272 148 274 147 277 144 279 145 281 146 283 145 287 146 288 144 290 145 295 144 297 142 300 138 301 135 302 131 302 128 302 125 304 121 305 118 306 114 305 112 306 110 305 106 304 103 306 101 307 99 306 97 305 93 305 90 304 88 305 85 306 83 306 80 305 78 305 73 307 71 309 69 310 67 311 64 312 62 313 60 312 57 311 54 312 51 313 48 315 45 317 42 318 39 318 36 317 34 316 32 315 29 317 25 319 22 320 20 319 15 318 13 319 9 316 0 314 5 313 9 312 12 310 13 308 14 307 16 303 15 301 14 299 13 298 15 297 18 296 20 295 22 294 24 294 27 292 28 291 25 289 26 287 27 287 30 288 32 289 35 287 38 285 40 283 41 283 44 281 46 279 48 276 48 274 49 272 52 268 54 265 54 263 53 260 53 258 57 256 54 254 55 253 57 253 60 250 63 249 67 250 70 249 75 250 79 248 83 248 87 246 89 244 92 243 94 240 95 238 99 237 101 236 103 233 105 232 107 230 109 225 111 220 112 216 112 212 113 205 114 200 114 197 114 199 115 203 115 205 114 208 114 212 114 215 114 217 113 219 114 215 118 214 120 211 120 208 120 205 118 204 120 202 119 200 122 199 124 196 125 194 123 191 123 193 124 194 126 190 129 187 129 185 127 184 123 181 121 179 119 176 117 175 114 179 112 182 114 184 116 184 119 187 120 190 119 191 117 194 115 197 116 195 114 195 111 196 109 195 107 196 105 195 103 194 101 193 98 192 95 193 93 191 90 189 92 187 91 185 90 182 89 179 88 177 90 175 91 174 95 175 98 175 101 176 103 177 105 178 107 179 110 177 113 174 112 172 111 170 109 167 109 166 111 165 113 163 115 161 117 158 119 156 121 154 123 149 125 145 126 143 129 141 132 140 134 138 137 135 139 131 142 128 144 124 146 122 148 120 149 116 151 112 152 109 155 106 157 104 158 109 171 110 174 108 175 107 178 110 181 109 183 108 186 107 188 112 193 111 195 118 200 116 204 116 207 115 209 114 211 112 209 109 208 108 206 107 204 106 206 104 207 104 210 103 212 100 212 98 214 96 215 93 214 90 217 87 222 84 225 84 228 86 229 86 233 90 232 92 233 91 235 89 237 88 239 86 240 84 239 83 246 82 250 84 252 86 248 91 251 93 252 91 257 89 265 87 269 82 279 77 276 72 278 72 281 71 284 73 289 71 292 68 293 64 295 61 295 60 291 58 290 56 289 46 298 44 299 45 301 41 301 38 301 38 304 35 306 33 308 30 306 27 306 26 308 26 311 25 313 23 314 22 316 27 322 33 323 33 326 32 328 36 334 38 333 39 330 42 329 45 328 47 326 46 330 47 335 49 337 50 340 52 344 54 345 57 344 61 343 63 342 65 341 67 343 84 356Z"/><path class="a" d="M49 237 45 237 41 236 38 236 36 238 34 241 33 244 35 245 37 247 34 249 36 251 38 247 43 250 45 244 47 239 49 237Z"/><path class="a" d="M54 225 53 223 52 226 54 225ZM69 227 67 225 65 223 64 221 60 223 57 228 59 229 62 229 66 230 68 229 69 227Z"/><path class="a" d="M111 195 112 193 107 189 108 186 109 183 110 181 106 179 102 182 101 188 111 195Z"/><path class="a" d="M80 220 78 221 76 222 74 221 71 222 73 220 74 218 74 211 71 211 73 214 72 220 71 223 70 221 71 213 69 212 67 213 70 215 69 217 66 216 65 219 64 217 62 220 60 223 63 221 65 223 67 224 69 227 70 224 74 222 78 221 80 220Z"/><path class="a" d="M66 230 62 229 59 230 57 228 54 231 53 233 55 234 54 237 60 237 63 239 68 232 66 230Z"/><path class="a" d="M42 273 46 270 45 267 47 266 44 266 44 263 43 261 40 264 36 271 38 272 41 273Z"/><path class="a" d="M111 195 101 188 99 192 99 196 97 205 95 208 88 211 86 213 84 215 81 218 84 218 85 221 87 222 90 217 93 214 95 215 98 214 100 212 102 213 104 210 103 208 106 206 107 204 108 206 109 208 112 209 114 211 115 209 116 207 116 204 118 200 112 196Z"/><path class="a" d="M63 239 60 237 54 237 52 240 51 243 51 247 59 253 59 249 60 245 62 240Z"/><path class="a" d="M1 264 1 269 1 266ZM35 268 34 266 30 263 29 261 27 262 22 262 17 262 15 263 13 265 16 264 19 263 24 263 23 265 29 271 32 271 35 268ZM9 262 10 260 8 262Z"/><path class="a" d="M54 237 55 234 53 233 51 235 49 237 47 239 45 244 44 251 42 253 42 256 44 257 46 258 48 261 53 259 56 259 59 254 52 248 51 245 52 242 54 237Z"/><path class="a" d="M87 222 85 221 84 218 82 219 80 220 78 221 74 222 74 228 76 227 78 229 80 231 83 231 85 229 84 225 87 222Z"/><path class="a" d="M43 261 42 259 43 257 40 259 38 260 36 261 32 261 29 262 34 266 35 268 36 271 40 264 43 261Z"/><path class="a" d="M23 267 21 270 19 272 18 274 22 277 24 278 28 278 29 276 31 273 32 271 30 270 23 267Z"/><path class="a" d="M65 239 63 238 62 240 60 244 59 249 59 253 67 242 65 239Z"/><path class="a" d="M80 234 74 234 71 234 68 235 65 239 68 241 71 245 74 246 76 243 76 240 78 238 80 234Z"/><path class="a" d="M74 246 72 244 67 242 59 253 57 258 57 261 60 264 62 265 64 268 66 267 68 264 71 266 72 264 74 263 69 260 67 258 70 257 72 254 73 251 73 247Z"/><path class="a" d="M36 271 35 268 32 271 31 273 29 276 33 281 30 284 32 285 32 288 37 292 38 297 46 298 56 290 59 290 60 294 60 291 58 288 56 284 52 281 48 277 44 276 42 273 40 272 36 271Z"/><path class="a" d="M57 258 54 259 49 261 46 258 44 257 42 259 43 261 45 262 44 265 47 266 45 267 46 269 43 272 44 276 48 277 52 281 56 284 57 287 60 290 60 294 64 295 66 293 71 292 73 289 71 284 72 281 72 278 75 276 72 275 71 273 68 272 67 270 68 268 66 267 64 268 62 265 60 264 57 261 58 259Z"/><path class="a" d="M26 308 25 305 25 302 23 303 22 301 19 295 16 292 13 291 11 293 20 306 22 308 23 310 23 314 25 313 26 311 26 308Z"/><path class="a" d="M84 239 82 237 80 239 78 238 76 240 76 243 74 246 72 250 72 254 70 255 67 258 69 260 74 263 72 264 71 266 68 264 67 267 67 270 68 272 71 273 72 275 75 276 82 279 87 269 89 265 92 258 93 252 91 251 86 248 84 252 82 250 83 248 84 239Z"/><path class="on" d="M80 231 79 229 76 227 74 228 74 223 70 224 69 227 68 229 66 230 68 232 63 238 65 239 68 235 70 233 71 236 73 234 80 234 80 230Z"/></svg><figcaption>Nelson Central-Trafalgar within Nelson City</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$34,500</strong><em>Nelson $39,400</em></div><div class="card"><span>Median household income</span><strong>$64,000</strong><em>Nelson $83,700</em></div><div class="card"><span>Median age</span><strong>40.4</strong><em>Nelson 43.0</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>28.2%</strong><em>Nelson 26.9%</em></div><div class="card"><span>Unemployment rate</span><strong>9.0%</strong><em>Nelson 3.4%</em></div><div class="card"><span>Born overseas</span><strong>40.0%</strong><em>Nelson 26.5%</em></div><div class="card"><span>NZDep2023 decile</span><strong>9 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>34.7%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$400</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$470</strong></div><div class="card"><span>Stand-alone houses</span><strong>31.6%</strong></div><div class="card"><span>Crowded households</span><strong>5.5%</strong></div><div class="card"><span>Damp homes</span><strong>10.8%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>70.0%</strong></div><div class="card"><span>Asian</span><strong>18.6%</strong></div><div class="card"><span>Māori</span><strong>12.7%</strong></div><div class="card"><span>Pacific</span><strong>3.6%</strong></div><div class="card"><span>MELAA</span><strong>2.3%</strong></div><div class="card"><span>Other</span><strong>1.4%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>34.7%</strong><em>Nelson 58.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$400</strong><em>Nelson $420</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$470</strong><em>Nelson $575</em></div><div class="card"><span>Stand-alone houses</span><strong>31.6%</strong><em>Nelson 78.5%</em></div><div class="card"><span>Crowded households</span><strong>5.5%</strong><em>Nelson 4.0%</em></div><div class="card"><span>Damp homes</span><strong>10.8%</strong><em>Nelson 13.9%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:19.6%"></i><u style="left:34.2%" title="Nelson: 16.6%"></u></div><b>9.5%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:53.4%"></i><u style="left:32.2%" title="Nelson: 15.6%"></u></div><b>25.9%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:93.8%"></i><u style="left:95.2%" title="Nelson: 46.2%"></u></div><b>45.5%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:38.3%"></i><u style="left:44.5%" title="Nelson: 21.6%"></u></div><b>18.6%</b></div><div class="key"><u></u>Nelson average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:78.7%"></i><u style="left:95.2%" title="Nelson: 84.7%"></u></div><b>70.0%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:20.9%"></i><u style="left:9.7%" title="Nelson: 8.6%"></u></div><b>18.6%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:14.3%"></i><u style="left:13.4%" title="Nelson: 11.9%"></u></div><b>12.7%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:4.0%"></i><u style="left:3.1%" title="Nelson: 2.8%"></u></div><b>3.6%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:2.6%"></i><u style="left:1.6%" title="Nelson: 1.4%"></u></div><b>2.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.6%"></i><u style="left:1.5%" title="Nelson: 1.3%"></u></div><b>1.4%</b></div><div class="key"><u></u>Nelson average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:23.2%"></i><u style="left:22.0%" title="Nelson: 14.9%"></u></div><b>15.7%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:62.2%"></i><u style="left:95.2%" title="Nelson: 64.5%"></u></div><b>42.1%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:3.7%"></i><u style="left:4.4%" title="Nelson: 3.0%"></u></div><b>2.5%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:1.2%"></i><u style="left:1.8%" title="Nelson: 1.2%"></u></div><b>0.8%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:9.7%"></i><u style="left:12.0%" title="Nelson: 8.1%"></u></div><b>6.6%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:42.7%"></i><u style="left:9.6%" title="Nelson: 6.5%"></u></div><b>28.9%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:3.7%"></i><u style="left:3.0%" title="Nelson: 2.0%"></u></div><b>2.5%</b></div><div class="key"><u></u>Nelson average</div></div>
 <h2>Nearby in Nelson City</h2>
 <ul class="links"><li><a href="/nelson/aldinga/">Aldinga</a></li><li><a href="/nelson/atawhai/">Atawhai</a></li><li><a href="/nelson/britannia/">Britannia</a></li><li><a href="/nelson/broadgreen-monaco/">Broadgreen-Monaco</a></li><li><a href="/nelson/daelyn/">Daelyn</a></li><li><a href="/nelson/enner-glynn/">Enner Glynn</a></li><li><a href="/nelson/grampians/">Grampians</a></li><li><a href="/nelson/maitai/">Maitai</a></li><li><a href="/nelson/maitlands/">Maitlands</a></li><li><a href="/nelson/marybank/">Marybank</a></li><li><a href="/nelson/nayland/">Nayland</a></li><li><a href="/nelson/nelson-rural/">Nelson Rural</a></li><li><a href="/nelson/omaio/">Omaio</a></li><li><a href="/nelson/port-nelson/">Port Nelson</a></li><li><a href="/nelson/rutherford/">Rutherford</a></li><li><a href="/nelson/suffolk/">Suffolk</a></li><li><a href="/nelson/tahuna-hills/">Tahuna Hills</a></li><li><a href="/nelson/the-brook/">The Brook</a></li><li><a href="/nelson/the-wood/">The Wood</a></li><li><a href="/nelson/toi-toi/">Toi Toi</a></li><li><a href="/nelson/tahunanui/">Tāhunanui</a></li><li><a href="/nelson/victory/">Victory</a></li><li><a href="/nelson/washington/">Washington</a></li></ul>
 

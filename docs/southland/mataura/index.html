@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Southland", "item": "https://population.co.nz/southland/"}, {"@type": "ListItem", "position": 3, "name": "Mataura", "item": "https://population.co.nz/southland/mataura/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#southland/mataura" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/southland/">Southland</a> › Mataura</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/southland/">Southland</a> › Mataura</nav>
 <h1>Mataura population and demographics</h1>
-<p>Mataura is a statistical area in Gore District, Southland. At the 2023 Census it had <strong>1,650</strong>
-usually resident people (+1.3% since 2018). It is part of the wider Gore District Other area.</p>
-<a class="cta" href="/#southland/mataura">Open Mataura on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,650</strong></div><div class="card"><span>Population 2018</span><strong>1,629</strong></div><div class="card"><span>Population 2013</span><strong>1,509</strong></div><div class="card"><span>Median age</span><strong>40.5</strong></div><div class="card"><span>Median personal income</span><strong>$36,300</strong></div><div class="card"><span>Median household income</span><strong>$64,900</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>6.1%</strong></div><div class="card"><span>Unemployment rate</span><strong>6.2%</strong></div><div class="card"><span>Born overseas</span><strong>9.5%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>9</strong></div></div>
+<p class="where">Gore District · Southland · part of the wider Gore District Other area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,650</span><span class="chip">+1.3% since 2018</span></div>
+    <div class="trend"><div><b>1,509</b><i style="height:64%"></i><span>2013</span></div><div><b>1,629</b><i style="height:69%"></i><span>2018</span></div><div><b>1,650</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Mataura is in Gore District, Southland. Its population grew 1.3% between the 2018 and 2023 censuses. The median age is 40.5, compared with 40.1 across Southland.</p>
+    <a class="cta" href="/#southland/mataura">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 277 406" role="img" fill-rule="evenodd"><path class="a" d="M137 235 134 235 132 232 129 230 127 233 127 236 124 235 124 241 128 241 131 242 131 239 133 238 134 236 137 238 138 236Z"/><path class="a" d="M128 242 125 241 122 241 121 243 119 242 116 246 114 249 116 252 117 255 128 254 128 242Z"/><path class="a" d="M165 3 163 2 161 0 156 1 153 2 150 4 147 4 145 9 144 12 143 15 141 17 140 20 139 22 137 25 135 28 133 29 132 31 130 35 103 34 78 34 78 38 73 46 72 50 71 52 68 58 65 66 64 68 67 82 69 84 73 86 74 88 77 91 62 91 62 94 61 96 60 98 59 100 58 102 57 104 56 109 56 112 57 114 62 115 61 117 62 119 62 122 64 125 64 128 63 130 64 132 66 134 69 137 69 140 71 141 72 143 71 145 72 148 71 150 70 152 71 154 69 156 67 155 65 154 63 152 61 154 58 154 55 154 52 154 49 154 47 155 47 164 47 169 49 166 51 164 54 165 55 163 57 162 60 161 63 161 65 162 67 163 69 164 71 167 72 169 74 170 76 172 78 173 80 172 83 171 85 170 89 170 90 172 91 174 95 174 95 178 97 179 99 178 102 176 104 177 106 178 109 180 111 179 113 178 115 179 116 181 116 184 118 185 119 183 121 185 120 188 117 191 116 193 115 195 117 196 120 197 121 199 122 206 124 207 124 210 123 212 124 214 123 216 124 218 125 220 127 221 129 222 132 222 134 224 133 226 134 228 144 228 154 228 155 230 156 232 158 234 160 233 162 232 171 235 174 236 178 237 180 240 184 242 187 242 192 242 192 248 192 251 191 266 189 268 185 268 181 268 178 268 177 270 175 271 173 274 175 275 180 275 183 276 186 276 189 276 192 276 195 277 199 276 203 275 207 274 209 273 210 271 211 266 213 268 216 270 219 272 224 274 226 275 229 276 231 277 233 275 235 273 237 272 236 270 238 268 239 266 241 264 245 262 248 263 249 261 252 258 251 256 252 254 250 249 250 246 252 244 253 240 251 239 250 237 245 237 245 232 238 232 239 226 242 224 247 222 250 218 250 214 247 203 239 203 236 201 234 197 231 195 229 194 227 193 224 194 221 193 220 191 218 190 217 187 215 186 212 184 212 181 212 178 210 176 208 175 209 173 207 172 207 169 233 167 231 166 228 165 223 161 218 162 215 164 213 165 210 166 207 166 203 166 203 163 202 158 202 155 201 153 200 151 201 148 202 146 203 144 205 143 204 141 208 137 212 136 213 134 215 133 216 129 218 124 217 118 213 115 210 112 209 109 204 106 205 103 207 99 210 99 210 93 210 90 211 88 212 86 212 82 213 79 216 78 218 73 216 72 213 72 211 69 208 64 204 63 203 58 205 57 206 55 207 53 205 51 200 49 194 46 193 49 192 52 190 54 191 56 166 57 166 54 167 51 166 47 167 44 168 42 169 39 170 34 173 30 174 26 177 25 179 14 178 12 175 11 172 10 170 8 168 7 166 4Z"/><path class="a" d="M135 228 133 227 134 224 132 222 129 222 127 221 125 220 124 218 123 216 124 214 123 212 124 210 124 207 122 206 121 201 121 198 117 196 115 195 116 193 117 191 120 188 121 186 120 183 118 184 116 183 115 180 113 178 111 179 109 180 107 179 105 177 102 176 100 177 97 179 95 178 96 175 91 174 90 172 89 170 86 170 83 171 80 172 78 173 76 172 75 170 73 169 71 167 70 165 67 163 66 161 63 161 60 161 57 162 55 163 54 165 52 164 49 166 48 168 47 170 46 172 47 174 47 178 48 180 46 183 43 183 41 184 38 185 37 188 36 191 37 193 38 195 40 198 43 202 45 203 46 205 49 206 51 207 56 209 59 210 62 210 67 212 68 214 69 216 70 220 68 221 65 221 64 223 63 227 61 228 60 230 62 233 65 235 68 235 67 237 65 238 59 242 57 247 57 253 57 257 53 257 49 257 46 256 45 253 42 252 40 251 37 252 35 251 32 250 29 250 27 252 2 267 2 287 0 293 0 301 3 303 11 306 15 305 18 306 22 306 27 307 31 308 33 310 36 309 40 308 43 310 45 311 48 311 51 313 50 315 49 318 50 320 49 322 47 324 45 325 44 327 45 330 44 332 44 335 44 339 43 341 42 343 39 345 38 347 37 349 52 357 55 356 62 360 71 362 75 361 76 359 76 356 74 355 86 355 93 355 98 355 104 356 109 356 116 356 116 370 118 369 121 369 124 370 127 369 132 369 135 370 138 370 141 370 142 368 145 368 148 367 150 368 153 368 157 370 161 371 162 373 163 375 161 377 160 379 160 382 158 384 160 385 163 385 164 388 168 390 170 391 172 393 175 395 177 396 179 397 181 398 184 399 186 400 188 398 189 396 191 394 192 392 193 389 194 387 196 386 197 384 200 384 202 383 204 382 209 381 213 380 215 381 219 381 221 380 224 380 227 380 229 379 231 378 233 379 235 378 236 376 238 375 240 376 243 376 247 376 255 384 259 388 260 390 267 385 267 374 265 375 267 371 266 368 265 366 267 362 268 359 269 357 271 353 270 351 267 349 265 346 265 340 268 337 272 332 272 322 270 321 267 319 265 318 263 319 264 316 266 314 263 313 261 314 259 313 257 315 255 316 256 314 255 312 257 310 256 308 254 307 252 306 251 303 252 300 253 297 255 294 256 292 255 290 252 289 252 286 251 284 248 285 246 286 243 284 240 282 237 284 236 282 234 281 235 275 233 277 229 276 226 275 224 274 219 272 218 270 214 268 212 267 210 271 209 273 207 274 203 275 201 276 195 277 192 276 189 276 186 276 183 276 180 275 177 275 174 274 174 271 177 270 178 268 181 268 185 268 189 268 191 266 192 252 192 248 192 242 187 242 184 242 181 240 178 237 174 236 172 235 164 232 161 232 158 234 156 232 155 230 153 229 152 232 148 235 145 237 144 240 143 242 141 241 139 242 140 244 139 246 137 245 139 246 139 249 137 251 136 255 128 255 126 259 120 268 119 270 116 271 116 268 115 266 116 262 115 256 117 255 116 253 114 251 113 249 116 246 118 242 121 243 122 241 124 236 127 236 127 233 129 230 132 232 133 234 137 235 135 232 135 229ZM110 301 107 301 104 303 101 307 100 309 99 315 99 321 96 320 94 321 92 324 87 324 85 323 83 321 83 318 85 316 87 313 89 312 91 310 92 306 93 304 92 302 108 300 112 300 110 301Z"/><path class="a" d="M128 254 130 251 131 247 131 242 128 242 128 254Z"/><path class="a" d="M137 251 138 249 139 247 137 246 139 245 139 242 140 240 142 241 143 239 145 237 148 236 151 233 153 231 154 229 144 228 135 228 136 231 136 234 138 236 137 238 136 240 136 243 135 245 136 247 136 250Z"/><path class="a" d="M137 238 134 238 133 236 133 239 131 242 131 247 130 251 132 248 136 247 135 245 136 243 136 240 137 238Z"/><path class="a" d="M117 255 115 256 116 262 115 264 116 268 117 270 119 272 120 268 125 260 128 255 136 255 137 253 136 250 136 247 132 248 132 251 128 254 117 255Z"/><path class="on" d="M110 301 112 300 108 300 92 300 93 303 92 306 92 309 91 312 88 312 86 315 83 318 83 321 85 323 87 324 92 324 93 320 96 320 99 321 99 317 99 310 101 308 104 305 106 302 110 301Z"/></svg><figcaption>Mataura within Gore District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$36,300</strong><em>Southland $40,900</em></div><div class="card"><span>Median household income</span><strong>$64,900</strong><em>Southland $77,900</em></div><div class="card"><span>Median age</span><strong>40.5</strong><em>Southland 40.1</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>6.1%</strong><em>Southland 16.5%</em></div><div class="card"><span>Unemployment rate</span><strong>6.2%</strong><em>Southland 3.1%</em></div><div class="card"><span>Born overseas</span><strong>9.5%</strong><em>Southland 14.5%</em></div><div class="card"><span>NZDep2023 decile</span><strong>9 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>60.7%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$250</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$430</strong></div><div class="card"><span>Stand-alone houses</span><strong>91.0%</strong></div><div class="card"><span>Crowded households</span><strong>4.6%</strong></div><div class="card"><span>Damp homes</span><strong>21.1%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>74.7%</strong></div><div class="card"><span>Māori</span><strong>32.7%</strong></div><div class="card"><span>Pacific</span><strong>4.7%</strong></div><div class="card"><span>Asian</span><strong>3.1%</strong></div><div class="card"><span>Other</span><strong>1.3%</strong></div><div class="card"><span>MELAA</span><strong>0.5%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>60.7%</strong><em>Southland 59.6%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$250</strong><em>Southland $318</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$430</strong><em>Southland $500</em></div><div class="card"><span>Stand-alone houses</span><strong>91.0%</strong><em>Southland 88.7%</em></div><div class="card"><span>Crowded households</span><strong>4.6%</strong><em>Southland 3.0%</em></div><div class="card"><span>Damp homes</span><strong>21.1%</strong><em>Southland 14.8%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:39.4%"></i><u style="left:39.0%" title="Southland: 18.9%"></u></div><b>19.1%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:35.7%"></i><u style="left:35.5%" title="Southland: 17.2%"></u></div><b>17.3%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:93.6%" title="Southland: 45.4%"></u></div><b>46.2%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:36.3%"></i><u style="left:38.1%" title="Southland: 18.5%"></u></div><b>17.6%</b></div><div class="key"><u></u>Southland average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:84.6%"></i><u style="left:95.2%" title="Southland: 84.1%"></u></div><b>74.7%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:37.0%"></i><u style="left:19.0%" title="Southland: 16.8%"></u></div><b>32.7%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:5.3%"></i><u style="left:3.9%" title="Southland: 3.4%"></u></div><b>4.7%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:3.5%"></i><u style="left:8.0%" title="Southland: 7.1%"></u></div><b>3.1%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.5%"></i><u style="left:1.7%" title="Southland: 1.5%"></u></div><b>1.3%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.6%"></i><u style="left:1.1%" title="Southland: 1.0%"></u></div><b>0.5%</b></div><div class="key"><u></u>Southland average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:8.9%"></i><u style="left:19.6%" title="Southland: 17.0%"></u></div><b>7.7%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:81.7%" title="Southland: 70.8%"></u></div><b>82.5%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:5.1%"></i><u style="left:4.6%" title="Southland: 4.0%"></u></div><b>4.4%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:0.5%" title="Southland: 0.4%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:1.3%"></i><u style="left:2.0%" title="Southland: 1.7%"></u></div><b>1.1%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:4.2%"></i><u style="left:4.6%" title="Southland: 4.0%"></u></div><b>3.6%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.0%"></i><u style="left:2.4%" title="Southland: 2.1%"></u></div><b>0.0%</b></div><div class="key"><u></u>Southland average</div></div>
 <h2>Nearby in Gore District</h2>
 <ul class="links"><li><a href="/southland/east-gore/">East Gore</a></li><li><a href="/southland/gore-central/">Gore Central</a></li><li><a href="/southland/gore-main/">Gore Main</a></li><li><a href="/southland/gore-north/">Gore North</a></li><li><a href="/southland/gore-south/">Gore South</a></li><li><a href="/southland/gore-west/">Gore West</a></li><li><a href="/southland/waikaka/">Waikaka</a></li><li><a href="/southland/waimumu-kaiwera/">Waimumu-Kaiwera</a></li></ul>
 

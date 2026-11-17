@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Auckland", "item": "https://population.co.nz/auckland/"}, {"@type": "ListItem", "position": 3, "name": "Pinehill South", "item": "https://population.co.nz/auckland/pinehill-south/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#auckland/pinehill-south" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Pinehill South</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Pinehill South</nav>
 <h1>Pinehill South population and demographics</h1>
-<p>Pinehill South is a statistical area in Upper Harbour Local Board, Auckland. At the 2023 Census it had <strong>2,511</strong>
-usually resident people (+1.8% since 2018). It is part of the wider Pinehill area.</p>
-<a class="cta" href="/#auckland/pinehill-south">Open Pinehill South on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>2,511</strong></div><div class="card"><span>Population 2018</span><strong>2,466</strong></div><div class="card"><span>Population 2013</span><strong>2,316</strong></div><div class="card"><span>Median age</span><strong>36.9</strong></div><div class="card"><span>Median personal income</span><strong>$36,500</strong></div><div class="card"><span>Median household income</span><strong>$123,900</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>39.3%</strong></div><div class="card"><span>Unemployment rate</span><strong>3.8%</strong></div><div class="card"><span>Born overseas</span><strong>71.7%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>4</strong></div></div>
+<p class="where">Upper Harbour Local Board · Auckland · part of the wider Pinehill area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">2,511</span><span class="chip">+1.8% since 2018</span></div>
+    <div class="trend"><div><b>2,316</b><i style="height:65%"></i><span>2013</span></div><div><b>2,466</b><i style="height:69%"></i><span>2018</span></div><div><b>2,511</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Pinehill South is in Upper Harbour Local Board, Auckland. Its population grew 1.8% between the 2018 and 2023 censuses. The median age is 36.9, compared with 35.9 across Auckland.</p>
+    <a class="cta" href="/#auckland/pinehill-south">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 340" role="img" fill-rule="evenodd"><path class="a" d="M91 137 85 138 85 146 82 152 86 157 90 159 82 159 81 163 84 165 80 168 83 174 81 178 82 181 80 184 80 187 82 191 86 186 94 184 99 183 106 183 107 181 111 181 109 177 111 176 112 179 116 178 119 179 121 183 125 185 127 184 128 187 130 188 133 188 136 189 140 187 146 179 149 176 146 174 145 172 152 171 154 167 151 164 155 162 157 158 158 154 163 150 164 148 164 145 167 142 171 141 171 137 173 130 172 128 174 124 177 122 177 119 178 117 178 113 183 107 184 100 194 94 197 91 198 87 198 82 201 78 202 73 190 56 187 55 184 51 183 49 177 44 175 38 173 36 169 33 167 29 156 23 151 27 153 34 153 37 154 39 154 45 155 50 158 56 160 63 157 70 154 74 150 75 147 80 143 82 143 86 140 87 136 91 134 94 132 95 130 100 129 104 127 108 123 109 121 111 118 113 114 113 111 115 110 117 101 120 93 120 89 124 91 127 90 129 92 130 91 132 88 134 91 137Z"/><path class="a" d="M88 262 89 258 94 251 94 248 96 244 95 242 95 237 99 233 102 229 106 227 107 222 116 219 120 219 123 221 127 218 132 216 137 215 139 214 141 210 142 204 139 201 137 204 135 207 122 211 120 214 117 216 116 219 106 221 106 215 108 212 106 209 102 212 100 208 97 207 103 202 99 199 94 200 91 199 87 203 85 207 82 205 78 202 75 203 73 202 70 202 68 200 64 200 59 202 56 201 52 201 48 203 46 210 43 211 44 208 45 202 43 199 40 201 37 199 34 200 32 198 28 198 24 203 21 203 17 207 16 209 11 213 6 223 7 225 6 227 3 231 0 240 4 243 4 247 7 251 9 252 11 256 10 261 9 263 9 268 13 275 12 278 14 283 16 285 22 292 24 296 36 321 35 313 35 306 39 302 47 296 62 286 69 282 78 277 92 268 87 267 85 266 88 262Z"/><path class="a" d="M254 44 246 50 244 48 245 44 234 43 233 51 231 52 229 54 225 54 223 57 218 57 216 55 213 54 211 55 210 59 210 63 211 65 219 70 220 74 217 73 212 74 212 77 215 81 217 88 215 94 217 95 222 98 231 97 236 95 240 91 244 86 247 87 259 90 263 92 266 92 265 89 263 85 261 79 260 70 259 60 258 54 254 44Z"/><path class="a" d="M176 171 173 167 167 169 164 175 163 169 162 167 159 168 157 172 158 175 155 178 152 180 152 184 151 186 152 189 146 187 144 189 144 193 146 197 148 202 151 202 152 204 151 210 148 214 151 215 156 215 158 217 160 222 163 220 164 222 161 224 160 227 167 224 174 220 187 208 190 204 194 195 195 191 189 191 184 192 186 188 185 186 183 184 180 185 176 171Z"/><path class="a" d="M276 61 274 58 271 57 270 49 269 46 266 45 263 45 262 38 254 44 258 54 259 60 260 70 263 69 265 66 268 64 276 61Z"/><path class="a" d="M302 89 298 89 292 91 296 95 294 97 292 95 288 96 296 107 298 106 302 111 300 112 306 118 309 120 313 117 316 112 320 105 320 101 318 99 308 95 306 93 302 89Z"/><path class="a" d="M242 21 241 23 235 25 230 24 227 23 222 26 219 27 212 23 208 22 206 20 205 17 197 21 194 20 189 21 186 18 182 20 181 22 178 24 176 23 174 26 172 28 169 33 173 36 175 38 177 44 183 49 184 51 187 55 190 56 202 73 205 69 207 67 209 70 211 65 209 63 209 59 211 57 213 54 216 55 218 57 223 57 225 54 229 54 231 52 233 51 234 43 245 44 244 48 246 50 254 44 252 39 245 28 242 21Z"/><path class="a" d="M281 9 278 6 274 1 270 2 266 6 259 10 256 10 253 13 248 16 245 16 242 21 245 28 252 39 254 44 262 38 267 33 271 30 275 29 279 24 282 22 286 21 288 19 283 12 281 9Z"/><path class="a" d="M278 61 278 56 280 50 281 41 283 34 284 32 286 26 288 22 288 19 286 21 282 22 279 24 275 29 271 30 267 33 262 38 263 45 266 45 269 46 270 49 271 57 274 58 276 61Z"/><path class="a" d="M215 81 214 77 212 74 217 73 220 74 219 70 211 65 212 68 210 71 207 69 205 71 201 81 201 84 202 87 194 97 191 99 188 103 181 113 180 115 183 116 182 119 182 123 179 127 186 133 187 135 191 134 193 136 194 133 199 134 201 129 207 133 213 133 212 131 211 112 210 101 207 92 208 89 209 86 215 81Z"/><path class="a" d="M259 90 247 87 244 86 240 91 236 95 231 97 222 98 217 95 215 94 217 88 215 81 209 86 208 89 207 92 210 101 211 112 222 110 229 110 229 107 232 107 242 108 244 115 251 113 250 108 258 109 257 106 257 101 259 98 259 90Z"/><path class="a" d="M292 91 289 91 285 90 281 94 276 99 270 99 267 94 265 89 266 92 263 92 259 90 261 98 257 101 257 106 258 109 250 108 251 113 244 115 242 110 232 107 229 107 229 110 222 110 211 112 212 131 213 133 215 137 220 140 225 144 230 147 234 152 241 145 248 141 256 139 266 139 272 138 284 134 290 141 292 139 297 138 296 135 303 132 304 130 308 129 309 120 306 118 300 112 302 111 298 106 296 107 288 96 292 95 294 97 296 95 292 91Z"/><path class="a" d="M213 133 209 133 201 129 199 134 194 133 193 136 191 134 187 135 186 133 184 132 182 133 178 129 176 135 178 139 178 142 177 144 180 145 174 150 173 153 174 155 173 157 175 158 180 166 183 168 186 169 191 167 196 162 203 162 205 164 208 164 212 163 221 153 222 147 230 147 225 144 220 140 215 137 213 133Z"/><path class="a" d="M288 70 286 67 282 67 280 66 278 61 268 64 265 66 263 69 260 70 261 79 263 85 265 89 269 86 285 73 288 70Z"/><path class="a" d="M230 147 223 148 221 153 212 163 208 164 205 164 203 162 196 162 191 167 188 169 184 170 184 173 179 170 176 171 180 185 183 184 185 186 186 188 184 192 189 191 195 191 199 183 203 177 206 176 217 171 222 167 229 160 234 152 230 147Z"/><path class="a" d="M122 245 120 247 117 242 110 241 107 240 103 242 98 246 96 251 92 256 90 257 88 262 85 266 87 267 92 268 78 277 69 282 62 286 47 296 50 299 61 313 65 311 74 309 76 307 77 305 79 298 95 275 98 277 100 275 104 278 109 271 113 279 114 276 117 273 120 273 122 275 127 270 122 267 115 265 117 261 119 255 121 249 122 245Z"/><path class="a" d="M267 172 263 168 260 167 255 167 250 164 245 161 241 160 239 156 234 152 229 160 222 167 217 171 206 176 203 177 199 183 195 191 194 195 190 204 187 208 174 220 167 224 160 227 162 228 167 228 171 230 174 232 179 232 183 230 184 225 186 221 192 216 194 217 195 219 198 221 201 219 203 217 208 216 216 208 222 205 225 197 233 191 235 190 233 187 240 184 236 180 238 179 240 180 248 175 246 173 253 169 256 174 259 172 262 176 263 173 267 172Z"/><path class="a" d="M278 163 275 161 271 164 268 164 266 166 263 166 261 162 261 158 258 150 255 147 250 144 248 141 241 145 234 152 239 156 241 160 245 161 250 164 255 167 260 167 263 168 267 172 268 174 274 170 274 167 278 163Z"/><path class="a" d="M151 258 157 259 159 258 162 259 163 261 166 263 170 260 170 254 164 251 162 247 164 246 167 241 162 237 159 233 157 232 152 233 149 231 143 233 133 240 137 246 146 255 150 257Z"/><path class="a" d="M150 257 146 255 137 246 133 240 143 233 149 231 145 231 142 233 134 238 131 236 128 235 123 237 122 239 122 245 121 249 119 255 117 259 114 264 122 267 127 270 133 262 139 266 141 264 147 260 150 257Z"/><path class="a" d="M122 275 125 282 128 282 140 289 146 290 152 290 158 286 162 283 165 275 162 274 154 271 150 270 151 268 154 269 160 269 162 268 158 263 156 261 151 258 147 260 142 265 139 266 133 262 127 270 122 275Z"/><path class="a" d="M113 279 109 271 104 278 100 275 98 277 95 275 79 298 77 305 84 307 92 304 96 308 101 303 96 301 98 299 103 302 108 294 106 291 110 281 113 279Z"/><path class="a" d="M278 163 278 160 277 154 288 146 290 141 284 134 272 138 266 139 256 139 248 141 250 144 255 147 258 150 261 158 261 162 263 166 266 166 268 164 271 164 275 161 278 163Z"/><path class="a" d="M86 335 91 334 96 331 98 326 104 322 107 318 104 309 102 304 96 308 92 304 86 307 77 305 76 307 74 309 65 311 71 323 79 326 83 325 84 329 83 331 86 335Z"/><path class="on" d="M302 89 301 86 301 80 298 77 295 73 294 71 288 70 285 73 269 86 265 89 267 94 269 100 276 99 281 94 285 90 289 91 292 91 298 89 302 89Z"/></svg><figcaption>Pinehill South within Upper Harbour Local Board</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$36,500</strong><em>Auckland $44,800</em></div><div class="card"><span>Median household income</span><strong>$123,900</strong><em>Auckland $118,200</em></div><div class="card"><span>Median age</span><strong>36.9</strong><em>Auckland 35.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>39.3%</strong><em>Auckland 32.9%</em></div><div class="card"><span>Unemployment rate</span><strong>3.8%</strong><em>Auckland 4.8%</em></div><div class="card"><span>Born overseas</span><strong>71.7%</strong><em>Auckland 42.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>4 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>39.1%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$700</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$890</strong></div><div class="card"><span>Stand-alone houses</span><strong>82.9%</strong></div><div class="card"><span>Crowded households</span><strong>5.6%</strong></div><div class="card"><span>Damp homes</span><strong>15.3%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>Asian</span><strong>79.0%</strong></div><div class="card"><span>European</span><strong>18.9%</strong></div><div class="card"><span>MELAA</span><strong>2.9%</strong></div><div class="card"><span>Māori</span><strong>2.7%</strong></div><div class="card"><span>Pacific</span><strong>1.6%</strong></div><div class="card"><span>Other</span><strong>0.5%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>39.1%</strong><em>Auckland 44.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$700</strong><em>Auckland $540</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$890</strong><em>Auckland $655</em></div><div class="card"><span>Stand-alone houses</span><strong>82.9%</strong><em>Auckland 71.5%</em></div><div class="card"><span>Crowded households</span><strong>5.6%</strong><em>Auckland 8.8%</em></div><div class="card"><span>Damp homes</span><strong>15.3%</strong><em>Auckland 20.1%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:34.3%"></i><u style="left:36.8%" title="Auckland: 19.2%"></u></div><b>17.9%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:41.4%"></i><u style="left:40.0%" title="Auckland: 20.9%"></u></div><b>21.6%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:89.1%" title="Auckland: 46.5%"></u></div><b>49.7%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:20.3%"></i><u style="left:25.5%" title="Auckland: 13.3%"></u></div><b>10.6%</b></div><div class="key"><u></u>Auckland average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>Asian</span><div class="track"><i style="width:95.2%"></i><u style="left:37.7%" title="Auckland: 31.3%"></u></div><b>79.0%</b></div><div class="bar"><span>European</span><div class="track"><i style="width:22.8%"></i><u style="left:60.0%" title="Auckland: 49.8%"></u></div><b>18.9%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:3.5%"></i><u style="left:3.3%" title="Auckland: 2.7%"></u></div><b>2.9%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:3.3%"></i><u style="left:14.8%" title="Auckland: 12.3%"></u></div><b>2.7%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:1.9%"></i><u style="left:20.0%" title="Auckland: 16.6%"></u></div><b>1.6%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.6%"></i><u style="left:1.1%" title="Auckland: 0.9%"></u></div><b>0.5%</b></div><div class="key"><u></u>Auckland average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:25.9%"></i><u style="left:26.2%" title="Auckland: 18.1%"></u></div><b>17.9%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:93.8%" title="Auckland: 64.9%"></u></div><b>65.9%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:4.0%"></i><u style="left:5.3%" title="Auckland: 3.7%"></u></div><b>2.8%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:12.9%"></i><u style="left:11.3%" title="Auckland: 7.8%"></u></div><b>8.9%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:1.0%"></i><u style="left:1.3%" title="Auckland: 0.9%"></u></div><b>0.7%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:4.8%"></i><u style="left:4.8%" title="Auckland: 3.3%"></u></div><b>3.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.3%"></i><u style="left:1.7%" title="Auckland: 1.2%"></u></div><b>0.2%</b></div><div class="key"><u></u>Auckland average</div></div>
 <h2>Nearby in Upper Harbour Local Board</h2>
 <ul class="links"><li><a href="/auckland/albany-central/">Albany Central</a></li><li><a href="/auckland/albany-heights/">Albany Heights</a></li><li><a href="/auckland/albany-south/">Albany South</a></li><li><a href="/auckland/albany-west/">Albany West</a></li><li><a href="/auckland/fairview-heights/">Fairview Heights</a></li><li><a href="/auckland/greenhithe-east/">Greenhithe East</a></li><li><a href="/auckland/greenhithe-south/">Greenhithe South</a></li><li><a href="/auckland/greenhithe-west/">Greenhithe West</a></li><li><a href="/auckland/hobsonville/">Hobsonville</a></li><li><a href="/auckland/hobsonville-point-catalina-bay/">Hobsonville Point Catalina Bay</a></li><li><a href="/auckland/hobsonville-point-park/">Hobsonville Point Park</a></li><li><a href="/auckland/hobsonville-scott-point/">Hobsonville Scott Point</a></li><li><a href="/auckland/north-harbour/">North Harbour</a></li><li><a href="/auckland/oteha-east/">Oteha East</a></li><li><a href="/auckland/oteha-west/">Oteha West</a></li><li><a href="/auckland/pinehill-north/">Pinehill North</a></li><li><a href="/auckland/paremoremo-east/">Pāremoremo East</a></li><li><a href="/auckland/schnapper-rock/">Schnapper Rock</a></li><li><a href="/auckland/unsworth-heights-east/">Unsworth Heights East</a></li><li><a href="/auckland/unsworth-heights-west/">Unsworth Heights West</a></li><li><a href="/auckland/west-harbour-clearwater-cove/">West Harbour Clearwater Cove</a></li><li><a href="/auckland/west-harbour-luckens-point/">West Harbour Luckens Point</a></li><li><a href="/auckland/whenuapai/">Whenuapai</a></li><li><a href="/auckland/windsor-park/">Windsor Park</a></li></ul>
 

@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Canterbury", "item": "https://population.co.nz/canterbury/"}, {"@type": "ListItem", "position": 3, "name": "Winchmore-Wakanui", "item": "https://population.co.nz/canterbury/winchmore-wakanui/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#canterbury/winchmore-wakanui" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/canterbury/">Canterbury</a> › Winchmore-Wakanui</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/canterbury/">Canterbury</a> › Winchmore-Wakanui</nav>
 <h1>Winchmore-Wakanui population and demographics</h1>
-<p>Winchmore-Wakanui is a statistical area in Ashburton District, Canterbury. At the 2023 Census it had <strong>1,398</strong>
-usually resident people (-4.7% since 2018). It is part of the wider Ashburton District East area.</p>
-<a class="cta" href="/#canterbury/winchmore-wakanui">Open Winchmore-Wakanui on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,398</strong></div><div class="card"><span>Population 2018</span><strong>1,467</strong></div><div class="card"><span>Population 2013</span><strong>1,344</strong></div><div class="card"><span>Median age</span><strong>40.6</strong></div><div class="card"><span>Median personal income</span><strong>$49,900</strong></div><div class="card"><span>Median household income</span><strong>$94,700</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>18.1%</strong></div><div class="card"><span>Unemployment rate</span><strong>2.6%</strong></div><div class="card"><span>Born overseas</span><strong>21.7%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>4</strong></div></div>
+<p class="where">Ashburton District · Canterbury · part of the wider Ashburton District East area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,398</span><span class="chip">-4.7% since 2018</span></div>
+    <div class="trend"><div><b>1,344</b><i style="height:64%"></i><span>2013</span></div><div><b>1,467</b><i style="height:70%"></i><span>2018</span></div><div><b>1,398</b><i style="height:67%"></i><span>2023</span></div></div>
+    <p class="lead">Winchmore-Wakanui is in Ashburton District, Canterbury. Its population fell 4.7% between the 2018 and 2023 censuses. The median age is 40.6, compared with 39.3 across Canterbury.</p>
+    <a class="cta" href="/#canterbury/winchmore-wakanui">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 355" role="img" fill-rule="evenodd"><path class="a" d="M194 89 192 88 191 86 189 84 188 82 184 78 182 75 180 73 178 71 176 69 174 67 170 64 169 62 167 60 165 58 162 55 161 53 159 51 156 51 154 52 150 51 148 49 145 47 143 45 142 43 141 40 139 39 136 38 136 35 133 35 133 32 131 30 130 28 130 25 128 24 125 23 128 19 130 18 130 15 129 13 127 12 126 10 125 8 124 6 123 4 122 2 120 0 112 4 115 10 112 10 114 16 115 21 115 25 117 27 120 31 119 34 118 36 119 38 118 40 115 41 116 45 109 54 112 55 111 58 107 61 105 60 103 59 101 60 99 61 97 63 94 64 96 66 94 67 93 69 91 70 92 73 94 75 96 76 98 78 99 80 100 82 101 84 102 86 104 89 105 91 107 96 108 101 109 105 110 107 110 110 110 114 111 117 112 120 113 123 114 126 115 128 116 131 117 133 117 136 119 138 120 140 122 144 123 146 126 149 127 152 129 155 131 158 133 159 134 161 136 163 137 165 139 168 141 169 144 169 146 170 147 172 149 174 151 176 154 174 158 169 159 167 168 156 173 149 176 145 179 142 185 136 190 130 193 126 196 123 199 120 200 118 206 111 210 107 209 105 207 103 205 102 203 100 201 98 198 95 197 93 194 90ZM136 88 141 89 139 91 142 93 141 95 144 96 142 99 137 97 134 95 130 95 128 92 133 90 132 88 135 89Z"/><path class="a" d="M151 176 149 174 148 172 146 171 145 169 142 169 140 168 137 167 136 165 135 162 133 160 131 158 130 156 128 153 126 150 124 147 122 144 120 141 119 139 118 137 117 135 116 132 115 128 114 126 113 123 112 120 111 117 110 115 110 110 110 107 109 105 108 101 107 97 105 92 104 89 102 86 101 84 100 82 99 80 98 78 96 76 94 75 92 73 89 76 86 77 84 79 79 78 77 81 75 82 74 80 72 83 67 87 64 89 60 92 60 95 59 99 59 102 55 104 52 104 50 105 44 107 36 101 32 100 31 102 29 100 26 101 22 104 21 106 23 108 24 110 25 112 26 114 23 118 23 121 20 126 20 130 17 142 12 143 10 147 9 145 7 143 3 145 2 148 1 151 3 152 0 154 2 155 2 158 3 160 5 162 5 165 7 167 6 169 7 172 9 173 9 176 10 178 9 180 9 184 8 186 9 188 10 190 9 192 9 195 10 197 11 199 10 202 11 205 13 210 14 213 13 216 13 220 14 223 15 225 16 229 18 235 20 238 21 240 21 243 22 246 22 249 25 249 29 250 35 246 46 241 59 234 62 232 71 228 82 227 91 224 94 225 96 226 97 224 96 221 95 219 93 220 91 219 89 218 87 216 86 214 94 209 96 208 103 206 107 204 109 202 121 195 125 190 127 187 131 185 133 184 140 179 146 178 151 176Z"/><path class="a" d="M97 226 94 225 91 224 82 227 71 227 62 232 59 234 46 241 35 246 29 250 27 249 23 250 24 253 25 256 27 259 29 263 31 265 34 267 35 269 37 270 39 272 41 274 43 276 46 278 49 280 51 283 53 285 56 286 61 288 62 290 64 293 67 297 71 301 75 303 79 306 81 308 82 312 84 314 84 317 85 319 85 322 86 325 87 328 87 331 87 334 87 337 88 339 88 342 89 344 90 348 91 350 94 347 96 345 98 344 100 343 103 341 106 338 108 336 111 335 113 333 115 332 118 329 120 328 122 327 124 325 126 324 129 322 131 321 133 320 135 318 138 316 141 315 140 313 139 311 140 309 139 306 138 304 137 301 136 299 135 297 134 295 133 291 133 288 132 285 131 283 130 281 128 279 127 277 128 275 127 273 125 271 124 269 122 268 121 266 119 264 118 262 116 260 114 259 112 258 110 257 109 255 108 253 108 250 108 247 107 245 106 243 105 241 104 239 101 239 100 236 100 233 99 231 98 228 97 226Z"/><path class="a" d="M177 213 175 209 173 210 171 212 174 216 177 213Z"/><path class="a" d="M169 215 170 217 172 216 170 213 169 215Z"/><path class="a" d="M136 88 133 89 128 92 130 95 134 93 137 95 142 98 144 96 141 95 142 93 139 91 141 89 138 88 136 86Z"/><path class="a" d="M165 208 164 206 163 204 163 201 164 198 165 196 166 194 165 191 162 190 160 189 158 187 156 185 154 182 153 180 152 178 151 176 148 178 142 179 134 183 131 185 127 187 125 190 121 195 109 202 107 204 103 206 96 208 94 209 86 214 87 216 89 218 91 219 93 220 95 219 96 221 97 223 97 226 98 228 99 230 100 233 99 235 101 239 104 239 105 241 106 243 107 245 108 247 108 250 108 253 109 255 110 257 112 258 114 259 116 260 118 262 119 264 121 266 122 268 124 269 125 271 127 273 128 275 127 277 128 279 129 281 131 283 132 285 133 288 133 291 134 295 135 297 136 299 137 301 138 304 139 306 140 309 139 311 140 313 142 314 144 313 147 311 149 310 151 309 153 308 155 307 157 306 159 304 163 303 165 301 167 300 170 299 172 297 177 295 182 292 184 291 187 289 190 287 189 284 188 282 188 278 188 274 187 270 186 267 185 265 184 263 183 261 182 258 181 255 180 253 181 250 182 248 183 246 184 244 185 242 185 238 183 236 181 237 178 234 176 233 175 231 173 229 171 226 170 223 168 224 164 227 161 230 159 228 157 229 155 228 154 225 158 224 161 221 163 220 165 219 164 216 163 214 162 212 161 210 164 209Z"/><path class="a" d="M254 137 252 135 250 134 248 132 244 130 241 128 239 127 237 126 235 125 232 123 230 122 228 121 226 119 224 118 222 117 220 115 218 114 216 112 214 111 212 109 210 107 207 110 200 118 199 120 196 123 193 126 190 130 185 136 179 142 176 145 174 148 180 156 183 158 188 163 190 165 193 167 188 173 191 175 195 179 201 185 205 188 206 192 214 192 218 192 220 193 227 193 226 196 225 205 225 208 224 215 223 225 225 229 235 238 241 246 246 254 248 253 257 247 259 246 263 244 265 243 269 241 272 239 276 237 280 236 286 233 288 232 295 228 297 227 299 226 301 225 304 224 307 223 309 222 312 221 315 220 317 219 320 218 319 216 318 214 317 212 315 211 314 208 313 206 311 205 309 203 307 202 306 200 304 198 303 196 303 193 301 192 299 190 298 188 297 186 294 186 293 184 292 182 290 181 290 178 289 176 287 174 286 172 285 170 283 169 282 167 281 165 280 163 278 161 277 159 276 157 274 155 272 153 271 150 269 148 267 150 264 152 261 154 260 152 252 151 249 148 252 140 254 137Z"/><path class="a" d="M175 209 172 206 170 204 168 205 166 207 169 210 171 212 173 211 175 209Z"/><path class="a" d="M159 224 154 225 155 228 157 229 159 228 161 229 164 228 168 224 169 222 166 222 164 224 161 226 159 224Z"/><path class="a" d="M172 222 176 218 174 216 173 218 172 220Z"/><path class="a" d="M183 221 182 219 180 217 177 213 174 216 176 218 178 220 180 223 183 221Z"/><path class="a" d="M180 223 178 220 176 218 172 222 170 223 171 225 174 226 177 226 180 223Z"/><path class="a" d="M166 207 164 209 162 210 163 214 164 216 168 215 170 213 169 210 167 208Z"/><path class="a" d="M269 148 266 147 267 144 265 142 262 141 260 140 258 139 256 138 254 137 252 140 249 146 253 150 260 152 261 154 263 153 266 150 269 148Z"/><path class="a" d="M183 221 184 219 187 221 189 218 191 219 192 217 195 212 198 209 199 207 201 205 199 203 201 202 197 200 200 198 197 194 187 204 182 208 179 205 177 204 175 203 173 205 174 203 171 204 170 202 172 206 175 209 178 212 179 216 181 218 182 220Z"/><path class="a" d="M168 221 166 218 163 220 161 221 159 223 161 225 164 224 166 222 168 221Z"/><path class="a" d="M174 216 171 212 171 215 170 218 169 216 165 217 167 220 169 222 171 225 170 223 172 222 170 220 172 219 173 217Z"/><path class="on" d="M246 254 241 246 235 238 225 229 223 227 224 215 225 208 225 205 226 196 227 193 220 193 218 192 214 192 206 192 205 187 201 185 195 179 191 175 188 173 193 167 190 165 189 163 183 158 180 156 173 149 168 155 159 167 158 169 154 174 152 176 153 180 154 182 155 184 157 187 159 188 161 190 164 191 166 192 165 196 164 198 163 201 163 204 164 206 165 208 167 206 169 205 169 202 171 204 174 203 172 204 174 203 175 205 177 203 179 205 182 208 186 205 197 194 200 198 197 200 201 202 199 203 201 205 199 207 198 209 195 212 191 217 189 218 187 221 184 219 183 221 181 223 177 226 175 225 172 225 172 228 175 231 176 233 178 234 180 236 183 236 185 238 185 241 184 244 183 246 182 248 181 250 180 252 181 255 182 257 183 261 184 263 185 265 186 267 187 269 188 272 188 276 188 280 188 283 189 286 192 286 194 285 196 284 198 283 201 281 204 278 207 277 210 275 217 271 222 268 224 267 229 264 231 263 236 260 238 259 243 256 246 254Z"/></svg><figcaption>Winchmore-Wakanui within Ashburton District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$49,900</strong><em>Canterbury $41,500</em></div><div class="card"><span>Median household income</span><strong>$94,700</strong><em>Canterbury $89,000</em></div><div class="card"><span>Median age</span><strong>40.6</strong><em>Canterbury 39.3</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>18.1%</strong><em>Canterbury 25.3%</em></div><div class="card"><span>Unemployment rate</span><strong>2.6%</strong><em>Canterbury 3.4%</em></div><div class="card"><span>Born overseas</span><strong>21.7%</strong><em>Canterbury 24.7%</em></div><div class="card"><span>NZDep2023 decile</span><strong>4 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>57.2%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$200</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$600</strong></div><div class="card"><span>Stand-alone houses</span><strong>95.7%</strong></div><div class="card"><span>Crowded households</span><strong>1.7%</strong></div><div class="card"><span>Damp homes</span><strong>12.4%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>84.8%</strong></div><div class="card"><span>Asian</span><strong>9.7%</strong></div><div class="card"><span>Māori</span><strong>5.8%</strong></div><div class="card"><span>Pacific</span><strong>1.5%</strong></div><div class="card"><span>MELAA</span><strong>1.3%</strong></div><div class="card"><span>Other</span><strong>1.3%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>57.2%</strong><em>Canterbury 56.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$200</strong><em>Canterbury $400</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$600</strong><em>Canterbury $550</em></div><div class="card"><span>Stand-alone houses</span><strong>95.7%</strong><em>Canterbury 79.9%</em></div><div class="card"><span>Crowded households</span><strong>1.7%</strong><em>Canterbury 3.8%</em></div><div class="card"><span>Damp homes</span><strong>12.4%</strong><em>Canterbury 13.7%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:41.6%"></i><u style="left:35.3%" title="Canterbury: 17.5%"></u></div><b>20.6%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:29.9%"></i><u style="left:38.9%" title="Canterbury: 19.3%"></u></div><b>14.8%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:92.4%" title="Canterbury: 45.8%"></u></div><b>47.2%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:35.9%"></i><u style="left:35.1%" title="Canterbury: 17.4%"></u></div><b>17.8%</b></div><div class="key"><u></u>Canterbury average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:90.2%" title="Canterbury: 80.3%"></u></div><b>84.8%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:10.9%"></i><u style="left:14.9%" title="Canterbury: 13.3%"></u></div><b>9.7%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:6.5%"></i><u style="left:11.9%" title="Canterbury: 10.6%"></u></div><b>5.8%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:1.7%"></i><u style="left:4.2%" title="Canterbury: 3.7%"></u></div><b>1.5%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:1.5%"></i><u style="left:1.8%" title="Canterbury: 1.6%"></u></div><b>1.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.5%"></i><u style="left:1.5%" title="Canterbury: 1.3%"></u></div><b>1.3%</b></div><div class="key"><u></u>Canterbury average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:49.9%"></i><u style="left:21.3%" title="Canterbury: 15.6%"></u></div><b>36.5%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:74.6%"></i><u style="left:95.2%" title="Canterbury: 69.6%"></u></div><b>54.5%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:2.1%"></i><u style="left:3.8%" title="Canterbury: 2.8%"></u></div><b>1.5%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:3.8%" title="Canterbury: 2.8%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:0.5%"></i><u style="left:5.6%" title="Canterbury: 4.1%"></u></div><b>0.4%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:2.1%"></i><u style="left:4.7%" title="Canterbury: 3.4%"></u></div><b>1.5%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:8.2%"></i><u style="left:2.2%" title="Canterbury: 1.6%"></u></div><b>6.0%</b></div><div class="key"><u></u>Canterbury average</div></div>
 <h2>Nearby in Ashburton District</h2>
 <ul class="links"><li><a href="/canterbury/allenton-east/">Allenton East</a></li><li><a href="/canterbury/allenton-north/">Allenton North</a></li><li><a href="/canterbury/allenton-south/">Allenton South</a></li><li><a href="/canterbury/ashburton-central/">Ashburton Central</a></li><li><a href="/canterbury/ashburton-east/">Ashburton East</a></li><li><a href="/canterbury/ashburton-forks/">Ashburton Forks</a></li><li><a href="/canterbury/ashburton-north/">Ashburton North</a></li><li><a href="/canterbury/ashburton-west/">Ashburton West</a></li><li><a href="/canterbury/cairnbrae/">Cairnbrae</a></li><li><a href="/canterbury/chertsey/">Chertsey</a></li><li><a href="/canterbury/ealing-lowcliffe/">Ealing-Lowcliffe</a></li><li><a href="/canterbury/eiffelton/">Eiffelton</a></li><li><a href="/canterbury/hampstead/">Hampstead</a></li><li><a href="/canterbury/methven/">Methven</a></li><li><a href="/canterbury/netherby/">Netherby</a></li><li><a href="/canterbury/rakaia/">Rākaia</a></li><li><a href="/canterbury/tinwald-north/">Tinwald North</a></li><li><a href="/canterbury/tinwald-south/">Tinwald South</a></li></ul>
 

@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Wellington", "item": "https://population.co.nz/wellington/"}, {"@type": "ListItem", "position": 3, "name": "Paraparaumu Beach West", "item": "https://population.co.nz/wellington/paraparaumu-beach-west/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#wellington/paraparaumu-beach-west" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Paraparaumu Beach West</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Paraparaumu Beach West</nav>
 <h1>Paraparaumu Beach West population and demographics</h1>
-<p>Paraparaumu Beach West is a statistical area in Kapiti Coast District, Wellington. At the 2023 Census it had <strong>2,424</strong>
-usually resident people (+2.5% since 2018). It is part of the wider Paraparaumu Beach area.</p>
-<a class="cta" href="/#wellington/paraparaumu-beach-west">Open Paraparaumu Beach West on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>2,424</strong></div><div class="card"><span>Population 2018</span><strong>2,364</strong></div><div class="card"><span>Population 2013</span><strong>2,292</strong></div><div class="card"><span>Median age</span><strong>53.0</strong></div><div class="card"><span>Median personal income</span><strong>$38,400</strong></div><div class="card"><span>Median household income</span><strong>$78,800</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>27.1%</strong></div><div class="card"><span>Unemployment rate</span><strong>5.0%</strong></div><div class="card"><span>Born overseas</span><strong>26.2%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>6</strong></div></div>
+<p class="where">Kapiti Coast District · Wellington · part of the wider Paraparaumu Beach area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">2,424</span><span class="chip">+2.5% since 2018</span></div>
+    <div class="trend"><div><b>2,292</b><i style="height:66%"></i><span>2013</span></div><div><b>2,364</b><i style="height:68%"></i><span>2018</span></div><div><b>2,424</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Paraparaumu Beach West is in Kapiti Coast District, Wellington. Its population grew 2.5% between the 2018 and 2023 censuses. The median age is 53.0, compared with 38.1 across Wellington.</p>
+    <a class="cta" href="/#wellington/paraparaumu-beach-west">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 402" role="img" fill-rule="evenodd"><path class="a" d="M126 337 138 335 139 332 142 333 143 329 142 326 142 322 143 319 136 308 130 297 158 304 165 295 177 281 178 275 180 277 182 274 184 277 186 278 189 281 197 264 193 262 191 264 188 264 189 262 196 250 206 256 213 243 222 227 195 213 194 215 195 218 194 221 193 223 191 224 191 227 190 233 187 236 188 238 186 239 184 241 181 242 180 244 180 247 177 246 175 243 174 245 172 246 169 246 167 249 165 248 163 249 161 247 159 248 157 249 154 250 152 253 149 252 147 256 145 255 169 200 155 193 153 197 144 212 143 214 142 218 141 220 139 222 139 226 138 228 138 231 135 234 133 232 132 230 126 231 119 233 115 235 110 237 104 237 101 237 99 238 96 240 94 243 89 248 86 253 82 259 81 261 82 263 85 266 87 270 79 284 80 286 81 288 80 290 73 288 64 287 59 303 57 309 55 320 54 323 53 330 52 335 50 340 49 343 47 345 45 348 43 352 41 354 38 356 29 357 26 359 25 361 23 363 20 365 19 367 16 371 15 373 12 375 11 377 8 379 6 382 3 384 5 386 27 393 46 396 62 389 67 378 73 378 79 378 83 378 85 377 88 375 91 374 93 372 96 368 97 366 100 363 103 359 106 353 108 349 110 347 112 343 113 341 114 339 116 336 122 332 126 337Z"/><path class="a" d="M82 259 79 256 77 255 75 254 73 253 71 251 60 257 57 254 52 249 46 257 47 259 57 270 68 281 70 277 73 273 76 267 81 261 82 259Z"/><path class="a" d="M187 43 184 43 181 43 182 41 183 38 180 39 179 41 176 47 171 57 167 66 164 73 167 73 170 74 176 75 179 77 182 78 185 79 187 76 188 74 189 71 185 68 184 66 183 64 180 64 177 64 176 62 177 60 179 59 186 44Z"/><path class="a" d="M240 23 236 27 235 25 233 24 229 24 227 23 229 13 220 9 213 7 196 0 194 5 192 9 190 13 188 20 186 25 183 32 184 35 183 37 182 41 181 43 184 43 187 43 186 46 188 49 190 50 192 49 193 52 195 51 198 52 200 51 203 48 205 47 207 49 209 50 212 50 213 52 213 55 214 58 210 63 212 64 216 66 214 69 217 72 218 69 229 72 229 77 228 84 233 87 235 89 236 94 237 97 240 101 242 103 266 116 266 105 264 103 263 99 265 97 266 94 268 92 269 89 270 85 274 81 275 79 270 79 266 77 262 77 258 77 250 72 250 68 248 62 247 60 246 58 246 54 256 55 257 52 259 49 263 40 260 39 247 27 241 22Z"/><path class="a" d="M112 185 110 184 107 184 99 192 95 197 94 200 92 201 87 204 85 206 81 208 77 212 71 216 74 219 75 221 78 224 83 224 87 224 89 225 91 224 94 224 94 220 91 217 93 218 93 214 97 212 99 209 103 207 102 203 101 199 104 196 110 188 112 186Z"/><path class="a" d="M219 69 217 72 214 69 216 66 212 64 210 63 214 58 213 55 213 52 212 50 209 50 207 49 205 47 203 48 202 51 198 52 195 51 193 52 192 49 190 50 188 49 186 46 188 44 179 59 177 60 176 62 177 64 180 64 182 63 184 66 185 68 188 70 188 74 187 76 185 79 189 81 191 82 194 84 197 86 200 88 203 90 206 86 208 84 210 82 216 79 219 77 220 75 219 71Z"/><path class="a" d="M204 90 200 88 197 86 194 84 191 82 189 81 185 79 182 78 179 77 176 75 170 74 167 73 164 73 160 80 159 83 158 87 156 91 154 94 151 100 148 106 147 109 146 113 142 121 141 125 138 129 134 137 130 144 128 149 126 152 156 165 161 165 162 163 167 167 181 158 192 150 196 145 192 141 181 131 182 129 191 114 196 105 198 102 204 92Z"/><path class="a" d="M237 98 236 95 235 89 233 87 228 84 231 77 231 72 219 69 220 75 219 77 216 79 210 82 208 84 206 86 204 90 208 92 211 94 213 95 215 96 219 96 224 97 229 99 234 100 237 98Z"/><path class="a" d="M167 167 162 163 161 165 157 164 126 152 125 155 126 157 124 158 122 160 120 163 117 168 114 172 111 177 106 183 109 184 112 185 115 181 126 187 129 186 134 189 135 186 146 193 146 189 149 190 152 187 155 188 156 185 158 183 157 181 158 179 167 167Z"/><path class="a" d="M72 232 71 230 78 227 77 225 76 222 74 219 72 217 62 222 57 225 54 227 52 229 55 232 57 233 61 239 63 240 67 237 70 233 72 232Z"/><path class="a" d="M134 189 129 186 126 187 115 181 112 185 111 189 104 196 101 199 102 201 103 207 99 208 97 211 95 214 94 218 91 217 93 219 94 224 96 222 99 224 101 223 104 224 104 228 107 230 109 229 112 230 113 227 115 224 114 222 115 219 116 217 118 216 134 189Z"/><path class="a" d="M64 240 61 239 55 243 50 245 52 249 57 254 68 247 65 244 64 240Z"/><path class="a" d="M113 230 109 229 107 230 104 230 104 225 102 223 99 224 98 222 95 223 91 225 87 224 83 224 80 224 77 225 78 227 71 230 72 232 77 240 82 236 84 237 87 239 88 241 92 241 94 243 96 240 99 238 101 237 104 237 108 237 115 235 119 233 125 231 124 229 121 231 119 232 116 233 115 230Z"/><path class="a" d="M94 243 92 241 88 241 87 239 85 238 82 236 77 240 72 232 70 233 68 237 64 240 65 242 68 247 57 254 60 257 71 251 73 253 75 252 75 255 79 254 82 259 86 253 89 248 94 243Z"/><path class="a" d="M125 230 127 228 128 224 130 221 146 194 135 186 134 189 118 216 116 217 115 219 114 222 115 224 115 227 113 230 116 232 119 232 121 231 122 229 125 230Z"/><path class="a" d="M237 98 235 99 231 99 225 97 221 96 217 96 213 95 211 94 208 92 204 90 198 102 196 105 191 114 182 129 181 131 192 141 196 145 192 150 181 158 168 167 187 182 219 198 246 211 249 205 283 221 285 220 286 218 287 216 289 215 290 212 292 211 291 209 291 203 292 201 295 200 294 198 296 195 320 146 311 141 302 137 287 128 266 116 242 103 240 101 237 98Z"/><path class="a" d="M57 270 46 260 46 257 45 259 43 257 43 262 44 271 44 276 43 286 48 286 50 287 49 285 51 282 53 279 52 276 54 274 57 270Z"/><path class="a" d="M155 188 152 187 149 190 146 189 146 193 130 221 128 224 127 226 126 229 132 229 132 232 135 234 138 231 138 228 139 226 138 223 141 220 142 218 143 216 144 212 153 197 155 193 154 189Z"/><path class="a" d="M64 287 65 284 68 281 57 270 54 274 52 276 53 279 51 282 50 284 50 287 53 288 54 286 60 288 63 286Z"/><path class="a" d="M64 287 73 290 80 290 81 288 80 286 79 284 87 272 85 266 82 263 81 261 77 267 72 272 70 277 68 281 65 284 64 287Z"/><path class="a" d="M50 287 48 286 44 285 42 293 41 300 40 302 39 309 36 321 35 324 38 324 39 322 40 324 42 322 46 322 49 322 54 323 55 320 57 309 59 305 64 287 62 288 60 287 54 286 53 288 50 287Z"/><path class="a" d="M54 323 49 322 46 322 42 322 41 324 39 322 38 324 35 324 32 332 29 340 27 345 25 348 21 355 17 364 11 373 8 378 7 380 5 381 1 384 6 382 8 379 11 377 12 375 14 373 15 371 18 368 20 365 23 363 25 361 26 359 29 357 37 356 41 354 43 352 45 348 47 345 49 343 50 340 52 337 53 330 54 323Z"/><path class="on" d="M61 239 56 234 55 232 52 229 49 234 47 239 45 244 44 248 43 255 45 259 46 257 52 249 49 246 54 244 61 239Z"/></svg><figcaption>Paraparaumu Beach West within Kapiti Coast District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$38,400</strong><em>Wellington $48,400</em></div><div class="card"><span>Median household income</span><strong>$78,800</strong><em>Wellington $113,700</em></div><div class="card"><span>Median age</span><strong>53.0</strong><em>Wellington 38.1</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>27.1%</strong><em>Wellington 35.6%</em></div><div class="card"><span>Unemployment rate</span><strong>5.0%</strong><em>Wellington 4.1%</em></div><div class="card"><span>Born overseas</span><strong>26.2%</strong><em>Wellington 28.3%</em></div><div class="card"><span>NZDep2023 decile</span><strong>6 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>55.8%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$480</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$525</strong></div><div class="card"><span>Stand-alone houses</span><strong>69.0%</strong></div><div class="card"><span>Crowded households</span><strong>3.5%</strong></div><div class="card"><span>Damp homes</span><strong>10.5%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>86.1%</strong></div><div class="card"><span>Māori</span><strong>11.8%</strong></div><div class="card"><span>Asian</span><strong>7.7%</strong></div><div class="card"><span>Pacific</span><strong>3.7%</strong></div><div class="card"><span>Other</span><strong>1.6%</strong></div><div class="card"><span>MELAA</span><strong>0.5%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>55.8%</strong><em>Wellington 52.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$480</strong><em>Wellington $510</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$525</strong><em>Wellington $610</em></div><div class="card"><span>Stand-alone houses</span><strong>69.0%</strong><em>Wellington 72.7%</em></div><div class="card"><span>Crowded households</span><strong>3.5%</strong><em>Wellington 5.4%</em></div><div class="card"><span>Damp homes</span><strong>10.5%</strong><em>Wellington 19.9%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:24.7%"></i><u style="left:35.4%" title="Wellington: 17.2%"></u></div><b>12.0%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:26.7%"></i><u style="left:43.0%" title="Wellington: 20.9%"></u></div><b>13.0%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:92.4%"></i><u style="left:95.2%" title="Wellington: 46.3%"></u></div><b>44.9%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:61.9%"></i><u style="left:31.9%" title="Wellington: 15.5%"></u></div><b>30.1%</b></div><div class="key"><u></u>Wellington average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:80.3%" title="Wellington: 72.6%"></u></div><b>86.1%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:13.1%"></i><u style="left:17.1%" title="Wellington: 15.5%"></u></div><b>11.8%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:8.5%"></i><u style="left:16.8%" title="Wellington: 15.2%"></u></div><b>7.7%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:4.1%"></i><u style="left:10.1%" title="Wellington: 9.1%"></u></div><b>3.7%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.8%"></i><u style="left:1.2%" title="Wellington: 1.1%"></u></div><b>1.6%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.6%"></i><u style="left:2.5%" title="Wellington: 2.3%"></u></div><b>0.5%</b></div><div class="key"><u></u>Wellington average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:39.3%"></i><u style="left:31.5%" title="Wellington: 19.0%"></u></div><b>23.7%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:82.1%" title="Wellington: 49.5%"></u></div><b>57.4%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:5.3%"></i><u style="left:6.1%" title="Wellington: 3.7%"></u></div><b>3.2%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:15.3%"></i><u style="left:25.7%" title="Wellington: 15.5%"></u></div><b>9.2%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:2.0%"></i><u style="left:4.0%" title="Wellington: 2.4%"></u></div><b>1.2%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:6.1%"></i><u style="left:13.8%" title="Wellington: 8.3%"></u></div><b>3.7%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.7%"></i><u style="left:2.7%" title="Wellington: 1.6%"></u></div><b>1.0%</b></div><div class="key"><u></u>Wellington average</div></div>
 <h2>Nearby in Kapiti Coast District</h2>
 <ul class="links"><li><a href="/wellington/forest-lakes-kapiti-coast-district/">Forest Lakes (Kapiti Coast District)</a></li><li><a href="/wellington/maungakotukutuku/">Maungakotukutuku</a></li><li><a href="/wellington/otaihanga/">Otaihanga</a></li><li><a href="/wellington/paekakariki/">Paekākāriki</a></li><li><a href="/wellington/paraparaumu-beach-east/">Paraparaumu Beach East</a></li><li><a href="/wellington/paraparaumu-beach-north/">Paraparaumu Beach North</a></li><li><a href="/wellington/paraparaumu-central/">Paraparaumu Central</a></li><li><a href="/wellington/paraparaumu-east/">Paraparaumu East</a></li><li><a href="/wellington/paraparaumu-north/">Paraparaumu North</a></li><li><a href="/wellington/peka-peka/">Peka Peka</a></li><li><a href="/wellington/raumati-beach-east/">Raumati Beach East</a></li><li><a href="/wellington/raumati-beach-west/">Raumati Beach West</a></li><li><a href="/wellington/raumati-south/">Raumati South</a></li><li><a href="/wellington/te-horo/">Te Horo</a></li><li><a href="/wellington/waikanae-beach/">Waikanae Beach</a></li><li><a href="/wellington/waikanae-east/">Waikanae East</a></li><li><a href="/wellington/waikanae-park/">Waikanae Park</a></li><li><a href="/wellington/waikanae-west/">Waikanae West</a></li><li><a href="/wellington/waitohu/">Waitohu</a></li><li><a href="/wellington/otaki/">Ōtaki</a></li><li><a href="/wellington/otaki-beach/">Ōtaki Beach</a></li><li><a href="/wellington/otaki-forks/">Ōtaki Forks</a></li></ul>
 

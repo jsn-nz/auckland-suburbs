@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Wellington", "item": "https://population.co.nz/wellington/"}, {"@type": "ListItem", "position": 3, "name": "Ngaumutawa", "item": "https://population.co.nz/wellington/ngaumutawa/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#wellington/ngaumutawa" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Ngaumutawa</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/wellington/">Wellington</a> › Ngaumutawa</nav>
 <h1>Ngaumutawa population and demographics</h1>
-<p>Ngaumutawa is a statistical area in Masterton District, Wellington. At the 2023 Census it had <strong>1,671</strong>
-usually resident people (+10.5% since 2018). It is part of the wider Masterton West area.</p>
-<a class="cta" href="/#wellington/ngaumutawa">Open Ngaumutawa on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,671</strong></div><div class="card"><span>Population 2018</span><strong>1,512</strong></div><div class="card"><span>Population 2013</span><strong>1,392</strong></div><div class="card"><span>Median age</span><strong>48.7</strong></div><div class="card"><span>Median personal income</span><strong>$35,300</strong></div><div class="card"><span>Median household income</span><strong>$67,600</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>16.0%</strong></div><div class="card"><span>Unemployment rate</span><strong>2.2%</strong></div><div class="card"><span>Born overseas</span><strong>13.6%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>6</strong></div></div>
+<p class="where">Masterton District · Wellington · part of the wider Masterton West area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,671</span><span class="chip">+10.5% since 2018</span></div>
+    <div class="trend"><div><b>1,392</b><i style="height:58%"></i><span>2013</span></div><div><b>1,512</b><i style="height:63%"></i><span>2018</span></div><div><b>1,671</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Ngaumutawa is in Masterton District, Wellington. Its population grew 10.5% between the 2018 and 2023 censuses. The median age is 48.7, compared with 38.1 across Wellington.</p>
+    <a class="cta" href="/#wellington/ngaumutawa">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 271" role="img" fill-rule="evenodd"><path class="a" d="M134 50 126 48 127 45 127 42 129 40 131 39 130 37 132 36 133 34 135 30 136 27 133 26 131 25 130 23 131 21 132 19 128 13 123 18 123 15 121 12 116 12 109 12 106 12 98 12 98 16 99 22 96 22 95 24 94 27 92 29 87 27 85 28 83 35 74 35 75 37 74 39 72 40 67 36 64 35 62 34 59 32 55 31 51 32 48 31 48 28 42 25 15 10 5 26 4 29 3 31 3 34 2 36 0 37 3 38 5 41 7 44 8 46 10 47 12 48 15 50 17 51 20 52 22 53 21 56 21 59 22 61 21 63 21 66 20 68 19 70 18 72 18 75 17 78 17 81 15 83 16 85 15 87 15 90 16 92 18 93 19 95 24 93 26 92 28 91 31 92 34 92 36 89 45 91 50 92 55 94 64 92 66 91 67 95 71 95 71 92 74 91 75 95 75 98 79 95 81 92 83 93 85 95 85 98 86 101 88 102 88 105 90 107 92 109 93 111 95 112 98 113 98 116 100 118 99 120 100 122 102 123 103 125 104 127 104 130 105 132 106 134 115 133 117 132 119 131 120 128 121 126 123 125 124 123 125 125 126 123 128 122 127 120 129 119 131 118 131 115 132 113 134 112 133 110 135 109 133 108 131 107 130 105 129 103 127 102 127 99 126 97 128 96 127 94 127 91 128 89 130 88 128 87 129 85 129 82 131 81 131 78 129 75 128 73 129 71 129 68 130 66 130 63 130 60 129 58 130 56 131 54 133 52 134 50Z"/><path class="a" d="M75 98 75 95 74 92 71 92 71 95 67 95 66 91 64 92 55 94 50 92 45 91 37 89 36 92 32 92 30 91 28 92 25 92 19 95 21 97 22 99 22 102 23 104 24 106 26 107 29 107 31 106 33 108 34 110 37 111 38 113 41 113 43 115 44 118 45 120 46 122 47 125 48 127 50 128 53 130 54 132 56 135 58 136 60 138 61 140 62 142 63 144 65 146 68 145 72 143 74 141 76 140 74 138 76 137 74 135 75 133 79 134 82 135 83 133 85 132 85 129 82 130 81 128 79 126 77 127 76 125 74 124 75 122 72 122 71 120 71 117 72 115 73 113 72 111 73 109 72 107 74 106 75 104 75 99Z"/><path class="a" d="M85 141 86 138 84 137 81 137 78 139 85 141Z"/><path class="a" d="M258 3 257 1 255 0 252 1 251 3 250 7 250 10 248 18 246 17 247 20 245 21 241 21 239 20 237 22 235 21 233 22 225 20 225 17 221 22 220 20 214 26 212 27 209 25 206 25 207 27 208 29 207 31 205 32 207 33 204 33 201 32 200 34 199 36 197 35 194 34 191 48 182 40 172 51 167 53 165 49 159 45 156 49 154 48 152 47 150 46 148 48 144 54 142 53 139 52 136 49 134 50 133 52 131 53 130 56 129 58 130 60 130 63 130 66 129 68 129 71 128 73 129 75 130 77 131 79 130 82 128 85 128 88 128 91 128 94 127 96 126 98 127 100 127 103 129 104 130 106 132 107 134 108 133 110 134 112 132 113 131 115 130 117 129 119 127 120 129 121 127 122 126 124 124 123 123 125 122 127 120 128 119 130 117 132 120 132 125 129 127 127 129 126 132 125 133 123 136 120 137 118 138 120 140 122 139 124 141 125 142 127 141 129 140 135 138 136 136 135 132 136 131 138 134 140 133 142 133 145 132 147 130 148 129 150 128 152 126 153 127 155 126 157 124 159 125 161 124 163 123 165 121 164 120 166 122 167 123 169 123 172 122 174 123 176 125 178 128 181 130 183 131 186 122 192 122 197 121 200 120 202 118 204 117 206 116 208 120 209 123 210 125 209 125 212 127 215 129 217 128 219 130 221 133 222 134 224 136 223 136 226 137 228 139 229 138 231 140 232 142 233 144 234 146 236 145 238 146 240 148 242 149 244 151 243 153 246 162 238 164 239 167 238 170 237 171 239 173 242 175 243 177 244 179 242 178 239 180 240 182 241 184 242 187 242 189 243 190 245 190 248 191 250 191 253 192 257 193 259 195 260 197 261 200 263 202 264 204 263 206 264 208 265 210 264 212 265 213 263 214 261 215 257 216 255 217 253 219 251 221 249 223 247 224 245 226 244 229 242 232 239 234 238 235 236 236 234 238 233 240 232 241 229 242 227 241 225 242 222 243 220 242 218 243 216 243 213 244 211 245 209 247 207 249 205 249 202 250 199 251 197 252 195 254 194 253 192 253 188 255 186 256 184 256 181 257 179 256 177 257 174 259 172 261 171 262 169 264 167 265 165 266 162 267 159 267 156 268 154 269 150 270 148 271 146 272 144 273 142 275 141 276 139 278 138 280 136 282 135 283 133 285 131 287 129 289 128 291 126 293 124 295 121 297 120 299 121 301 120 302 118 304 117 305 115 302 116 300 113 300 110 301 105 303 100 305 98 307 96 309 93 310 91 310 88 311 85 312 83 313 81 314 79 315 76 314 74 315 71 315 68 316 66 317 64 318 62 317 60 319 58 319 55 317 54 316 52 318 50 317 48 318 46 315 45 316 42 318 43 317 41 319 39 317 38 319 37 318 34 316 33 315 35 313 36 312 34 310 33 311 31 310 29 307 28 307 25 308 23 306 22 305 20 306 18 303 18 302 16 300 17 299 15 296 16 294 15 292 14 290 13 287 12 285 13 283 14 281 13 276 10 277 8 278 6 277 4 275 2 273 3 271 4 269 5 267 6 265 5 262 4 260 3Z"/><path class="a" d="M120 168 120 165 122 164 124 163 125 161 124 159 126 157 128 156 126 155 127 153 128 150 130 149 131 147 133 145 133 142 134 140 131 138 132 136 135 136 138 136 140 135 141 129 142 127 141 125 139 124 140 122 139 120 137 119 134 122 132 125 130 126 128 127 126 129 120 132 117 133 107 135 105 134 104 130 104 127 104 124 104 127 103 129 101 131 100 133 100 137 98 138 97 140 95 142 94 144 92 145 89 147 85 149 76 158 77 160 79 161 80 163 82 165 85 166 87 168 88 170 87 173 87 176 86 179 85 181 85 184 85 187 84 189 82 191 80 190 78 191 76 192 74 194 75 198 76 200 77 198 79 199 81 198 81 201 83 200 86 199 85 197 87 196 88 198 89 195 90 192 92 191 91 188 93 187 95 186 97 187 99 186 99 183 98 181 97 179 99 177 101 178 104 176 106 177 108 176 110 175 112 176 113 174 116 174 115 172 117 171 116 169 117 167 118 169 120 168Z"/><path class="a" d="M81 144 79 143 75 141 73 142 69 144 69 147 76 146 81 145Z"/><path class="a" d="M90 140 91 138 92 135 90 134 91 131 88 131 84 128 85 130 84 132 85 134 87 136 90 137 90 140Z"/><path class="a" d="M103 125 102 123 100 122 99 120 100 118 98 117 99 114 97 112 95 111 93 110 91 108 89 106 88 104 86 102 85 100 85 97 84 94 82 93 79 94 75 98 75 102 74 105 72 107 73 109 72 111 73 113 72 115 70 116 71 118 71 121 73 122 75 123 76 125 77 127 79 126 81 127 82 129 84 128 88 129 91 131 90 128 92 129 94 128 95 126 95 129 96 131 98 133 97 135 96 137 95 139 97 140 98 138 100 137 100 134 101 131 102 129 104 127 103 125Z"/><path class="a" d="M89 138 87 136 85 134 83 133 82 135 77 138 81 137 83 136 87 137 85 139 81 144 86 142 88 141 89 139Z"/><path class="a" d="M85 141 78 139 76 140 74 141 79 142 81 143 85 141Z"/><path class="a" d="M81 145 76 146 69 147 69 144 67 146 67 149 69 151 72 152 73 154 74 157 76 158 84 149 85 147 83 146 81 145Z"/><path class="a" d="M97 140 95 139 96 137 97 135 98 133 96 132 96 129 96 126 94 128 92 129 90 128 91 130 90 134 92 135 91 138 90 140 91 142 92 144 94 142 96 141Z"/><path class="a" d="M91 142 90 140 89 138 87 140 86 142 82 145 84 146 91 142Z"/><path class="a" d="M85 148 88 147 92 145 91 142 85 147Z"/><path class="on" d="M82 135 79 135 76 134 74 135 76 137 74 138 76 140 77 138 82 135Z"/></svg><figcaption>Ngaumutawa within Masterton District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$35,300</strong><em>Wellington $48,400</em></div><div class="card"><span>Median household income</span><strong>$67,600</strong><em>Wellington $113,700</em></div><div class="card"><span>Median age</span><strong>48.7</strong><em>Wellington 38.1</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>16.0%</strong><em>Wellington 35.6%</em></div><div class="card"><span>Unemployment rate</span><strong>2.2%</strong><em>Wellington 4.1%</em></div><div class="card"><span>Born overseas</span><strong>13.6%</strong><em>Wellington 28.3%</em></div><div class="card"><span>NZDep2023 decile</span><strong>6 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>59.8%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$390</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$560</strong></div><div class="card"><span>Stand-alone houses</span><strong>83.9%</strong></div><div class="card"><span>Crowded households</span><strong>2.5%</strong></div><div class="card"><span>Damp homes</span><strong>16.7%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>86.2%</strong></div><div class="card"><span>Māori</span><strong>21.5%</strong></div><div class="card"><span>Asian</span><strong>3.8%</strong></div><div class="card"><span>Pacific</span><strong>3.6%</strong></div><div class="card"><span>Other</span><strong>1.3%</strong></div><div class="card"><span>MELAA</span><strong>0.9%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>59.8%</strong><em>Wellington 52.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$390</strong><em>Wellington $510</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$560</strong><em>Wellington $610</em></div><div class="card"><span>Stand-alone houses</span><strong>83.9%</strong><em>Wellington 72.7%</em></div><div class="card"><span>Crowded households</span><strong>2.5%</strong><em>Wellington 5.4%</em></div><div class="card"><span>Damp homes</span><strong>16.7%</strong><em>Wellington 19.9%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:34.4%"></i><u style="left:35.4%" title="Wellington: 17.2%"></u></div><b>16.7%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:30.6%"></i><u style="left:43.0%" title="Wellington: 20.9%"></u></div><b>14.9%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:76.7%"></i><u style="left:95.2%" title="Wellington: 46.3%"></u></div><b>37.3%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:64.6%"></i><u style="left:31.9%" title="Wellington: 15.5%"></u></div><b>31.4%</b></div><div class="key"><u></u>Wellington average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:80.2%" title="Wellington: 72.6%"></u></div><b>86.2%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:23.8%"></i><u style="left:17.1%" title="Wellington: 15.5%"></u></div><b>21.5%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:4.2%"></i><u style="left:16.8%" title="Wellington: 15.2%"></u></div><b>3.8%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:4.0%"></i><u style="left:10.1%" title="Wellington: 9.1%"></u></div><b>3.6%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.4%"></i><u style="left:1.2%" title="Wellington: 1.1%"></u></div><b>1.3%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:1.0%"></i><u style="left:2.5%" title="Wellington: 2.3%"></u></div><b>0.9%</b></div><div class="key"><u></u>Wellington average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:11.1%"></i><u style="left:22.9%" title="Wellington: 19.0%"></u></div><b>9.2%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:59.7%" title="Wellington: 49.5%"></u></div><b>79.0%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:8.3%"></i><u style="left:4.5%" title="Wellington: 3.7%"></u></div><b>6.9%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:1.3%"></i><u style="left:18.7%" title="Wellington: 15.5%"></u></div><b>1.1%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:1.0%"></i><u style="left:2.9%" title="Wellington: 2.4%"></u></div><b>0.8%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:1.8%"></i><u style="left:10.0%" title="Wellington: 8.3%"></u></div><b>1.5%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.5%"></i><u style="left:1.9%" title="Wellington: 1.6%"></u></div><b>0.4%</b></div><div class="key"><u></u>Wellington average</div></div>
 <h2>Nearby in Masterton District</h2>
 <ul class="links"><li><a href="/wellington/cameron-and-soldiers-park/">Cameron and Soldiers Park</a></li><li><a href="/wellington/douglas-park/">Douglas Park</a></li><li><a href="/wellington/homebush-te-ore-ore/">Homebush-Te Ore Ore</a></li><li><a href="/wellington/kopuaranga/">Kopuaranga</a></li><li><a href="/wellington/kuripuni/">Kuripuni</a></li><li><a href="/wellington/lansdowne-east/">Lansdowne East</a></li><li><a href="/wellington/lansdowne-west/">Lansdowne West</a></li><li><a href="/wellington/masterton-central/">Masterton Central</a></li><li><a href="/wellington/mcjorrow-park/">McJorrow Park</a></li><li><a href="/wellington/opaki/">Opaki</a></li><li><a href="/wellington/solway-north/">Solway North</a></li><li><a href="/wellington/solway-south/">Solway South</a></li><li><a href="/wellington/upper-plain/">Upper Plain</a></li><li><a href="/wellington/whareama/">Whareama</a></li></ul>
 

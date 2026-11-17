@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Auckland", "item": "https://population.co.nz/auckland/"}, {"@type": "ListItem", "position": 3, "name": "Hillcrest East (Auckland)", "item": "https://population.co.nz/auckland/hillcrest-east-auckland/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#auckland/hillcrest-east-auckland" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Hillcrest East (Auckland)</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Hillcrest East (Auckland)</nav>
 <h1>Hillcrest East (Auckland) population and demographics</h1>
-<p>Hillcrest East (Auckland) is a statistical area in Kaipātiki Local Board, Auckland. At the 2023 Census it had <strong>3,900</strong>
-usually resident people (-0.5% since 2018). It is part of the wider Hillcrest (Auckland) area.</p>
-<a class="cta" href="/#auckland/hillcrest-east-auckland">Open Hillcrest East (Auckland) on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>3,900</strong></div><div class="card"><span>Population 2018</span><strong>3,921</strong></div><div class="card"><span>Population 2013</span><strong>3,669</strong></div><div class="card"><span>Median age</span><strong>36.3</strong></div><div class="card"><span>Median personal income</span><strong>$51,700</strong></div><div class="card"><span>Median household income</span><strong>$127,300</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>43.5%</strong></div><div class="card"><span>Unemployment rate</span><strong>3.0%</strong></div><div class="card"><span>Born overseas</span><strong>47.3%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>3</strong></div></div>
+<p class="where">Kaipātiki Local Board · Auckland · part of the wider Hillcrest (Auckland) area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">3,900</span><span class="chip">-0.5% since 2018</span></div>
+    <div class="trend"><div><b>3,669</b><i style="height:66%"></i><span>2013</span></div><div><b>3,921</b><i style="height:70%"></i><span>2018</span></div><div><b>3,900</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Hillcrest East (Auckland) is in Kaipātiki Local Board, Auckland. Its population fell 0.5% between the 2018 and 2023 censuses. The median age is 36.3, compared with 35.9 across Auckland.</p>
+    <a class="cta" href="/#auckland/hillcrest-east-auckland">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 325 357" role="img" fill-rule="evenodd"><path class="a" d="M248 235 252 236 266 223 270 218 275 215 264 203 266 201 255 191 249 197 219 226 248 235Z"/><path class="a" d="M148 54 143 56 141 60 135 53 130 56 125 48 114 55 116 59 103 67 99 64 96 66 102 74 95 79 91 80 93 84 98 84 103 87 106 90 114 93 118 112 120 114 123 107 129 103 134 98 137 98 142 101 159 99 158 92 161 86 162 78 157 71 153 58 151 56 148 54Z"/><path class="a" d="M207 55 209 57 217 52 214 47 220 44 224 40 216 28 189 0 185 7 166 22 169 33 169 38 183 42 198 43 204 48 207 55Z"/><path class="a" d="M75 239 77 243 91 237 93 234 103 231 103 223 107 223 106 207 114 205 109 190 82 198 82 194 69 199 62 199 61 205 63 208 58 213 61 221 67 228 72 230 75 239Z"/><path class="a" d="M214 145 237 122 223 108 216 115 213 112 209 116 202 108 197 117 191 122 190 125 193 136 208 151 214 145Z"/><path class="a" d="M151 254 143 258 139 256 138 251 130 248 128 254 124 247 120 247 110 251 100 252 88 262 88 266 87 283 81 284 83 286 104 293 106 294 112 291 117 275 119 273 138 273 155 276 155 257 151 254Z"/><path class="a" d="M176 239 175 236 169 213 169 210 171 186 139 196 133 198 135 209 148 220 141 222 126 241 120 247 124 247 128 254 130 248 138 251 139 256 143 258 151 254 150 250 155 250 154 240 175 239Z"/><path class="a" d="M273 228 266 223 252 236 248 235 249 240 247 254 252 258 254 259 255 267 259 271 267 273 271 276 272 280 275 288 274 292 276 293 279 289 287 287 290 283 287 277 306 253 310 243 308 242 305 248 302 253 293 237 287 242 282 243 276 240 275 237 273 228Z"/><path class="a" d="M120 114 118 112 114 93 106 90 103 87 98 84 93 84 90 85 87 91 80 97 80 102 77 107 78 109 71 121 80 122 82 124 90 122 97 122 100 126 105 126 117 118 120 114Z"/><path class="a" d="M261 126 246 96 234 67 230 54 224 40 220 44 214 47 217 52 209 57 207 55 188 55 189 70 212 68 212 77 199 78 203 83 203 92 190 92 188 94 202 108 209 116 213 112 216 115 223 108 237 122 214 145 225 156 231 150 240 159 246 153 269 177 281 165 261 126Z"/><path class="a" d="M159 173 158 170 161 164 162 159 160 154 163 149 159 139 159 136 167 117 166 111 162 103 154 106 150 110 146 121 140 121 136 123 131 123 126 126 120 136 129 146 139 160 142 161 147 175 149 176 159 173Z"/><path class="a" d="M41 161 34 154 28 154 25 161 21 162 13 159 6 167 0 171 2 180 7 181 11 183 16 189 7 188 4 190 7 194 10 195 8 203 8 210 14 215 20 215 19 222 35 220 39 225 45 224 43 211 49 200 41 178 41 161Z"/><path class="a" d="M207 55 204 48 198 43 183 42 169 38 162 44 161 50 151 56 153 58 157 71 162 78 173 74 181 75 188 80 192 80 199 78 212 77 212 68 189 70 188 55 207 55Z"/><path class="a" d="M199 78 192 80 188 80 181 75 173 74 162 78 161 86 158 92 160 98 162 103 166 111 173 111 178 116 179 122 190 125 191 122 197 117 202 108 188 94 190 92 203 92 203 83 199 78Z"/><path class="a" d="M160 98 142 101 137 98 134 98 129 103 123 107 120 114 117 118 105 126 100 126 97 122 90 122 82 124 80 122 71 121 73 123 74 130 79 139 86 144 89 148 101 150 109 148 113 145 117 137 120 136 126 126 131 123 136 123 140 121 146 121 150 110 154 106 162 103 160 98Z"/><path class="a" d="M68 167 67 157 66 152 67 148 63 144 63 140 58 140 49 146 44 146 39 150 39 154 42 156 41 161 41 178 49 200 43 211 45 224 47 235 52 244 63 238 63 233 67 228 61 221 58 213 63 208 61 205 62 199 68 198 64 194 70 186 67 183 69 177 68 167Z"/><path class="a" d="M219 226 193 199 195 197 190 192 190 186 195 182 193 177 189 180 177 181 171 186 169 210 169 213 175 236 176 239 205 230 218 226Z"/><path class="a" d="M107 182 103 176 97 169 93 161 93 154 88 153 83 150 77 152 73 149 70 152 69 159 68 167 69 177 67 183 70 186 64 194 68 198 82 194 82 198 109 190 107 182Z"/><path class="a" d="M159 173 149 176 147 175 142 161 139 160 129 146 120 136 117 137 113 145 108 149 104 152 95 154 101 160 99 163 101 172 104 173 107 182 110 183 118 193 130 189 133 198 139 196 171 186 170 183 159 173Z"/><path class="a" d="M45 224 39 225 35 220 19 222 22 226 28 227 31 232 27 236 30 242 28 245 29 256 31 259 35 258 42 261 43 265 46 267 36 271 41 274 41 281 47 284 52 280 58 280 63 282 70 284 77 283 81 284 87 283 88 266 88 262 86 253 81 255 80 251 77 249 75 239 72 230 67 228 63 233 63 238 52 244 47 235 45 224Z"/><path class="a" d="M177 181 182 179 183 176 208 151 193 136 190 127 179 122 178 116 173 111 166 111 167 117 159 136 159 139 163 149 160 154 162 159 161 164 158 170 159 173 170 183 171 186 177 181Z"/><path class="a" d="M133 198 130 189 118 193 110 183 107 182 109 190 114 205 106 207 107 223 103 223 103 231 93 234 91 237 77 243 75 239 77 249 80 251 81 255 86 253 88 262 100 252 110 251 120 247 126 241 141 222 148 220 135 209 133 198Z"/><path class="a" d="M320 217 313 219 310 211 294 189 288 180 281 165 269 177 255 191 266 201 264 203 275 215 270 218 266 223 272 228 276 222 280 219 288 220 295 233 298 234 305 242 307 241 310 243 312 238 317 224 320 217Z"/><path class="a" d="M269 177 246 153 240 159 231 150 225 156 214 145 208 151 183 176 182 179 177 181 189 180 193 177 196 175 221 170 227 167 228 175 249 197 255 191 269 177Z"/><path class="a" d="M155 276 138 273 119 273 117 275 112 291 106 294 104 293 83 286 75 285 67 289 60 295 60 299 64 303 62 309 63 315 67 316 72 321 72 325 68 332 72 334 76 338 80 336 93 337 100 341 105 337 107 333 115 340 117 347 123 341 130 341 134 341 141 335 149 331 155 330 166 326 169 328 177 322 177 312 180 309 177 307 173 299 160 300 159 284 158 277 155 276Z"/><path class="a" d="M212 271 207 271 205 268 199 267 199 260 194 261 194 253 202 253 204 245 204 234 205 230 176 239 154 240 155 250 150 250 151 254 155 257 155 276 168 269 182 269 183 274 195 278 211 287 212 271Z"/><path class="a" d="M252 258 247 254 249 240 248 235 219 227 205 230 204 234 204 245 202 253 194 253 194 261 199 260 199 267 205 268 207 271 212 271 242 273 260 280 270 280 255 272 249 268 252 258Z"/><path class="a" d="M211 287 195 278 183 274 182 269 168 269 155 276 158 277 159 284 160 300 173 299 177 307 180 309 185 307 186 311 192 316 196 323 208 330 217 327 222 322 226 321 228 317 225 311 229 308 228 301 232 301 228 293 223 293 220 288 214 289 211 287Z"/><path class="a" d="M270 280 260 280 242 273 212 271 211 287 214 289 220 288 223 293 228 293 232 301 237 300 241 306 247 309 258 320 261 338 259 347 263 351 267 349 269 345 272 331 274 330 272 323 271 315 274 302 276 293 274 292 270 295 269 281Z"/><path class="on" d="M249 197 228 175 227 167 221 170 196 175 193 177 195 182 190 186 190 192 195 197 193 199 219 226 249 197Z"/></svg><figcaption>Hillcrest East (Auckland) within Kaipātiki Local Board</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$51,700</strong><em>Auckland $44,800</em></div><div class="card"><span>Median household income</span><strong>$127,300</strong><em>Auckland $118,200</em></div><div class="card"><span>Median age</span><strong>36.3</strong><em>Auckland 35.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>43.5%</strong><em>Auckland 32.9%</em></div><div class="card"><span>Unemployment rate</span><strong>3.0%</strong><em>Auckland 4.8%</em></div><div class="card"><span>Born overseas</span><strong>47.3%</strong><em>Auckland 42.9%</em></div><div class="card"><span>NZDep2023 decile</span><strong>3 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>45.6%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$580</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$680</strong></div><div class="card"><span>Stand-alone houses</span><strong>77.3%</strong></div><div class="card"><span>Crowded households</span><strong>6.3%</strong></div><div class="card"><span>Damp homes</span><strong>25.6%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>53.0%</strong></div><div class="card"><span>Asian</span><strong>41.7%</strong></div><div class="card"><span>Māori</span><strong>7.6%</strong></div><div class="card"><span>Pacific</span><strong>3.8%</strong></div><div class="card"><span>MELAA</span><strong>3.3%</strong></div><div class="card"><span>Other</span><strong>0.9%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>45.6%</strong><em>Auckland 44.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$580</strong><em>Auckland $540</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$680</strong><em>Auckland $655</em></div><div class="card"><span>Stand-alone houses</span><strong>77.3%</strong><em>Auckland 71.5%</em></div><div class="card"><span>Crowded households</span><strong>6.3%</strong><em>Auckland 8.8%</em></div><div class="card"><span>Damp homes</span><strong>25.6%</strong><em>Auckland 20.1%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:34.5%"></i><u style="left:37.4%" title="Auckland: 19.2%"></u></div><b>17.7%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:40.1%"></i><u style="left:40.7%" title="Auckland: 20.9%"></u></div><b>20.6%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:90.6%" title="Auckland: 46.5%"></u></div><b>48.9%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:24.9%"></i><u style="left:25.9%" title="Auckland: 13.3%"></u></div><b>12.8%</b></div><div class="key"><u></u>Auckland average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:89.5%" title="Auckland: 49.8%"></u></div><b>53.0%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:74.9%"></i><u style="left:56.2%" title="Auckland: 31.3%"></u></div><b>41.7%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:13.7%"></i><u style="left:22.1%" title="Auckland: 12.3%"></u></div><b>7.6%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:6.8%"></i><u style="left:29.8%" title="Auckland: 16.6%"></u></div><b>3.8%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:5.9%"></i><u style="left:4.9%" title="Auckland: 2.7%"></u></div><b>3.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.6%"></i><u style="left:1.6%" title="Auckland: 0.9%"></u></div><b>0.9%</b></div><div class="key"><u></u>Auckland average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:27.1%"></i><u style="left:26.4%" title="Auckland: 18.1%"></u></div><b>18.6%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:94.5%" title="Auckland: 64.9%"></u></div><b>65.4%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:3.5%"></i><u style="left:5.4%" title="Auckland: 3.7%"></u></div><b>2.4%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:15.3%"></i><u style="left:11.4%" title="Auckland: 7.8%"></u></div><b>10.5%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:1.2%"></i><u style="left:1.3%" title="Auckland: 0.9%"></u></div><b>0.8%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:1.7%"></i><u style="left:4.8%" title="Auckland: 3.3%"></u></div><b>1.2%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.9%"></i><u style="left:1.7%" title="Auckland: 1.2%"></u></div><b>1.3%</b></div><div class="key"><u></u>Auckland average</div></div>
 <h2>Nearby in Kaipātiki Local Board</h2>
 <ul class="links"><li><a href="/auckland/akoranga/">Akoranga</a></li><li><a href="/auckland/bayview-east-auckland/">Bayview East (Auckland)</a></li><li><a href="/auckland/bayview-south-auckland/">Bayview South (Auckland)</a></li><li><a href="/auckland/bayview-west-auckland/">Bayview West (Auckland)</a></li><li><a href="/auckland/beach-haven-east/">Beach Haven East</a></li><li><a href="/auckland/beach-haven-south/">Beach Haven South</a></li><li><a href="/auckland/beach-haven-west/">Beach Haven West</a></li><li><a href="/auckland/birkdale-central/">Birkdale Central</a></li><li><a href="/auckland/birkdale-north/">Birkdale North</a></li><li><a href="/auckland/birkdale-south/">Birkdale South</a></li><li><a href="/auckland/birkenhead-north/">Birkenhead North</a></li><li><a href="/auckland/birkenhead-north-west/">Birkenhead North West</a></li><li><a href="/auckland/birkenhead-south/">Birkenhead South</a></li><li><a href="/auckland/birkenhead-west/">Birkenhead West</a></li><li><a href="/auckland/chatswood/">Chatswood</a></li><li><a href="/auckland/glenfield-central/">Glenfield Central</a></li><li><a href="/auckland/glenfield-east/">Glenfield East</a></li><li><a href="/auckland/glenfield-north/">Glenfield North</a></li><li><a href="/auckland/glenfield-south-west/">Glenfield South West</a></li><li><a href="/auckland/glenfield-west/">Glenfield West</a></li><li><a href="/auckland/hillcrest-north-auckland/">Hillcrest North (Auckland)</a></li><li><a href="/auckland/hillcrest-west-auckland/">Hillcrest West (Auckland)</a></li><li><a href="/auckland/northcote-central-auckland/">Northcote Central (Auckland)</a></li><li><a href="/auckland/northcote-point-auckland/">Northcote Point (Auckland)</a></li><li><a href="/auckland/northcote-south-auckland/">Northcote South (Auckland)</a></li><li><a href="/auckland/northcote-tuff-crater/">Northcote Tuff Crater</a></li><li><a href="/auckland/totara-vale-north/">Totara Vale North</a></li><li><a href="/auckland/totara-vale-south/">Totara Vale South</a></li><li><a href="/auckland/wairau-valley/">Wairau Valley</a></li></ul>
 

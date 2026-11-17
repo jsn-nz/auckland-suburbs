@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Northland", "item": "https://population.co.nz/northland/"}, {"@type": "ListItem", "position": 3, "name": "Kaiwaka", "item": "https://population.co.nz/northland/kaiwaka/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#northland/kaiwaka" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/northland/">Northland</a> › Kaiwaka</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/northland/">Northland</a> › Kaiwaka</nav>
 <h1>Kaiwaka population and demographics</h1>
-<p>Kaiwaka is a statistical area in Kaipara District, Northland. At the 2023 Census it had <strong>2,532</strong>
-usually resident people (+18.4% since 2018). It is part of the wider Kaipara District South area.</p>
-<a class="cta" href="/#northland/kaiwaka">Open Kaiwaka on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>2,532</strong></div><div class="card"><span>Population 2018</span><strong>2,139</strong></div><div class="card"><span>Population 2013</span><strong>1,599</strong></div><div class="card"><span>Median age</span><strong>43.6</strong></div><div class="card"><span>Median personal income</span><strong>$32,700</strong></div><div class="card"><span>Median household income</span><strong>$77,300</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>18.4%</strong></div><div class="card"><span>Unemployment rate</span><strong>2.7%</strong></div><div class="card"><span>Born overseas</span><strong>20.5%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>8</strong></div></div>
+<p class="where">Kaipara District · Northland · part of the wider Kaipara District South area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">2,532</span><span class="chip">+18.4% since 2018</span></div>
+    <div class="trend"><div><b>1,599</b><i style="height:44%"></i><span>2013</span></div><div><b>2,139</b><i style="height:59%"></i><span>2018</span></div><div><b>2,532</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Kaiwaka is in Kaipara District, Northland. Its population grew 18.4% between the 2018 and 2023 censuses. The median age is 43.6, compared with 44.6 across Northland.</p>
+    <a class="cta" href="/#northland/kaiwaka">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 284" role="img" fill-rule="evenodd"><path class="a" d="M81 4 80 2 79 0 76 0 73 1 72 3 71 1 68 1 66 2 63 2 61 3 58 3 56 2 54 1 52 2 48 3 43 3 34 3 34 20 31 20 30 18 27 18 26 20 24 19 22 20 20 19 18 20 17 18 15 17 14 15 11 15 8 14 7 16 6 18 4 19 4 22 2 24 2 28 4 30 5 32 7 34 8 36 9 38 11 40 14 44 15 46 17 48 19 50 20 52 21 54 22 56 23 58 25 60 27 61 28 63 30 64 31 66 33 69 35 71 37 74 38 76 41 79 42 81 44 82 45 84 47 87 48 89 50 92 52 94 56 99 58 101 59 103 60 105 62 108 64 109 65 112 67 115 69 117 71 120 73 122 74 124 76 126 77 128 78 130 80 131 81 133 82 135 84 137 85 139 87 141 88 143 90 145 92 148 93 150 95 152 96 154 97 156 99 158 100 160 102 162 103 164 105 167 106 169 108 171 110 173 111 175 112 177 115 181 116 183 118 185 119 187 121 190 122 192 124 193 125 197 127 200 129 202 130 204 131 206 133 208 134 210 137 213 138 215 139 217 141 219 142 221 143 224 144 227 145 229 146 232 147 234 149 238 150 240 150 243 151 245 152 248 153 250 153 253 154 255 155 258 156 261 157 265 155 267 155 270 156 273 157 276 159 277 161 278 164 278 167 278 171 277 173 278 176 278 179 278 181 277 184 277 186 276 188 275 190 274 192 273 194 271 196 269 198 267 197 265 197 262 198 260 197 258 197 261 196 259 197 257 196 254 195 252 194 250 192 249 190 248 191 246 189 245 186 246 184 247 182 246 184 245 186 244 185 242 187 243 189 242 191 241 190 239 191 237 189 236 187 234 185 233 184 231 182 232 181 230 179 231 177 230 176 232 176 235 175 233 174 231 176 230 177 228 176 226 174 227 174 223 172 222 169 222 170 220 171 218 169 217 168 215 166 216 167 213 166 211 164 210 163 208 160 207 158 206 156 205 155 202 154 200 153 198 152 196 150 195 149 193 147 191 145 189 143 187 142 185 141 182 139 180 138 178 138 174 138 171 138 168 138 165 137 161 136 159 135 157 133 155 130 152 127 150 126 148 124 147 123 145 122 143 121 139 120 136 117 134 115 133 114 131 112 128 110 126 108 128 107 126 105 127 100 124 102 123 103 121 105 119 104 117 106 116 110 112 109 110 107 109 106 107 103 107 102 105 103 103 102 101 103 99 103 96 103 93 104 91 105 89 103 87 104 85 103 83 104 81 104 78 105 76 106 74 105 72 103 71 101 72 99 71 100 69 98 67 98 64 96 63 96 56 94 55 88 55 80 56 80 48 80 41 81 34 81 27 79 26 77 27 78 25 80 24 82 22 82 19 81 17 81 14 78 14 79 12 79 5 81 4Z"/><path class="a" d="M164 67 161 67 162 69 161 67 161 64 159 66 157 67 155 66 150 64 147 63 141 60 141 57 142 55 140 53 138 52 134 50 131 48 128 48 125 45 121 49 120 47 118 49 117 47 115 44 114 42 113 40 113 37 110 38 107 43 106 45 100 45 96 46 96 49 94 48 92 49 90 52 87 52 85 50 83 49 81 48 80 56 88 56 94 55 96 56 96 62 98 64 98 67 100 68 99 70 101 71 104 72 106 73 106 76 104 77 103 80 103 83 104 85 103 87 105 89 104 91 103 93 103 96 104 98 103 100 102 102 102 105 103 107 105 108 107 109 109 110 110 112 113 112 114 114 116 115 118 116 117 118 115 119 113 120 111 121 110 123 109 125 111 127 113 130 115 132 117 134 119 135 121 137 122 141 123 144 124 146 125 148 127 150 128 152 132 154 134 156 135 158 137 159 140 158 142 157 147 155 150 154 152 153 159 145 160 143 164 141 167 140 170 140 170 137 172 135 174 134 175 131 177 129 179 127 177 126 178 124 177 122 177 119 174 119 171 119 172 116 174 117 175 115 177 114 178 112 180 113 182 112 183 110 185 109 187 108 188 106 189 103 189 96 185 96 185 90 179 86 174 85 173 83 172 81 176 79 175 77 174 75 172 67 169 67 165 67Z"/><path class="a" d="M110 126 109 124 110 122 113 120 115 119 117 118 119 117 117 116 115 115 113 114 110 114 106 116 104 117 105 119 103 120 103 123 101 124 104 127 106 126 108 127 110 126Z"/><path class="a" d="M236 141 236 138 235 136 237 135 239 134 239 126 234 124 231 121 228 121 223 125 221 126 208 134 206 135 204 137 203 135 201 136 199 137 198 139 196 138 193 138 192 136 191 134 190 136 188 137 187 139 186 141 184 142 182 143 181 141 179 139 178 137 179 135 180 133 179 131 180 129 179 127 178 129 176 130 174 132 173 134 171 136 170 138 169 140 165 141 162 143 159 145 152 153 150 154 148 155 143 157 140 158 137 159 138 165 138 168 138 171 138 174 138 178 139 180 140 182 143 184 147 185 149 186 151 187 153 189 154 191 156 192 157 194 158 197 159 199 162 200 164 199 166 198 169 197 171 196 174 196 177 196 178 198 180 199 182 200 183 202 184 204 185 206 186 208 187 210 189 211 188 213 191 212 190 214 192 215 194 216 195 218 197 219 198 221 199 223 201 222 203 221 203 224 205 225 204 227 206 228 207 230 209 231 211 232 214 232 216 231 217 229 216 227 218 226 220 225 222 224 223 222 226 222 229 223 229 220 228 218 227 216 225 215 224 217 222 216 221 214 221 211 221 208 219 209 218 211 217 213 215 212 216 210 214 209 213 211 212 213 211 215 211 212 208 212 209 210 210 208 212 207 214 206 212 207 209 207 208 205 206 204 205 206 205 209 204 207 202 208 203 206 204 204 205 202 207 201 208 203 211 204 210 202 208 201 210 200 209 198 206 199 206 196 204 197 203 199 201 200 200 198 201 196 199 197 197 198 196 196 198 195 200 194 202 193 201 191 199 192 196 192 195 190 192 190 195 190 198 190 200 189 201 187 201 184 199 183 202 184 204 185 203 188 206 186 207 184 208 182 207 179 207 176 208 174 209 172 210 170 211 168 212 170 214 169 214 166 214 163 216 162 215 160 218 160 221 160 224 159 225 157 225 154 225 151 225 148 227 147 228 145 229 143 229 140 231 142 234 143 236 141Z"/><path class="a" d="M236 141 234 143 231 142 230 140 229 142 229 145 227 146 225 148 225 151 225 154 225 157 224 159 221 160 218 160 215 160 216 162 214 163 214 166 214 169 212 170 211 168 210 170 209 172 208 174 207 176 206 179 208 180 210 181 211 179 212 177 212 180 210 181 209 183 209 186 209 189 208 191 209 193 210 196 211 194 211 191 211 188 213 186 214 184 216 183 218 182 218 179 219 181 220 183 222 182 220 183 218 182 219 185 217 186 215 187 214 189 213 191 212 193 213 195 213 198 213 201 215 202 217 203 219 204 218 202 216 200 215 198 217 199 218 201 220 200 223 200 221 201 223 202 225 201 227 200 228 198 227 200 226 202 228 203 230 202 232 201 234 202 232 203 230 202 231 204 229 203 227 204 225 203 223 204 222 206 225 208 227 209 228 211 229 213 231 214 232 212 234 211 235 209 237 208 239 209 236 209 235 211 236 213 235 215 234 217 235 219 237 218 238 216 240 214 242 213 244 212 247 212 249 210 248 208 249 206 250 204 248 202 251 200 250 197 252 198 253 196 255 195 254 192 255 190 254 188 251 189 249 188 247 187 246 185 238 186 236 183 236 180 235 178 236 176 238 174 240 173 242 172 245 172 243 169 246 169 248 170 250 171 250 174 252 175 251 177 250 179 251 181 250 183 252 184 253 186 255 187 257 188 255 189 256 191 259 191 262 191 263 189 265 188 266 181 267 177 267 174 268 172 267 169 265 168 263 167 261 168 259 167 257 165 255 164 256 162 255 157 253 158 250 159 248 156 246 154 244 153 244 150 243 148 241 149 239 150 237 143 236 141Z"/><path class="a" d="M251 179 250 177 252 176 250 175 250 172 249 170 247 168 244 168 244 171 242 172 240 173 238 174 237 176 235 177 236 180 237 182 238 184 245 185 247 187 249 188 251 189 252 187 251 185 249 183 250 181 251 179Z"/><path class="a" d="M314 167 313 165 313 162 313 159 312 157 310 159 308 162 305 162 304 160 305 162 304 164 301 164 299 165 297 164 295 163 292 164 290 166 287 166 284 166 281 167 284 170 282 171 283 173 285 174 287 175 288 179 290 180 292 181 293 183 291 185 290 187 287 188 289 189 291 190 290 192 291 195 291 198 291 201 292 203 294 204 295 206 297 204 300 203 302 202 304 203 305 201 307 200 310 199 311 197 312 195 311 193 311 190 314 190 316 188 317 186 317 183 320 181 319 178 317 175 316 173 315 170 313 171 314 173 316 175 315 177 316 179 315 181 314 183 311 184 311 187 309 188 307 189 308 187 306 186 307 184 305 183 305 180 307 181 309 179 308 177 307 175 307 172 307 169 312 167Z"/><path class="a" d="M307 173 308 175 309 177 310 179 311 181 313 182 314 180 314 177 313 175 313 172 312 170 314 169 313 167 307 168 307 171Z"/><path class="a" d="M309 179 307 181 305 180 305 183 307 184 306 186 309 186 310 184 309 182 309 179Z"/><path class="on" d="M283 166 281 165 279 167 277 168 275 169 273 170 271 171 269 170 267 169 268 171 267 173 267 177 266 179 265 187 264 189 265 191 266 193 268 195 266 194 264 193 263 191 261 192 259 193 257 192 257 195 259 194 258 196 256 197 254 198 252 199 251 201 253 202 255 201 257 199 260 199 258 200 256 201 258 203 257 205 256 202 254 203 252 204 254 205 252 204 252 207 251 209 252 211 254 213 252 214 251 212 249 213 250 215 248 214 245 215 243 216 244 218 246 219 243 219 242 221 244 222 242 221 240 220 238 221 237 223 238 226 240 225 240 228 241 230 244 230 245 232 246 234 248 235 247 238 246 236 245 238 243 239 244 237 245 235 244 233 241 232 241 235 240 233 238 234 236 235 237 232 236 230 235 228 234 226 232 225 231 227 228 227 227 229 225 230 223 231 223 234 224 237 224 240 226 241 227 243 228 241 231 242 232 244 233 246 234 248 235 250 237 249 238 247 239 249 241 250 244 249 246 248 246 245 247 242 249 240 250 238 252 236 255 236 254 238 255 240 257 241 259 240 260 238 262 236 264 235 266 234 267 232 267 229 268 231 270 232 271 230 273 229 274 227 276 229 277 231 278 229 279 227 279 224 278 222 280 221 280 218 279 216 280 214 280 217 280 220 283 220 284 218 287 218 289 217 291 215 293 214 294 212 294 209 295 207 296 205 294 204 292 203 291 201 291 198 291 195 290 193 291 190 289 189 287 188 289 187 290 185 292 184 293 182 291 181 290 179 287 177 286 174 283 173 282 171 284 170 281 167 283 166Z"/></svg><figcaption>Kaiwaka within Kaipara District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$32,700</strong><em>Northland $34,100</em></div><div class="card"><span>Median household income</span><strong>$77,300</strong><em>Northland $74,200</em></div><div class="card"><span>Median age</span><strong>43.6</strong><em>Northland 44.6</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>18.4%</strong><em>Northland 18.2%</em></div><div class="card"><span>Unemployment rate</span><strong>2.7%</strong><em>Northland 5.7%</em></div><div class="card"><span>Born overseas</span><strong>20.5%</strong><em>Northland 17.1%</em></div><div class="card"><span>NZDep2023 decile</span><strong>8 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>61.4%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$380</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$600</strong></div><div class="card"><span>Stand-alone houses</span><strong>92.3%</strong></div><div class="card"><span>Crowded households</span><strong>7.0%</strong></div><div class="card"><span>Damp homes</span><strong>25.8%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>79.6%</strong></div><div class="card"><span>Māori</span><strong>26.1%</strong></div><div class="card"><span>Asian</span><strong>6.9%</strong></div><div class="card"><span>Pacific</span><strong>4.9%</strong></div><div class="card"><span>Other</span><strong>1.7%</strong></div><div class="card"><span>MELAA</span><strong>0.8%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>61.4%</strong><em>Northland 56.5%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$380</strong><em>Northland $400</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$600</strong><em>Northland $565</em></div><div class="card"><span>Stand-alone houses</span><strong>92.3%</strong><em>Northland 85.8%</em></div><div class="card"><span>Crowded households</span><strong>7.0%</strong><em>Northland 7.1%</em></div><div class="card"><span>Damp homes</span><strong>25.8%</strong><em>Northland 24.7%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:36.4%"></i><u style="left:37.9%" title="Northland: 19.6%"></u></div><b>18.8%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:27.1%"></i><u style="left:29.8%" title="Northland: 15.4%"></u></div><b>14.0%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:83.6%" title="Northland: 43.2%"></u></div><b>49.2%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:34.8%"></i><u style="left:42.2%" title="Northland: 21.8%"></u></div><b>18.0%</b></div><div class="key"><u></u>Northland average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:87.3%" title="Northland: 73.0%"></u></div><b>79.6%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:31.2%"></i><u style="left:44.7%" title="Northland: 37.4%"></u></div><b>26.1%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:8.3%"></i><u style="left:5.7%" title="Northland: 4.8%"></u></div><b>6.9%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:5.9%"></i><u style="left:5.9%" title="Northland: 4.9%"></u></div><b>4.9%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.0%"></i><u style="left:1.3%" title="Northland: 1.1%"></u></div><b>1.7%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:1.0%"></i><u style="left:0.8%" title="Northland: 0.7%"></u></div><b>0.8%</b></div><div class="key"><u></u>Northland average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:39.6%"></i><u style="left:28.0%" title="Northland: 20.7%"></u></div><b>29.2%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:87.8%"></i><u style="left:95.2%" title="Northland: 70.3%"></u></div><b>64.8%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:5.0%"></i><u style="left:5.0%" title="Northland: 3.7%"></u></div><b>3.7%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.3%"></i><u style="left:0.5%" title="Northland: 0.4%"></u></div><b>0.2%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:0.3%"></i><u style="left:0.9%" title="Northland: 0.7%"></u></div><b>0.2%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:1.2%"></i><u style="left:4.2%" title="Northland: 3.1%"></u></div><b>0.9%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.2%"></i><u style="left:1.5%" title="Northland: 1.1%"></u></div><b>0.9%</b></div><div class="key"><u></u>Northland average</div></div>
 <h2>Nearby in Kaipara District</h2>
 <ul class="links"><li><a href="/northland/dargaville/">Dargaville</a></li><li><a href="/northland/kaipara-coastal/">Kaipara Coastal</a></li><li><a href="/northland/mangawhai/">Mangawhai</a></li><li><a href="/northland/mangawhai-heads/">Mangawhai Heads</a></li><li><a href="/northland/mangawhai-rural/">Mangawhai Rural</a></li><li><a href="/northland/maungaru/">Maungaru</a></li><li><a href="/northland/maungaturoto/">Maungatūroto</a></li><li><a href="/northland/otamatea-kaipara-district/">Otamatea (Kaipara District)</a></li><li><a href="/northland/ruawai-matakohe/">Rūāwai-Matakohe</a></li></ul>
 

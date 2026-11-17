@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Canterbury", "item": "https://population.co.nz/canterbury/"}, {"@type": "ListItem", "position": 3, "name": "Mackenzie Lakes", "item": "https://population.co.nz/canterbury/mackenzie-lakes/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#canterbury/mackenzie-lakes" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/canterbury/">Canterbury</a> › Mackenzie Lakes</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/canterbury/">Canterbury</a> › Mackenzie Lakes</nav>
 <h1>Mackenzie Lakes population and demographics</h1>
-<p>Mackenzie Lakes is a statistical area in Mackenzie District, Canterbury. At the 2023 Census it had <strong>1,131</strong>
-usually resident people (+1.1% since 2018). It is part of the wider Mackenzie District area.</p>
-<a class="cta" href="/#canterbury/mackenzie-lakes">Open Mackenzie Lakes on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,131</strong></div><div class="card"><span>Population 2018</span><strong>1,119</strong></div><div class="card"><span>Population 2013</span><strong>837</strong></div><div class="card"><span>Median age</span><strong>35.8</strong></div><div class="card"><span>Median personal income</span><strong>$43,800</strong></div><div class="card"><span>Median household income</span><strong>$86,300</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>31.5%</strong></div><div class="card"><span>Unemployment rate</span><strong>1.1%</strong></div><div class="card"><span>Born overseas</span><strong>44.7%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>4</strong></div></div>
+<p class="where">Mackenzie District · Canterbury · part of the wider Mackenzie District area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,131</span><span class="chip">+1.1% since 2018</span></div>
+    <div class="trend"><div><b>837</b><i style="height:52%"></i><span>2013</span></div><div><b>1,119</b><i style="height:69%"></i><span>2018</span></div><div><b>1,131</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Mackenzie Lakes is in Mackenzie District, Canterbury. Its population grew 1.1% between the 2018 and 2023 censuses. The median age is 35.8, compared with 39.3 across Canterbury.</p>
+    <a class="cta" href="/#canterbury/mackenzie-lakes">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 339" role="img" fill-rule="evenodd"><path class="a" d="M62 276 64 273 65 271 66 268 68 267 69 260 68 262 64 260 61 262 58 261 57 263 60 263 60 268 52 270 51 272 49 271 51 272 53 273 55 274 57 275 59 276 62 276Z"/><path class="a" d="M311 162 309 161 309 158 308 156 308 153 311 153 314 152 316 154 318 155 319 153 320 151 319 149 319 146 318 144 319 141 320 139 317 138 316 135 314 134 313 132 311 131 310 129 309 127 308 125 305 126 303 124 302 122 302 119 301 117 298 118 294 115 292 114 290 113 290 110 288 109 286 108 284 109 282 110 279 109 277 108 275 107 271 107 269 108 268 110 266 111 264 113 262 114 260 115 258 116 256 118 253 118 251 119 249 120 250 122 250 125 247 125 245 124 243 126 241 127 239 126 237 125 236 123 235 121 236 119 234 118 232 117 230 116 228 115 226 116 225 118 220 115 220 118 219 120 218 122 217 124 217 127 216 129 213 129 211 128 208 128 206 126 204 125 203 127 200 130 198 131 196 132 195 134 193 136 193 139 195 140 197 141 197 144 197 147 196 149 196 152 194 153 193 155 191 156 192 158 191 160 191 163 192 165 190 166 189 168 187 170 186 172 188 174 188 177 187 179 185 180 186 182 188 183 188 187 187 189 188 193 187 195 188 197 186 200 185 203 183 205 181 206 179 207 178 209 178 214 178 218 177 222 177 225 179 226 180 229 179 231 180 233 181 235 181 238 182 240 181 243 180 246 179 248 180 250 182 252 182 257 182 261 181 263 181 266 181 269 180 272 181 274 180 276 179 280 179 284 179 290 179 293 179 296 180 298 183 298 185 297 187 299 188 301 188 304 190 305 191 307 209 308 210 311 211 313 212 316 213 318 214 321 215 323 217 325 222 325 224 324 222 321 221 319 219 317 220 315 221 313 221 310 221 307 222 305 223 302 225 301 226 299 228 298 231 298 232 296 233 294 235 293 237 292 239 291 242 290 244 291 247 291 250 292 251 294 252 297 253 299 254 301 257 301 259 303 262 304 264 305 262 300 261 298 261 295 260 292 259 289 257 287 258 285 257 283 256 281 254 280 253 278 252 276 250 274 249 272 248 270 246 269 246 266 245 263 244 261 243 259 242 257 242 254 241 252 240 250 239 248 238 245 238 242 240 238 239 235 240 230 243 231 244 233 247 234 249 235 250 237 253 237 254 239 257 239 261 239 263 240 265 241 268 241 269 239 268 237 269 235 270 233 269 231 269 228 268 226 267 224 266 222 265 220 266 218 265 216 264 213 265 211 265 208 263 207 264 205 265 203 267 200 265 199 264 197 262 196 261 194 263 192 261 191 259 190 257 189 259 187 261 185 262 183 262 180 262 177 263 175 265 176 267 175 268 170 266 168 266 162 269 163 270 165 272 166 273 168 274 170 277 173 280 173 282 174 285 174 288 173 289 170 290 168 291 165 294 165 297 164 299 165 302 165 305 164 308 164 310 163ZM227 215 229 212 230 214 231 216 234 217 235 219 231 221 229 220 227 219 226 217 224 216 226 215Z"/><path class="a" d="M227 215 225 216 227 217 226 219 229 220 231 221 234 220 233 218 232 216 230 214 229 212 227 214Z"/><path class="on" d="M161 168 160 166 161 168ZM182 7 179 7 177 8 175 7 174 5 173 3 171 4 168 4 166 3 164 2 163 0 161 1 160 3 159 5 157 6 155 5 153 6 151 7 149 8 148 11 147 13 146 16 144 17 141 17 139 19 138 21 136 22 135 25 133 26 132 28 130 29 127 29 125 30 122 30 120 28 118 27 117 25 118 23 116 24 115 26 113 27 111 28 109 29 107 30 105 31 103 32 100 32 98 33 95 34 93 35 92 37 91 39 89 41 88 43 87 45 85 46 83 48 81 47 79 48 78 50 76 52 74 54 74 57 72 56 69 56 67 58 64 59 63 61 64 63 64 66 63 68 64 70 65 72 64 75 64 78 62 79 61 81 59 82 57 84 55 85 52 86 50 87 49 89 48 91 47 93 48 95 49 97 48 100 46 101 44 103 43 105 40 105 38 106 37 108 38 110 37 112 36 114 36 117 35 119 34 121 32 122 30 123 30 126 28 127 26 129 25 131 23 132 23 135 22 137 21 139 20 142 19 145 18 147 17 149 15 151 13 153 11 155 10 157 10 160 8 162 7 164 6 166 5 168 4 170 3 172 2 175 3 177 2 179 2 182 2 185 1 188 0 192 0 195 1 198 2 200 3 204 4 206 6 210 8 212 10 214 12 216 13 218 13 221 12 224 11 226 10 229 8 230 6 232 6 235 9 237 10 239 11 241 11 244 13 245 14 247 14 250 14 253 14 256 14 260 14 264 14 267 15 269 16 271 18 272 20 273 23 273 25 272 27 273 28 275 30 276 32 275 34 274 36 273 38 271 39 269 41 270 43 269 42 271 45 272 48 271 51 272 52 270 60 268 60 265 62 263 58 263 56 261 58 262 61 262 64 260 68 262 69 260 69 266 66 268 65 271 64 273 63 275 64 277 66 278 68 280 70 281 73 282 75 284 77 286 79 287 80 289 82 290 83 292 85 294 86 296 88 297 88 300 89 302 89 306 88 308 89 311 91 313 91 316 93 318 93 321 93 324 91 326 91 331 92 334 94 333 135 308 172 285 173 287 174 289 175 291 176 293 177 296 179 297 180 294 179 292 179 285 179 281 180 278 180 275 181 273 181 270 181 266 181 263 182 261 182 258 182 254 181 251 179 250 178 248 180 246 181 243 182 241 181 239 181 236 180 234 179 232 179 229 180 227 178 226 177 224 178 220 178 216 178 211 179 208 180 206 183 205 184 203 186 202 188 197 187 195 188 193 187 189 188 187 188 184 186 182 185 180 187 179 188 177 188 174 186 172 187 170 189 168 190 166 192 165 191 163 191 160 192 158 191 156 192 154 194 153 196 152 196 149 197 147 196 145 197 143 197 140 194 140 193 138 194 135 196 133 198 131 200 130 202 128 204 127 205 125 206 123 207 120 208 118 209 116 210 114 209 112 206 111 204 112 201 111 200 108 198 106 199 104 200 102 199 99 197 97 198 95 200 93 201 91 200 89 201 87 202 85 203 83 202 81 203 79 203 76 204 74 205 72 207 71 208 69 209 66 210 64 210 61 209 59 207 58 206 56 205 53 206 51 207 49 207 46 205 45 203 46 200 45 198 43 195 42 193 43 191 41 190 39 188 38 187 36 187 33 186 31 184 30 184 27 185 25 183 24 180 24 178 22 176 21 176 18 178 17 179 15 180 12 182 11 182 8ZM161 120 162 117 161 115 164 115 166 116 166 119 168 120 167 122 168 124 168 127 167 129 169 131 170 133 169 136 168 138 167 140 168 142 167 144 167 147 167 150 168 152 169 154 168 156 167 158 168 161 169 163 169 166 167 167 167 170 166 173 164 174 161 174 159 175 158 177 157 179 156 181 155 183 155 186 154 188 152 187 148 186 149 184 150 182 151 180 152 178 152 175 153 173 154 171 156 170 154 168 156 166 154 167 152 166 153 164 152 162 153 159 154 157 154 154 155 152 158 151 158 148 157 146 156 144 157 142 158 140 157 138 157 135 156 133 156 130 157 128 158 126 159 124 159 121 161 120ZM86 186 86 189 86 192 87 194 89 195 88 197 89 199 90 201 91 203 92 205 91 207 91 210 90 212 89 214 90 216 89 218 89 221 90 223 91 225 89 226 90 228 91 230 92 232 93 234 92 236 91 238 89 240 88 242 86 243 84 242 82 241 80 242 77 242 76 244 75 246 72 245 73 243 70 241 69 239 68 237 69 234 70 231 72 230 73 228 73 225 72 223 73 221 74 219 74 216 73 214 73 211 73 208 72 205 73 203 73 200 72 197 72 194 72 191 72 188 72 185 73 183 72 181 72 178 72 175 73 173 72 171 72 167 71 165 71 162 73 161 72 159 74 158 76 157 78 158 80 157 82 156 84 157 85 159 86 163 85 165 87 166 87 169 87 172 87 175 87 178 86 181 87 183 86 185Z"/></svg><figcaption>Mackenzie Lakes within Mackenzie District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$43,800</strong><em>Canterbury $41,500</em></div><div class="card"><span>Median household income</span><strong>$86,300</strong><em>Canterbury $89,000</em></div><div class="card"><span>Median age</span><strong>35.8</strong><em>Canterbury 39.3</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>31.5%</strong><em>Canterbury 25.3%</em></div><div class="card"><span>Unemployment rate</span><strong>1.1%</strong><em>Canterbury 3.4%</em></div><div class="card"><span>Born overseas</span><strong>44.7%</strong><em>Canterbury 24.7%</em></div><div class="card"><span>NZDep2023 decile</span><strong>4 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>38.8%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$300</strong></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$230</strong></div><div class="card"><span>Stand-alone houses</span><strong>55.8%</strong></div><div class="card"><span>Crowded households</span><strong>5.1%</strong></div><div class="card"><span>Damp homes</span><strong>9.6%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>68.7%</strong></div><div class="card"><span>Asian</span><strong>22.3%</strong></div><div class="card"><span>MELAA</span><strong>5.8%</strong></div><div class="card"><span>Māori</span><strong>5.3%</strong></div><div class="card"><span>Pacific</span><strong>2.1%</strong></div><div class="card"><span>Other</span><strong>1.6%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>38.8%</strong><em>Canterbury 56.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$300</strong><em>Canterbury $400</em></div><div class="card"><span>Median weekly rent (new bonds)</span><strong>$230</strong><em>Canterbury $550</em></div><div class="card"><span>Stand-alone houses</span><strong>55.8%</strong><em>Canterbury 79.9%</em></div><div class="card"><span>Crowded households</span><strong>5.1%</strong><em>Canterbury 3.8%</em></div><div class="card"><span>Damp homes</span><strong>9.6%</strong><em>Canterbury 13.7%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:24.2%"></i><u style="left:32.6%" title="Canterbury: 17.5%"></u></div><b>13.0%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:40.9%"></i><u style="left:35.9%" title="Canterbury: 19.3%"></u></div><b>22.0%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:95.2%"></i><u style="left:85.2%" title="Canterbury: 45.8%"></u></div><b>51.2%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:24.7%"></i><u style="left:32.4%" title="Canterbury: 17.4%"></u></div><b>13.3%</b></div><div class="key"><u></u>Canterbury average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:81.5%"></i><u style="left:95.2%" title="Canterbury: 80.3%"></u></div><b>68.7%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:26.4%"></i><u style="left:15.8%" title="Canterbury: 13.3%"></u></div><b>22.3%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:6.9%"></i><u style="left:1.9%" title="Canterbury: 1.6%"></u></div><b>5.8%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:6.3%"></i><u style="left:12.6%" title="Canterbury: 10.6%"></u></div><b>5.3%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:2.5%"></i><u style="left:4.4%" title="Canterbury: 3.7%"></u></div><b>2.1%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.9%"></i><u style="left:1.5%" title="Canterbury: 1.3%"></u></div><b>1.6%</b></div><div class="key"><u></u>Canterbury average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:40.0%"></i><u style="left:21.3%" title="Canterbury: 15.6%"></u></div><b>29.2%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:58.0%"></i><u style="left:95.2%" title="Canterbury: 69.6%"></u></div><b>42.4%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:1.5%"></i><u style="left:3.8%" title="Canterbury: 2.8%"></u></div><b>1.1%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.5%"></i><u style="left:3.8%" title="Canterbury: 2.8%"></u></div><b>0.4%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:3.6%"></i><u style="left:5.6%" title="Canterbury: 4.1%"></u></div><b>2.6%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:31.7%"></i><u style="left:4.7%" title="Canterbury: 3.4%"></u></div><b>23.2%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:1.0%"></i><u style="left:2.2%" title="Canterbury: 1.6%"></u></div><b>0.7%</b></div><div class="key"><u></u>Canterbury average</div></div>
 <h2>Nearby in Mackenzie District</h2>
 <ul class="links"><li><a href="/canterbury/fairlie/">Fairlie</a></li><li><a href="/canterbury/opua-mackenzie-district/">Opua (Mackenzie District)</a></li><li><a href="/canterbury/twizel/">Twizel</a></li></ul>
 

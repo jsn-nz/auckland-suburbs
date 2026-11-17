@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Auckland", "item": "https://population.co.nz/auckland/"}, {"@type": "ListItem", "position": 3, "name": "Ōtāhuhu Industrial", "item": "https://population.co.nz/auckland/otahuhu-industrial/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#auckland/otahuhu-industrial" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Ōtāhuhu Industrial</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/auckland/">Auckland</a> › Ōtāhuhu Industrial</nav>
 <h1>Ōtāhuhu Industrial population and demographics</h1>
-<p>Ōtāhuhu Industrial is a statistical area in Māngere-Ōtāhuhu Local Board, Auckland. At the 2023 Census it had <strong>153</strong>
-usually resident people (+96.2% since 2018). It is part of the wider Ōtāhuhu area.</p>
-<a class="cta" href="/#auckland/otahuhu-industrial">Open Ōtāhuhu Industrial on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>153</strong></div><div class="card"><span>Population 2018</span><strong>78</strong></div><div class="card"><span>Population 2013</span><strong>27</strong></div><div class="card"><span>Median age</span><strong>18.9</strong></div><div class="card"><span>Median personal income</span><strong>$0</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>9.1%</strong></div><div class="card"><span>Unemployment rate</span><strong>0.0%</strong></div><div class="card"><span>Born overseas</span><strong>98.0%</strong></div></div>
+<p class="where">Māngere-Ōtāhuhu Local Board · Auckland · part of the wider Ōtāhuhu area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">153</span><span class="chip">+96.2% since 2018</span></div>
+    <div class="trend"><div><b>27</b><i style="height:12%"></i><span>2013</span></div><div><b>78</b><i style="height:36%"></i><span>2018</span></div><div><b>153</b><i style="height:70%"></i><span>2023</span></div></div>
+    <p class="lead">Ōtāhuhu Industrial is in Māngere-Ōtāhuhu Local Board, Auckland. Its population grew 96.2% between the 2018 and 2023 censuses. The median age is 18.9, compared with 35.9 across Auckland.</p>
+    <a class="cta" href="/#auckland/otahuhu-industrial">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 267" role="img" fill-rule="evenodd"><path class="a" d="M118 26 114 25 114 21 111 21 110 23 111 27 108 29 104 31 100 29 96 30 91 28 90 30 88 32 80 26 79 29 76 30 69 29 63 34 60 34 62 37 60 38 59 42 58 48 60 53 63 56 69 60 73 63 80 66 83 73 90 78 88 82 95 80 100 80 102 82 104 81 102 78 103 74 109 70 116 70 119 73 120 76 119 81 115 85 112 86 115 87 117 86 119 84 125 83 124 77 119 69 111 64 110 62 107 52 107 49 114 36 118 26Z"/><path class="a" d="M112 86 111 84 107 86 106 91 104 93 103 100 103 104 89 101 80 100 76 98 67 96 64 93 60 92 54 92 51 90 47 91 42 89 40 88 37 90 31 89 25 89 16 89 15 92 10 90 7 92 5 91 1 92 0 94 2 96 4 94 9 98 12 102 12 105 10 111 15 112 21 115 26 117 28 115 31 117 34 120 35 124 39 124 43 120 47 118 50 115 53 114 56 117 61 116 63 114 61 111 62 109 69 108 77 105 83 109 86 117 87 124 87 128 79 134 76 140 68 138 63 139 58 135 57 139 55 138 53 145 52 147 45 147 44 149 40 150 38 152 37 156 35 158 32 159 32 162 32 167 33 172 31 179 28 181 27 183 30 191 31 198 35 200 38 199 45 201 48 203 52 203 57 207 62 210 77 220 82 219 93 221 95 222 96 226 98 228 101 229 104 235 103 238 101 241 101 244 81 251 80 254 81 260 89 261 103 255 109 253 146 240 149 240 160 241 165 240 168 241 170 246 173 251 177 253 187 255 192 257 199 258 203 257 206 255 203 251 198 246 197 249 193 251 193 246 189 246 185 244 181 243 177 246 170 245 169 241 173 238 179 238 183 236 186 231 185 229 186 227 185 223 189 222 188 220 184 221 181 216 180 214 176 208 173 207 168 208 166 203 169 203 172 201 178 201 177 197 174 196 174 191 165 189 170 186 168 184 166 183 164 178 160 179 160 176 155 174 148 177 146 172 150 173 154 171 159 173 162 171 161 166 159 162 157 159 156 156 153 152 149 151 141 145 132 141 139 128 132 123 130 116 129 105 128 99 125 83 119 84 117 86 115 87 112 86Z"/><path class="a" d="M155 106 151 100 150 95 142 97 139 94 134 93 129 105 130 116 132 123 138 127 141 121 145 115 151 109 155 106Z"/><path class="a" d="M173 139 176 135 176 132 175 129 171 125 176 123 181 118 177 116 175 113 180 109 173 104 170 101 165 98 160 102 155 106 151 109 145 115 141 121 138 127 143 131 153 135 164 134 169 137 173 139Z"/><path class="a" d="M217 69 213 70 212 68 213 65 210 65 208 67 210 73 204 80 205 88 205 91 208 90 209 94 216 99 218 100 224 94 228 82 225 80 225 76 222 74 221 70 217 69Z"/><path class="a" d="M169 137 164 134 153 135 143 131 139 128 132 141 141 145 149 151 153 152 156 156 159 158 160 154 162 155 164 158 168 158 167 155 167 151 166 146 166 142 169 137Z"/><path class="a" d="M204 126 180 109 175 113 177 116 181 118 176 123 171 125 175 129 176 132 176 135 173 139 177 140 190 138 199 131 204 126Z"/><path class="a" d="M213 132 221 124 225 124 228 117 224 115 218 112 205 125 209 130 213 132Z"/><path class="a" d="M213 132 209 130 205 125 199 131 190 138 177 140 173 139 169 137 166 142 166 146 167 151 168 156 169 158 168 160 169 165 171 166 170 172 171 175 173 172 177 173 176 175 176 179 180 180 182 177 184 181 181 182 180 189 183 192 185 189 190 187 189 184 193 186 197 186 202 185 209 180 205 171 200 171 194 168 191 164 193 163 195 166 199 167 203 167 206 166 209 167 209 163 207 156 210 155 209 160 211 161 210 165 211 168 208 174 211 178 211 183 216 179 220 179 222 182 226 183 228 184 229 187 233 185 236 182 240 178 240 175 242 172 247 172 249 170 233 152 229 147 220 139 213 132Z"/><path class="a" d="M241 124 228 117 225 124 221 124 213 132 219 138 221 135 224 136 228 131 229 128 234 131 236 127 239 126 241 124Z"/><path class="a" d="M151 62 146 44 142 45 132 48 119 49 110 52 107 49 107 52 110 62 111 64 119 69 124 77 125 83 128 99 129 105 134 93 142 72 144 71 147 68 146 66 151 62Z"/><path class="a" d="M157 57 160 51 163 47 160 42 157 34 154 33 149 33 147 29 144 28 142 25 140 17 138 15 134 17 134 20 132 21 132 13 131 24 126 26 121 28 118 26 114 36 107 49 110 52 118 50 132 46 142 45 146 44 151 62 155 61 157 57Z"/><path class="a" d="M187 67 188 65 193 64 194 61 199 59 202 55 199 50 203 49 201 45 202 43 203 37 197 38 195 39 188 41 183 44 180 47 173 52 168 53 166 55 169 64 173 76 187 67Z"/><path class="a" d="M165 98 163 94 158 83 153 69 151 62 146 66 147 68 144 71 142 72 134 93 139 94 142 97 150 95 151 100 155 106 160 102 165 98Z"/><path class="a" d="M166 55 161 55 157 57 155 61 151 62 153 69 158 83 163 94 165 98 167 95 173 91 177 89 173 76 169 64 166 55Z"/><path class="a" d="M207 72 206 67 199 66 196 64 187 67 173 76 177 89 189 82 207 72Z"/><path class="a" d="M204 80 207 77 209 76 207 72 189 82 177 89 173 91 167 95 165 98 170 101 173 104 180 109 188 102 191 100 196 101 199 95 201 92 205 91 205 88 203 81Z"/><path class="a" d="M273 36 271 29 261 31 260 28 266 26 264 20 256 24 252 15 256 15 255 12 247 12 248 16 239 21 242 41 243 55 246 54 250 49 256 44 253 40 255 39 258 42 258 45 262 43 264 44 266 47 263 49 265 53 267 52 268 55 270 56 272 51 276 50 276 46 273 47 272 43 275 43 273 36Z"/><path class="a" d="M277 19 277 15 271 14 267 17 260 15 256 15 252 15 256 24 264 20 266 26 260 28 261 31 271 29 273 36 278 35 274 20 277 19Z"/><path class="a" d="M285 11 282 12 277 19 274 20 278 35 291 31 290 24 285 11Z"/><path class="a" d="M297 51 296 46 297 40 299 38 296 34 299 31 299 26 300 23 306 17 311 14 313 10 317 11 320 7 319 5 313 0 304 4 302 8 303 11 305 12 304 15 301 15 301 11 298 12 297 10 300 8 297 4 295 5 292 2 290 9 285 11 290 24 291 31 293 41 297 51Z"/><path class="a" d="M216 99 209 94 208 90 205 91 201 92 199 95 196 101 191 100 188 102 180 109 204 126 201 121 202 119 209 108 207 107 216 99Z"/><path class="a" d="M270 56 268 55 267 52 265 53 263 49 266 47 264 44 262 43 258 45 258 42 255 39 253 40 256 44 250 48 246 54 243 55 246 73 247 79 251 88 257 82 261 75 264 73 266 74 268 77 272 77 275 76 277 73 279 76 280 73 272 65 270 61 270 56Z"/><path class="a" d="M241 84 236 81 234 84 228 82 224 94 218 100 216 99 207 107 209 108 202 119 201 121 205 125 218 112 234 96 241 84Z"/><path class="a" d="M291 31 278 35 273 36 275 43 272 43 273 47 276 46 276 50 272 51 270 56 270 61 272 65 280 73 284 69 283 67 281 66 279 63 282 61 284 58 288 57 288 53 292 52 295 47 297 51 293 41 291 31Z"/><path class="a" d="M224 115 229 111 233 113 236 108 245 112 251 100 253 101 256 98 251 88 247 79 246 75 241 84 234 96 218 112 224 115Z"/><path class="on" d="M243 55 242 41 239 21 234 23 235 29 236 33 233 33 231 32 232 41 230 44 227 45 221 43 217 47 213 47 215 50 209 56 204 54 205 64 207 66 211 65 214 64 213 69 217 69 221 70 222 74 225 76 225 80 228 82 234 84 236 81 241 84 246 75 243 55Z"/></svg><figcaption>Ōtāhuhu Industrial within Māngere-Ōtāhuhu Local Board</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$0</strong><em>Auckland $44,800</em></div><div class="card"><span>Median age</span><strong>18.9</strong><em>Auckland 35.9</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>9.1%</strong><em>Auckland 32.9%</em></div><div class="card"><span>Unemployment rate</span><strong>0.0%</strong><em>Auckland 4.8%</em></div><div class="card"><span>Born overseas</span><strong>98.0%</strong><em>Auckland 42.9%</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>5.6%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>MELAA</span><strong>56.9%</strong></div><div class="card"><span>Asian</span><strong>41.2%</strong></div><div class="card"><span>European</span><strong>2.0%</strong></div><div class="card"><span>Māori</span><strong>0.0%</strong></div><div class="card"><span>Pacific</span><strong>0.0%</strong></div><div class="card"><span>Other</span><strong>0.0%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>5.6%</strong><em>Auckland 44.0%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:72.3%"></i><u style="left:39.3%" title="Auckland: 19.2%"></u></div><b>35.3%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:72.3%"></i><u style="left:42.8%" title="Auckland: 20.9%"></u></div><b>35.3%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:64.3%"></i><u style="left:95.2%" title="Auckland: 46.5%"></u></div><b>31.4%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:4.1%"></i><u style="left:27.2%" title="Auckland: 13.3%"></u></div><b>2.0%</b></div><div class="key"><u></u>Auckland average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>MELAA</span><div class="track"><i style="width:95.2%"></i><u style="left:4.5%" title="Auckland: 2.7%"></u></div><b>56.9%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:69.0%"></i><u style="left:52.4%" title="Auckland: 31.3%"></u></div><b>41.2%</b></div><div class="bar"><span>European</span><div class="track"><i style="width:3.3%"></i><u style="left:83.4%" title="Auckland: 49.8%"></u></div><b>2.0%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:0.0%"></i><u style="left:20.6%" title="Auckland: 12.3%"></u></div><b>0.0%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:0.0%"></i><u style="left:27.8%" title="Auckland: 16.6%"></u></div><b>0.0%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.0%"></i><u style="left:1.5%" title="Auckland: 0.9%"></u></div><b>0.0%</b></div><div class="key"><u></u>Auckland average</div></div></div></div>
 <h2>Nearby in Māngere-Ōtāhuhu Local Board</h2>
 <ul class="links"><li><a href="/auckland/aorere-north/">Aorere North</a></li><li><a href="/auckland/auckland-airport/">Auckland Airport</a></li><li><a href="/auckland/favona-east/">Favona East</a></li><li><a href="/auckland/favona-north/">Favona North</a></li><li><a href="/auckland/favona-west/">Favona West</a></li><li><a href="/auckland/harania-north/">Harania North</a></li><li><a href="/auckland/harania-south/">Harania South</a></li><li><a href="/auckland/massey-road-north/">Massey Road North</a></li><li><a href="/auckland/massey-road-south/">Massey Road South</a></li><li><a href="/auckland/massey-road-west/">Massey Road West</a></li><li><a href="/auckland/mangere-bridge/">Māngere Bridge</a></li><li><a href="/auckland/mangere-bridge-ambury/">Māngere Bridge Ambury</a></li><li><a href="/auckland/mangere-central/">Māngere Central</a></li><li><a href="/auckland/mangere-mascot/">Māngere Mascot</a></li><li><a href="/auckland/mangere-mountain-view/">Māngere Mountain View</a></li><li><a href="/auckland/mangere-north/">Māngere North</a></li><li><a href="/auckland/mangere-south/">Māngere South</a></li><li><a href="/auckland/mangere-south-east/">Māngere South East</a></li><li><a href="/auckland/mangere-west/">Māngere West</a></li><li><a href="/auckland/sutton-park/">Sutton Park</a></li><li><a href="/auckland/otahuhu-central/">Ōtāhuhu Central</a></li><li><a href="/auckland/otahuhu-east/">Ōtāhuhu East</a></li><li><a href="/auckland/otahuhu-north-east/">Ōtāhuhu North East</a></li><li><a href="/auckland/otahuhu-north-west/">Ōtāhuhu North West</a></li><li><a href="/auckland/otahuhu-south/">Ōtāhuhu South</a></li><li><a href="/auckland/otahuhu-south-west/">Ōtāhuhu South West</a></li></ul>
 

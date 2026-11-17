@@ -24,26 +24,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="/css/style.css">
 <style>
 body{display:block;height:auto}
-.pg{display:block;max-width:780px;margin:0 auto;padding:22px 18px 60px}
+.topbar{position:sticky;top:0}
+.topbar .brand a{font-size:16px;font-weight:650;color:inherit;text-decoration:none;display:block}
+.pg{display:block;max-width:860px;margin:0 auto;padding:20px 18px 64px}
 .pg a{color:var(--accent-ink)}
-.pg .crumbs{font-size:12.5px;color:var(--muted);margin-bottom:14px}
-.pg h1{font-size:26px;line-height:1.2;margin:0 0 6px}
-.pg h2{font-size:16px;margin:28px 0 8px}
+.pg .trail{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.pg h1{font-size:30px;line-height:1.15;letter-spacing:-.01em;margin:0 0 4px}
+.pg .where{color:var(--ink-2);font-size:14px;margin:0 0 18px}
+.pg h2{font-size:15px;margin:30px 0 4px}
+.pg .note{font-size:12px;color:var(--muted);margin:0 0 10px}
 .pg p{color:var(--ink-2);line-height:1.6;margin:0 0 10px}
-.pg .cta{display:inline-block;margin:10px 0 4px;padding:9px 16px;border-radius:9px;
-  background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-.pg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
-.pg .card{border:1px solid var(--grid);border-radius:10px;padding:9px 11px;background:var(--surface)}
-.pg .card span{display:block;font-size:11.5px;color:var(--ink-2)}
-.pg .card strong{font-size:19px}
-.pg table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.pg th,.pg td{padding:6px 9px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
-.pg th:first-child,.pg td:first-child{text-align:left;white-space:normal}
-.pg .scroll{overflow-x:auto;border:1px solid var(--grid);border-radius:10px}
-.pg ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
-.pg ul.links a{display:block;padding:4px 10px;border:1px solid var(--grid);border-radius:8px;
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:stretch}
+.hero.wide{grid-template-columns:minmax(0,1fr) minmax(0,440px)}
+.box .lead{margin:18px 0 0;font-size:13.5px}
+.box{background:var(--surface);border:1px solid var(--grid);border-radius:14px;padding:18px 20px}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.big-label{font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.chip{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;font-size:12.5px;
+  font-weight:600;vertical-align:middle;background:var(--plane);border:1px solid var(--grid);color:var(--ink-2)}
+.trend{display:flex;align-items:flex-end;gap:14px;height:92px;margin-top:20px}
+.trend div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;font-size:11.5px;color:var(--ink-2)}
+.trend i{display:block;width:100%;max-width:74px;background:var(--accent);border-radius:5px 5px 0 0;opacity:.45}
+.trend div:last-child i{opacity:1}
+.trend b{font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.trend span{margin-top:4px}
+.cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:10px;
+  background:var(--accent);color:#fff !important;text-decoration:none;font-weight:600}
+.cta:hover{filter:brightness(1.08)}
+.mapbox{display:flex;flex-direction:column;padding:12px}
+.mapbox svg{display:block;width:100%;height:auto;flex:1;max-height:420px}
+.mapbox figcaption{font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+figure{margin:0}
+svg .a{fill:var(--grid);stroke:var(--surface);stroke-width:.6}
+svg .on{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg a:hover path{stroke:var(--ink);stroke-width:1.5}
+svg .nd{fill:var(--nodata)}
+.scale{white-space:nowrap;display:flex;align-items:center;gap:6px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:8px}
+.scale i{width:22px;height:9px;border-radius:2px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{border:1px solid var(--grid);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.card span{display:block;font-size:11.5px;color:var(--ink-2)}
+.card strong{font-size:20px;font-weight:650}
+.card em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.bars{background:var(--surface);border:1px solid var(--grid);border-radius:12px;padding:12px 16px}
+.bar{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;padding:4px 0;font-size:12.5px}
+.bar span{color:var(--ink-2)}
+.bar b{text-align:right;font-weight:600}
+.track{position:relative;height:16px}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.key{font-size:11px;color:var(--muted);margin-top:6px}
+.key u{display:inline-block;width:2px;height:10px;background:var(--ink);vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pg table{border-collapse:collapse;width:100%;font-size:13px}
+.pg th,.pg td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.pg th{position:sticky;top:0;background:var(--surface);font-weight:600;border-bottom-color:var(--baseline)}
+.pg th:first-child,.pg td:first-child,.pg td.t,.pg th.t{text-align:left;white-space:normal}
+.pg td.t{color:var(--ink-2)}
+.pg tr:hover td{background:var(--plane)}
+.scroll{overflow:auto;max-height:640px;border:1px solid var(--grid);border-radius:12px;background:var(--surface)}
+ul.links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
+ul.links a{display:block;padding:5px 11px;border:1px solid var(--grid);border-radius:8px;
   background:var(--surface);text-decoration:none;font-size:13px}
-.pg footer{margin-top:36px;font-size:11.5px;color:var(--muted);line-height:1.6}
+ul.links a:hover{border-color:var(--accent)}
+.pg footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--grid);font-size:11.5px;
+  color:var(--muted);line-height:1.6}
+@media (max-width:720px){
+  .hero,.hero.wide,.two{grid-template-columns:1fr}
+  .pg h1{font-size:25px}.big{font-size:38px}
+  .bar{grid-template-columns:104px 1fr 50px}
+  .topbar .sub{display:none}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "New Zealand", "item": "https://population.co.nz/"}, {"@type": "ListItem", "position": 2, "name": "Canterbury", "item": "https://population.co.nz/canterbury/"}, {"@type": "ListItem", "position": 3, "name": "Waimate West", "item": "https://population.co.nz/canterbury/waimate-west/"}]}</script>
 </head>
@@ -52,17 +105,29 @@ body{display:block;height:auto}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXPPWMJ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+  <div class="brand"><a href="/">NZ Census</a><span class="sub">every suburb · 2013–2023 · NZDep2023</span></div>
+  <div class="topbar-right"><a class="btn" href="/#canterbury/waimate-west" style="text-decoration:none">Interactive map</a></div>
+</header>
 <main class="pg">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/canterbury/">Canterbury</a> › Waimate West</nav>
+<nav class="trail" aria-label="Breadcrumb"><a href="/">New Zealand</a> › <a href="/canterbury/">Canterbury</a> › Waimate West</nav>
 <h1>Waimate West population and demographics</h1>
-<p>Waimate West is a statistical area in Waimate District, Canterbury. At the 2023 Census it had <strong>1,320</strong>
-usually resident people (-1.1% since 2018). It is part of the wider Waimate  area.</p>
-<a class="cta" href="/#canterbury/waimate-west">Open Waimate West on the interactive map</a>
-<h2>Key figures (2023 Census)</h2>
-<div class="grid"><div class="card"><span>Population 2023</span><strong>1,320</strong></div><div class="card"><span>Population 2018</span><strong>1,335</strong></div><div class="card"><span>Population 2013</span><strong>1,254</strong></div><div class="card"><span>Median age</span><strong>53.4</strong></div><div class="card"><span>Median personal income</span><strong>$26,300</strong></div><div class="card"><span>Median household income</span><strong>$49,900</strong></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>10.4%</strong></div><div class="card"><span>Unemployment rate</span><strong>5.3%</strong></div><div class="card"><span>Born overseas</span><strong>13.2%</strong></div><div class="card"><span>NZDep2023 decile (10 = most deprived)</span><strong>8</strong></div></div>
+<p class="where">Waimate District · Canterbury · part of the wider Waimate  area</p>
+<div class="hero">
+  <div class="box">
+    <div class="big-label">Population, 2023 Census</div>
+    <div><span class="big">1,320</span><span class="chip">-1.1% since 2018</span></div>
+    <div class="trend"><div><b>1,254</b><i style="height:66%"></i><span>2013</span></div><div><b>1,335</b><i style="height:70%"></i><span>2018</span></div><div><b>1,320</b><i style="height:69%"></i><span>2023</span></div></div>
+    <p class="lead">Waimate West is in Waimate District, Canterbury. Its population fell 1.1% between the 2018 and 2023 censuses. The median age is 53.4, compared with 39.3 across Canterbury.</p>
+    <a class="cta" href="/#canterbury/waimate-west">Open on the interactive map</a>
+  </div>
+  <figure class="box mapbox"><svg viewBox="-3 -3 326 280" role="img" fill-rule="evenodd"><path class="a" d="M307 201 305 199 303 201 302 203 303 205 301 206 299 208 296 210 294 211 290 211 287 211 283 210 280 210 278 208 275 207 273 206 271 205 268 205 265 205 264 208 262 210 259 210 257 208 254 208 253 210 250 210 248 212 246 213 242 212 240 210 238 209 236 208 234 207 232 208 228 210 226 211 223 213 220 213 217 213 214 212 212 211 211 213 209 215 207 217 205 218 204 220 202 219 200 220 197 221 194 223 191 224 189 225 188 227 186 229 185 231 183 233 181 234 179 233 177 234 174 238 176 239 179 240 181 241 183 242 185 243 187 244 190 246 192 247 195 247 197 249 200 249 203 249 205 250 209 250 208 254 210 253 213 253 216 253 219 253 221 254 223 255 225 256 226 258 229 258 231 259 233 260 235 259 237 260 239 261 242 262 244 261 247 262 249 263 251 264 253 266 255 265 258 265 261 265 263 267 266 267 269 267 272 268 275 268 277 270 280 270 283 270 285 269 287 270 289 269 291 271 293 273 296 274 299 272 300 269 301 267 302 263 303 260 304 253 305 248 306 246 306 242 307 239 307 234 307 229 308 225 308 222 307 217 307 213 307 209 307 205 307 201Z"/><path class="a" d="M130 17 129 15 126 14 126 11 125 8 124 6 123 4 121 2 70 31 13 66 11 67 7 71 8 73 10 75 8 76 5 77 4 80 5 83 5 86 5 90 6 92 5 95 7 96 6 99 4 98 2 100 4 102 6 103 7 105 6 108 5 111 2 111 1 114 0 116 1 118 2 120 4 121 7 124 9 126 11 128 13 129 14 131 16 132 20 132 24 131 28 131 30 132 34 136 36 137 38 139 40 140 43 140 45 142 48 145 49 147 53 149 54 153 56 154 58 153 61 153 63 156 67 158 69 160 73 163 75 164 77 165 78 167 80 168 82 169 84 170 84 173 85 175 86 177 88 179 90 181 91 184 93 186 96 188 98 190 100 193 103 195 105 197 106 199 107 202 108 204 110 206 111 208 114 211 117 213 119 214 121 215 122 217 123 219 125 220 128 221 130 222 133 223 137 225 140 226 146 227 150 229 153 229 156 230 158 231 160 232 163 233 165 234 169 235 171 236 173 238 176 235 178 234 180 233 182 234 184 232 185 230 187 227 189 226 191 224 193 223 197 222 198 220 201 219 204 220 205 218 207 217 209 215 210 213 212 212 215 213 218 213 221 213 225 212 227 211 231 209 233 208 235 207 237 209 240 210 241 212 244 213 247 213 249 211 252 210 254 208 257 208 259 210 262 210 264 208 265 206 265 203 263 200 266 200 268 199 270 198 275 196 273 195 271 192 269 190 267 188 265 189 264 187 263 185 262 183 261 181 259 180 257 179 256 177 254 176 252 174 250 173 249 171 246 170 243 169 242 167 241 170 225 168 223 167 221 166 219 167 219 164 221 162 222 160 220 159 218 158 219 155 218 153 216 154 214 153 213 151 212 149 211 151 209 149 207 148 206 146 204 145 207 145 209 144 210 142 212 141 213 139 212 137 212 134 211 132 209 131 207 132 204 132 201 132 202 130 200 129 201 127 201 124 200 122 199 120 198 118 195 118 194 116 192 115 194 114 195 112 194 110 196 111 195 109 193 107 192 105 189 106 188 104 187 102 184 102 182 101 182 97 183 95 182 93 180 92 179 89 179 86 178 84 177 82 175 80 176 78 178 77 179 75 179 72 182 72 183 70 184 68 185 66 185 63 188 63 189 61 189 58 189 55 182 56 180 54 179 51 178 47 176 46 176 43 173 39 172 36 171 33 148 31 145 28 143 27 143 24 142 21 140 20 140 17 138 16 136 17 133 17 130 17Z"/><path class="a" d="M246 27 244 26 242 25 240 24 238 23 236 22 232 22 231 20 231 17 230 14 228 12 226 10 225 8 222 8 220 7 217 7 215 8 212 8 210 9 207 10 204 11 203 13 204 15 202 16 201 18 198 18 196 19 194 20 192 21 191 23 189 24 188 26 187 29 187 32 186 34 188 35 187 37 187 40 186 42 185 44 186 46 187 48 189 49 192 54 189 55 188 57 189 59 188 62 186 63 185 65 184 67 183 69 182 71 180 72 179 74 178 76 177 78 175 80 176 82 178 83 179 85 179 88 180 90 181 93 183 94 182 96 182 99 183 102 186 102 188 103 189 105 192 105 193 107 195 109 197 110 194 110 195 112 194 114 192 115 194 116 195 118 198 118 199 120 200 122 201 124 201 127 200 129 202 130 201 132 203 131 205 132 207 133 209 131 211 132 212 134 212 137 213 139 212 141 209 141 208 143 207 145 204 145 206 146 208 145 211 144 213 143 216 143 219 143 221 142 224 142 229 138 232 137 235 136 237 135 239 134 242 133 244 134 246 133 249 133 251 132 253 133 255 132 258 133 260 134 262 133 264 132 266 131 269 132 271 131 274 130 277 130 280 131 282 130 284 131 286 132 287 135 289 136 291 137 293 138 296 139 299 138 302 137 303 133 304 129 304 126 305 123 305 120 306 116 307 113 308 110 309 107 310 105 309 102 307 101 306 99 304 98 302 99 300 98 298 99 295 98 293 97 291 96 289 95 286 94 285 92 282 92 280 90 277 90 275 88 273 87 271 86 269 85 267 83 264 82 262 80 260 78 257 77 254 78 253 76 255 74 256 72 258 71 260 68 263 64 266 61 270 58 274 57 276 56 279 55 280 52 282 51 280 50 278 49 275 47 273 44 272 42 269 42 267 41 267 38 265 36 262 37 260 36 258 37 255 37 253 36 252 34 251 31 250 29 247 27Z"/><path class="a" d="M320 82 318 81 316 80 313 78 311 77 309 76 307 75 304 73 302 72 300 70 298 69 297 67 296 64 295 62 291 58 290 56 287 54 285 53 282 51 280 52 279 54 278 56 275 57 272 58 268 61 263 64 260 68 258 70 256 72 255 74 254 76 252 78 255 77 259 78 261 80 263 81 266 82 268 84 271 85 272 87 274 88 276 89 279 90 281 91 285 92 286 94 289 94 291 96 293 97 295 98 297 99 299 98 302 99 304 98 306 99 307 101 309 102 310 104 312 100 313 97 314 93 315 91 317 88 318 86 319 84 320 82Z"/><path class="a" d="M303 137 301 138 297 138 294 138 292 137 289 136 287 135 286 133 284 132 282 131 279 130 276 130 273 131 270 132 268 131 265 131 264 133 262 134 259 134 257 132 254 132 251 132 249 133 246 133 244 134 242 133 240 134 238 135 236 136 233 137 231 138 226 142 222 142 220 143 217 143 214 142 212 143 210 145 207 145 207 148 209 149 211 151 212 149 214 150 213 153 215 154 217 152 218 154 220 155 218 156 219 158 220 160 221 162 219 163 219 166 222 166 223 168 241 170 243 168 245 169 247 171 249 172 251 173 253 175 255 176 256 178 258 179 260 181 262 179 265 177 267 176 270 178 274 180 275 183 272 186 269 190 271 192 272 194 274 196 270 197 268 199 266 200 263 200 264 203 266 205 269 205 272 205 274 207 278 208 280 209 282 210 285 211 288 211 292 211 295 211 298 209 301 207 302 205 302 202 304 200 305 198 306 201 307 198 307 194 306 190 306 187 306 184 306 181 306 177 306 174 305 172 305 169 305 166 305 163 305 159 304 157 304 154 304 151 303 147 303 144 303 141 303 138Z"/><path class="a" d="M272 186 274 184 274 180 272 178 267 176 265 177 263 179 260 181 262 182 263 184 265 182 267 180 269 181 270 183 271 185Z"/><path class="a" d="M272 186 270 184 269 182 271 181 268 181 266 183 265 185 264 187 265 189 267 188 269 190 271 187Z"/><path class="on" d="M267 181 265 182 263 184 264 186 266 185 267 183Z"/></svg><figcaption>Waimate West within Waimate District</figcaption></figure>
+</div>
+<h2>Income and work</h2>
+<div class="grid"><div class="card"><span>Median personal income</span><strong>$26,300</strong><em>Canterbury $41,500</em></div><div class="card"><span>Median household income</span><strong>$49,900</strong><em>Canterbury $89,000</em></div><div class="card"><span>Median age</span><strong>53.4</strong><em>Canterbury 39.3</em></div><div class="card"><span>Bachelor&#x27;s degree or higher</span><strong>10.4%</strong><em>Canterbury 25.3%</em></div><div class="card"><span>Unemployment rate</span><strong>5.3%</strong><em>Canterbury 3.4%</em></div><div class="card"><span>Born overseas</span><strong>13.2%</strong><em>Canterbury 24.7%</em></div><div class="card"><span>NZDep2023 decile</span><strong>8 of 10</strong><em>10 = most deprived</em></div></div>
 <h2>Housing</h2>
-<div class="grid"><div class="card"><span>Own or partly own home</span><strong>69.1%</strong></div><div class="card"><span>Median weekly rent (census)</span><strong>$320</strong></div><div class="card"><span>Stand-alone houses</span><strong>92.2%</strong></div><div class="card"><span>Crowded households</span><strong>3.0%</strong></div><div class="card"><span>Damp homes</span><strong>15.7%</strong></div></div>
-<h2>Ethnicity</h2><p>Share of people who stated an ethnicity. People can identify with more than one group, so these add to more than 100%.</p><div class="grid"><div class="card"><span>European</span><strong>91.4%</strong></div><div class="card"><span>Māori</span><strong>8.9%</strong></div><div class="card"><span>Asian</span><strong>3.2%</strong></div><div class="card"><span>Other</span><strong>2.5%</strong></div><div class="card"><span>Pacific</span><strong>1.1%</strong></div><div class="card"><span>MELAA</span><strong>0.7%</strong></div></div>
+<div class="grid"><div class="card"><span>Own or partly own home</span><strong>69.1%</strong><em>Canterbury 56.0%</em></div><div class="card"><span>Median weekly rent (census)</span><strong>$320</strong><em>Canterbury $400</em></div><div class="card"><span>Stand-alone houses</span><strong>92.2%</strong><em>Canterbury 79.9%</em></div><div class="card"><span>Crowded households</span><strong>3.0%</strong><em>Canterbury 3.8%</em></div><div class="card"><span>Damp homes</span><strong>15.7%</strong><em>Canterbury 13.7%</em></div></div>
+<div class="two"><div><h2>Age</h2><p class="note">Share of residents, 2023.</p><div class="bars"><div class="bar"><span>0–14 years</span><div class="track"><i style="width:29.3%"></i><u style="left:36.4%" title="Canterbury: 17.5%"></u></div><b>14.1%</b></div><div class="bar"><span>15–29 years</span><div class="track"><i style="width:29.3%"></i><u style="left:40.1%" title="Canterbury: 19.3%"></u></div><b>14.1%</b></div><div class="bar"><span>30–64 years</span><div class="track"><i style="width:82.8%"></i><u style="left:95.2%" title="Canterbury: 45.8%"></u></div><b>39.8%</b></div><div class="bar"><span>65 and over</span><div class="track"><i style="width:66.5%"></i><u style="left:36.2%" title="Canterbury: 17.4%"></u></div><b>32.0%</b></div><div class="key"><u></u>Canterbury average</div></div></div><div><h2>Ethnicity</h2><p class="note">People can identify with more than one group, so shares add to more than 100%.</p><div class="bars"><div class="bar"><span>European</span><div class="track"><i style="width:95.2%"></i><u style="left:83.7%" title="Canterbury: 80.3%"></u></div><b>91.4%</b></div><div class="bar"><span>Māori</span><div class="track"><i style="width:9.3%"></i><u style="left:11.0%" title="Canterbury: 10.6%"></u></div><b>8.9%</b></div><div class="bar"><span>Asian</span><div class="track"><i style="width:3.3%"></i><u style="left:13.9%" title="Canterbury: 13.3%"></u></div><b>3.2%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:2.6%"></i><u style="left:1.4%" title="Canterbury: 1.3%"></u></div><b>2.5%</b></div><div class="bar"><span>Pacific</span><div class="track"><i style="width:1.1%"></i><u style="left:3.9%" title="Canterbury: 3.7%"></u></div><b>1.1%</b></div><div class="bar"><span>MELAA</span><div class="track"><i style="width:0.7%"></i><u style="left:1.7%" title="Canterbury: 1.6%"></u></div><b>0.7%</b></div><div class="key"><u></u>Canterbury average</div></div></div></div><h2>Getting to work</h2><p class="note">Main way of travelling to work, as a share of employed people who stated one, 2023.</p><div class="bars"><div class="bar"><span>Work from home</span><div class="track"><i style="width:8.1%"></i><u style="left:19.0%" title="Canterbury: 15.6%"></u></div><b>6.7%</b></div><div class="bar"><span>Drive</span><div class="track"><i style="width:95.2%"></i><u style="left:84.7%" title="Canterbury: 69.6%"></u></div><b>78.3%</b></div><div class="bar"><span>Passenger</span><div class="track"><i style="width:4.7%"></i><u style="left:3.4%" title="Canterbury: 2.8%"></u></div><b>3.9%</b></div><div class="bar"><span>Public transport</span><div class="track"><i style="width:0.0%"></i><u style="left:3.4%" title="Canterbury: 2.8%"></u></div><b>0.0%</b></div><div class="bar"><span>Cycle</span><div class="track"><i style="width:2.1%"></i><u style="left:5.0%" title="Canterbury: 4.1%"></u></div><b>1.7%</b></div><div class="bar"><span>Walk or jog</span><div class="track"><i style="width:10.1%"></i><u style="left:4.1%" title="Canterbury: 3.4%"></u></div><b>8.3%</b></div><div class="bar"><span>Other</span><div class="track"><i style="width:0.7%"></i><u style="left:1.9%" title="Canterbury: 1.6%"></u></div><b>0.6%</b></div><div class="key"><u></u>Canterbury average</div></div>
 <h2>Nearby in Waimate District</h2>
 <ul class="links"><li><a href="/canterbury/hakataramea/">Hakataramea</a></li><li><a href="/canterbury/lyalldale/">Lyalldale</a></li><li><a href="/canterbury/maungati/">Maungati</a></li><li><a href="/canterbury/morven-glenavy-ikawai/">Morven-Glenavy-Ikawai</a></li><li><a href="/canterbury/makikihi-willowbridge/">Mākikihi-Willowbridge</a></li><li><a href="/canterbury/waimate-east/">Waimate East</a></li><li><a href="/canterbury/waimate-north/">Waimate North</a></li></ul>
 
